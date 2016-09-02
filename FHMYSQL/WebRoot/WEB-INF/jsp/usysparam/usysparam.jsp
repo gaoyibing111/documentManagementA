@@ -14,7 +14,7 @@
 
 	<form id="formusysparam">
 
-	<jsp:include page="/common/page_param.jsp"></jsp:include>
+	<jsp:include page="/WEB-INF/jsp/common/page_param.jsp"></jsp:include>
 
 	<div class="row">
 		<div class="col-xs-12">
@@ -132,7 +132,7 @@
 				</div>
 			</div>
  --%>
-			<jsp:include page="/common/message.jsp"></jsp:include>
+			<jsp:include page="/WEB-INF/jsp/common/message.jsp"></jsp:include>
 
 
 			<!-- PAGE CONTENT ENDS -->

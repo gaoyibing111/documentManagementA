@@ -53,8 +53,8 @@
 								<c:if test="${sub.hasMenu}">
 								<c:choose>
 									<c:when test="${not empty sub.MENU_URL}">
-									<li id="z${sub.MENU_ID }">
-									<a style="cursor:pointer;" target="mainFrame"  onclick="siMenu('z${sub.MENU_ID }','lm${menu.MENU_ID }','${sub.MENU_NAME }','${sub.MENU_URL }')"><i class="icon-double-angle-right"></i>${sub.MENU_NAME }</a></li>
+										<li id="z${sub.MENU_ID }">
+										<a style="cursor:pointer;" target="mainFrame"  onclick="siMenu('z${sub.MENU_ID }','lm${menu.MENU_ID }','${sub.MENU_NAME }','${sub.MENU_URL }')"><i class="icon-double-angle-right"></i>${sub.MENU_NAME }</a></li>
 									</c:when>
 									<c:otherwise>
 									<li><a href="javascript:void(0);"><i class="icon-double-angle-right"></i>${sub.MENU_NAME }</a></li>

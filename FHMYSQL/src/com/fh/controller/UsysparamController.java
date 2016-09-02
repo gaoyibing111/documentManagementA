@@ -21,7 +21,7 @@ import com.fh.entity.system.Usysparam;
 import com.fh.service.UsysparamService;
 
 
-@RequestMapping("/web/usysparam")
+@RequestMapping("/usysparam")
 @Controller
 public class UsysparamController extends BaseController{
 
@@ -33,36 +33,28 @@ public class UsysparamController extends BaseController{
 	@ResponseBody
 	@RequestMapping("/query")
 	public String query(HttpServletRequest request, ModelMap map, @RequestParam String gcode, @RequestParam(required = false) String scode) throws Exception{
-		
 		List<Usysparam> list = service.query(gcode, scode);
 		String array = JSON.toJSONString(list);
-
 		return array;
 	}
 	
 	@RequestMapping("/queryAll")
 	public String queryAll(ModelMap map, Usysparam usysparam) throws Exception{
-
 		this.usysparam = usysparam;
 		PageBean bean = new PageBean();
-		String ret = "webpage/poms/usysparam/usysparam";
-
+		String ret = "usysparam/usysparam";
 		try {
 			usysparam.setOrderby("gcode desc");
-
 			List<Usysparam> list = service.queryAll(usysparam);
-
 			bean.setRetCode(100);
 			bean.setRetMsg("查询成功");
 			bean.setPageInfo(ret);
-
 			map.addAttribute("ret", bean);
 			map.addAttribute("list", list);
 			map.addAttribute("usysparam",usysparam);
 		} catch (Exception e) {
 			bean.setRetCode(5000);
 			bean.setRetMsg(e.getMessage());
-
 			map.addAttribute("ret", bean);
 			logger.error("", e);
 			throw e;
@@ -86,31 +78,28 @@ public class UsysparamController extends BaseController{
 			mcode = "";
 		}
 		String gcode = "PLF_TYPE";
-		Usysparam usysparam = service.queryUsysparamByCode(gcode,mcode);
+		Usysparam usysparam = service.queryUsysparamByCode(gcode, mcode);
 		return usysparam;
 	}
 	
 	@RequestMapping("/saveUsysparam")
 	public String saveUsysparam(ModelMap map, Usysparam usysparam, @RequestParam String operation) throws Exception{
 		PageBean bean = new PageBean();
-		String ret = "webpage/poms/usysparam/usysparam";
+		String ret = "usysparam/usysparam";
 		String transportionid = null;
 
 		try {
 			if(StringUtils.isEmpty(operation)){
-				transportionid = service.saveUsysparam(usysparam,"insert");
+				service.saveUsysparam(usysparam,"insert");
 				bean.setRetMsg("新增成功");
 			}else{
-				transportionid = service.saveUsysparam(usysparam,"update");
+				service.saveUsysparam(usysparam,"update");
 				bean.setRetMsg("保存成功");
 			}
-			
 			ret = this.queryAll(map, this.usysparam==null?new Usysparam():this.usysparam);
-
 			bean.setRetCode(100);
 			bean.setRetValue(transportionid);
 			bean.setPageInfo(ret);
-
 			map.addAttribute("ret", bean);
 		} catch (Exception e) {
 			bean.setRetCode(5000);
@@ -133,22 +122,18 @@ public class UsysparamController extends BaseController{
 		usysparam.setGcode(gcodevalue);
 		usysparam.setMcode(mcodevalue);
 		
-		String ret = "webpage/poms/usysparam/usysparam";
+		String ret = "usysparam/usysparam";
 
 		try {
 			service.deleteByGcodeAndMcode(usysparam);
 			bean.setRetMsg("删除成功");
-			
 			ret = this.queryAll(map, this.usysparam==null?new Usysparam():this.usysparam);
-
 			bean.setRetCode(100);
 			bean.setPageInfo(ret);
-
 			map.addAttribute("ret", bean);
 		} catch (Exception e) {
 			bean.setRetCode(5000);
 			bean.setRetMsg(e.getMessage());
-
 			map.addAttribute("ret", bean);
 			logger.error("", e);
 			throw e;
@@ -161,16 +146,14 @@ public class UsysparamController extends BaseController{
 	@RequestMapping("/preUpdate")
 	public String preUpdate(ModelMap map, @RequestParam String gcodevalue, @RequestParam String mcodevalue){
 		PageBean bean = new PageBean();
-		String ret = "webpage/poms/usysparam/usysparam_update";
+		String ret = "usysparam/usysparam_update";
 		Usysparam usysparam = new Usysparam();
 
 			try {
 				usysparam = service.queryUsysparamByCode(gcodevalue, mcodevalue);
-				
 				bean.setRetCode(100);
 				bean.setRetMsg("查询成功");
 				bean.setPageInfo(ret);
-
 				map.addAttribute("ret", bean);
 				map.addAttribute("usysparam", usysparam);
 
