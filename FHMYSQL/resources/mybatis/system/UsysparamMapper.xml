@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="UsysparamMapper" >
+  <resultMap id="BaseResultMap" type="com.fh.entity.system.Usysparam" >
+    <result column="gcode" property="gcode" jdbcType="VARCHAR" />
+    <result column="mcode" property="mcode" jdbcType="VARCHAR" />
+    <result column="mname" property="mname" jdbcType="VARCHAR" />
+    <result column="data" property="data" jdbcType="VARCHAR" />
+    <result column="scode" property="scode" jdbcType="VARCHAR" />
+  </resultMap>
+
+
+  <select id="queryUsysparamByCode" resultMap="BaseResultMap"  parameterType="com.fh.entity.system.Usysparam" >
+    select * from usysparam where gcode = #{0} and mcode = #{1}
+  </select>
+  <select id="selectDefault" resultMap="BaseResultMap"  parameterType="com.fh.entity.system.Usysparam" >
+  	 select * from usysparam u where 1=1
+    <trim>
+      <if test="gcode != null &amp;&amp; gcode != ''" >
+        and gcode = #{gcode,jdbcType=VARCHAR}
+      </if>
+      <if test="mcode != null &amp;&amp; mcode != ''" >
+        and mcode = #{mcode,jdbcType=VARCHAR}
+      </if>
+      <if test="mname != null &amp;&amp; mname != ''" >
+        and mname = #{mname,jdbcType=VARCHAR}
+      </if>
+      <if test="data != null &amp;&amp; data != ''">
+        and data = #{data,jdbcType=VARCHAR}
+      </if>
+    </trim>
+      and (scode is null or scode='')
+  </select>
+  
+  <select id="selectAll" resultMap="BaseResultMap"  parameterType="com.fh.entity.system.Usysparam" >
+  	 select * from usysparam u where 1=1
+    <trim>
+      <if test="gcode != null &amp;&amp; gcode != ''" >
+        and gcode like concat(concat('%',#{gcode,jdbcType=VARCHAR}),'%')
+      </if>
+      <if test="mcode != null &amp;&amp; mcode != ''" >
+        and mcode like concat(concat('%',#{mcode,jdbcType=VARCHAR}),'%')
+      </if>
+      <if test="mname != null &amp;&amp; mname != ''" >
+        and mname like concat(concat('%',#{mname,jdbcType=VARCHAR}),'%')
+      </if>
+    </trim>
+  </select>
+  
+  <insert id="insert" parameterType="com.fh.entity.system.Usysparam" >
+    insert into usysparam (gcode, mcode, mname, 
+      data, scode)
+    values (#{gcode,jdbcType=VARCHAR}, #{mcode,jdbcType=VARCHAR}, #{mname,jdbcType=VARCHAR}, 
+      #{data,jdbcType=VARCHAR}, #{scode,jdbcType=VARCHAR})
+  </insert>
+  
+ <update id="updateByPrimaryKey" parameterType="com.fh.entity.system.Usysparam" >
+    update usysparam
+    set mname = #{mname,jdbcType=VARCHAR},
+      data = #{data,jdbcType=VARCHAR},
+      scode = #{scode,jdbcType=VARCHAR}
+    where gcode = #{gcode,jdbcType=VARCHAR} and mcode = #{mcode,jdbcType=VARCHAR}
+  </update>
+  
+  <delete id="delete" parameterType="com.fh.entity.system.Usysparam" >
+    delete from usysparam where gcode = #{gcode,jdbcType=VARCHAR} and mcode = #{mcode,jdbcType=VARCHAR}
+  </delete>
+
+</mapper>
