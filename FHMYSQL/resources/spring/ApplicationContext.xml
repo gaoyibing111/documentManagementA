@@ -122,7 +122,9 @@
 			
 			<property name="filterChainDefinitions">
 				<value>
-				/static/login/** 			= anon
+				/searchVehicleInfo/**       = anon 
+				/static/vehicleManage/**    = anon 
+				/static/login/** 			= anon 
 				/static/js/myjs/** 			= authc
 				/static/js/** 				= anon
 				/uploadFiles/uploadImgs/** 	= anon

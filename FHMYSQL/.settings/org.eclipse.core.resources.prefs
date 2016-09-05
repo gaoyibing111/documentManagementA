@@ -3,4 +3,6 @@ encoding//WebRoot/WEB-INF/jsp/system/admin/head.jsp=UTF-8
 encoding//WebRoot/WEB-INF/jsp/system/admin/left.jsp=UTF-8
 encoding//WebRoot/WEB-INF/jsp/system/admin/top.jsp=UTF-8
 encoding//WebRoot/WEB-INF/jsp/system/tools/printPage.jsp=UTF-8
+encoding//WebRoot/WEB-INF/jsp/vehicleManage/index.jsp=UTF-8
+encoding//src/com/fh/interceptor/shiro/ShiroRealm.java=UTF-8
 encoding/<project>=UTF-8
