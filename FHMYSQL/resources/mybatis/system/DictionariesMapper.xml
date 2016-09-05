@@ -54,7 +54,7 @@
 	
 	<!-- 列表 -->
 	<select id="dictlistPage" parameterType="page" resultType="pd">
-		select  z1.ZD_ID,
+		select top 999999 z1.ZD_ID,
 				z1.NAME,
 				z1.BIANMA,
 				z1.ORDY_BY,
