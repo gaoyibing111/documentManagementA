@@ -18,8 +18,8 @@
 	<div class="header">
 		<div class="topnav">
 			<div class="inner">
-				<a href="">登录</a>
-				<a href="">注册</a>
+				<a href="<%=basePath%>/loginVehicleClient/loginPage">登录</a>
+				<a href="<%=basePath%>/registerVehicleClient/registerPage">注册</a>
 			</div>
 		</div>
 		<div class="logo">西安市道路运输车辆技术管理档案信息系统</div>
@@ -34,30 +34,36 @@
 								<a href="#vehicle">车 辆 </a>
 							</li>
 							<li class="">
-								<a href="#business">所属企 业</a>
+								<a href="#business" onclick="hide_user()">所属企业</a>
 							</li>
 						</ul>
+
 						<div class="tab-content">
+							<form action="queryVehicleByPlate" method="post" name="userForm" id="queryVehicleByPlate">
 							<div class="tab-pane active" id="vehicle">
 								<div class="row">
 									<div class="col-xs-10 col-left">
-										<input id="user" class="form-control-lg" type="text">
+										<input id="user" class="form-control-lg" type="text"  name="searchKeyWord">
 									</div>
 									<div class="col-xs-2 col-right">
-										<button class="btn btn-primary btn-lg btn-block">查 询</button>
+										<button id="userText" class="btn btn-primary btn-lg btn-block" onclick="queryVehicleByPlate()">查 询</button>
 									</div>
 								</div>
 							</div>
+								</form>
+							<form action="queryVehicleByCompany" method="post" name="userForm" id="queryVehicleByCompany">
 							<div class="tab-pane" id="business">
 								<div class="row">
 									<div class="col-xs-10 col-left">
-										<input id="user" class="form-control-lg" type="text">
+										<input id="user2" class="form-control-lg" type="text" name="searchKeyWord">
 									</div>
 									<div class="col-xs-2 col-right">
-										<button class="btn btn-primary btn-lg btn-block">查 询</button>
+										<button  id="userText2" class="btn btn-primary btn-lg btn-block" onclick="queryVehicleByCompany()">查 询</button>
 									</div>
 								</div>
 							</div>
+								</form>
+
 						</div>
 					</div>
 				</div>
@@ -71,8 +77,24 @@
 		地址: 西安市建设西路111号
 	</div>
 
+
     <script src="<%=basePath %>/static/vehicleManage/js/jquery.min.js"></script>
  	<script src="<%=basePath %>/static/vehicleManage/js/main.js"></script>
 	<script src="<%=basePath %>/static/vehicleManage/js/bootstrapValidator.js"></script>
+	<script type="text/javascript">
+		//1.	简要车辆查询接口
+		function queryVehicleByPlate(){
+		 $('#queryVehicleByPlate').submit();
+		}
+		//2.	简要所属企业查询接口
+		function queryVehicleByCompany(){
+			$('#queryVehicleByCompany').submit();
+		}
+		function hide_user(){
+			$('#user').hide();
+			$('#userText').hide();
+		}
+
+	</script>
 </body>
 </html>

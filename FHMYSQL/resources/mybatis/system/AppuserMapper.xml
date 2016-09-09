@@ -316,5 +316,32 @@
                   #{item}
              </foreach>
 	</delete>
-	
+
+
+	<!-- 通过USERNAME获取数据 -->
+	<select id="findByPhone" parameterType="pd" resultType="pd">
+		select
+		USER_ID,
+		USERNAME,
+		PASSWORD,
+		NAME,
+		RIGHTS,
+		ROLE_ID,
+		LAST_LOGIN,
+		IP,
+		STATUS,
+		BZ,
+		PHONE,
+		SFID,
+		START_TIME,
+		END_TIME,
+		YEARS,
+		EMAIL,
+		NUMBER
+		from
+		SYS_APP_USER
+		where
+		PHONE = #{PHONE}
+	</select>
+
 </mapper>

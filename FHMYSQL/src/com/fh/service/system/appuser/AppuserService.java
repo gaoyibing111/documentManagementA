@@ -105,7 +105,12 @@ public class AppuserService {
 		dao.update("AppuserMapper.updateLastLogin", pd);
 	}
 	//======================================================================================
-	
-	
+
+	/**
+	 * 通过手机号获取用户信息
+	 */
+	public PageData getUserByPhone(PageData pd) throws  Exception{
+		return (PageData)dao.findForObject("AppuserMapper.findByPhone",pd);
+	}
 }
 

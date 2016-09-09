@@ -122,7 +122,11 @@
 			
 			<property name="filterChainDefinitions">
 				<value>
-				/searchVehicleInfo/**       = anon 
+
+				/myInfoVehicleClient/**		=anon
+					/registerVehicleClient/**		=anon
+				/loginVehicleClient/**		= anon
+					/searchVehicleInfo/**       = anon
 				/static/vehicleManage/**    = anon 
 				/static/login/** 			= anon 
 				/static/js/myjs/** 			= authc
@@ -132,7 +136,7 @@
 	           	/login_login	 			= anon
 	           	/app**/** 					= anon
 	           	/weixin/** 					= anon
-	           	/**							= authc
+	          	/**							= authc
 				</value>
 			</property>
 		</bean>

@@ -17,14 +17,14 @@ import org.apache.shiro.subject.PrincipalCollection;
 public class ShiroRealm extends AuthorizingRealm {
 
 	/*
-	 * 鐧诲綍淇℃伅鍜岀敤鎴烽獙璇佷俊鎭獙璇�non-Javadoc)
+	 * 閻ц缍嶆穱鈩冧紖閸滃瞼鏁ら幋鐑界崣鐠囦椒淇婇幁顖炵崣鐠囷拷non-Javadoc)
 	 * @see org.apache.shiro.realm.AuthenticatingRealm#doGetAuthenticationInfo(org.apache.shiro.authc.AuthenticationToken)
 	 */
 	@Override
 	protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
 
-		 String username = (String)token.getPrincipal();  				//寰楀埌鐢ㄦ埛鍚�
-	     String password = new String((char[])token.getCredentials()); 	//寰楀埌瀵嗙爜
+		 String username = (String)token.getPrincipal();  				//瀵版鍩岄悽銊﹀煕閸氾拷
+	     String password = new String((char[])token.getCredentials()); 	//瀵版鍩岀?鍡欑垳
 		
 	     if(null != username && null != password){
 	    	 return new SimpleAuthenticationInfo(username, password, getName());
@@ -35,7 +35,7 @@ public class ShiroRealm extends AuthorizingRealm {
 	}
 	
 	/*
-	 * 鎺堟潈鏌ヨ鍥炶皟鍑芥暟, 杩涜閴存潈浣嗙紦瀛樹腑鏃犵敤鎴风殑鎺堟潈淇℃伅鏃惰皟鐢�璐熻矗鍦ㄥ簲鐢ㄧ▼搴忎腑鍐冲畾鐢ㄦ埛鐨勮闂帶鍒剁殑鏂规硶(non-Javadoc)
+	 * 閹哄牊娼堥弻銉嚄閸ョ偠鐨熼崙鑺ユ殶, 鏉╂稖顢戦柎瀛樻綀娴ｅ棛绱︾?妯硅厬閺冪姷鏁ら幋椋庢畱閹哄牊娼堟穱鈩冧紖閺冩儼鐨熼悽锟界拹鐔荤煑閸︺劌绨查悽銊р柤鎼村繋鑵戦崘鍐茬暰閻€劍鍩涢惃鍕問闂傤喗甯堕崚鍓佹畱閺傝纭?non-Javadoc)
 	 * @see org.apache.shiro.realm.AuthorizingRealm#doGetAuthorizationInfo(org.apache.shiro.subject.PrincipalCollection)
 	 */
 	@Override
