@@ -104,8 +104,7 @@ public class SerchVehicleController extends BaseController{
 	public ModelAndView queryVehicleByCompany(@RequestParam("searchKeyWord") String searchKeyWord){
 		ModelAndView mv = this.getModelAndView();
 		//todo 调用remoteService
-
-
+		mv.setViewName("vehicleManage/showQueryDataList");
 		return  mv;
 	}
 
