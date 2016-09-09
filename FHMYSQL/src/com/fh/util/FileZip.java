@@ -15,7 +15,7 @@ public class FileZip {
 	/**
 	 * @param inputFileName 你要压缩的文件夹(整个完整路径)
 	 * @param zipFileName 压缩后的文件(整个完整路径)
-	 */
+	  */
 	public static void zip(String inputFileName, String zipFileName) throws Exception {
 		zip(zipFileName, new File(inputFileName));
 	}
