@@ -13,10 +13,11 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
-import org.junit.Test;
 import org.springframework.stereotype.Service;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,59 +29,41 @@ public class RemoteService {
     /**
      * 发送 get请求
      */
-    @Test
     public String HttpClientGet(String urlandParam) {
         CloseableHttpClient httpclient = HttpClients.createDefault();
+
+        StringBuilder entityStringBuilder = null;
         try {
-            // 创建httpget.
-            HttpGet httpget = new HttpGet("http://remote.com/"+urlandParam);
-            System.out.println("executing request " + httpget.getURI());
-            // 执行get请求.
-            CloseableHttpResponse response = null;
+            HttpGet get = new HttpGet("http://192.168.0.109:8080/"+urlandParam);
+            CloseableHttpResponse httpResponse = null;
+            httpResponse = httpclient.execute(get);
             try {
-                RequestConfig requestConfig = RequestConfig.custom()
-                        .setConnectTimeout(15000).setConnectionRequestTimeout(10000)
-                        .setSocketTimeout(15000).build();
-                httpget.setConfig(requestConfig);
-
-                response = httpclient.execute(httpget);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            try {
-                // 获取响应实体
-                HttpEntity entity = response.getEntity();
-                System.out.println("--------------------------------------");
-                // 打印响应状态
-                System.out.println(response.getStatusLine());
-                if (entity != null) {
-                    // 打印响应内容长度
-                    System.out.println("Response content length: " + entity.getContentLength());
-                    // 打印响应内容
-                    System.out.println("Response content: " + EntityUtils.toString(entity, "UTF-8"));
-                    System.out.println("------------------------------------");
-                    return EntityUtils.toString(entity, "UTF-8");
+                HttpEntity entity = httpResponse.getEntity();
+                entityStringBuilder = new StringBuilder();
+                if (null != entity) {
+                    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(httpResponse.getEntity().getContent(), "UTF-8"), 8 * 1024);
+                    String line = null;
+                    while ((line = bufferedReader.readLine()) != null) {
+                        entityStringBuilder.append(line);
+                    }
                 }
-
             } finally {
-                response.close();
+                httpResponse.close();
             }
-        } catch (ClientProtocolException e) {
-            e.printStackTrace();
-        } catch (ParseException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            // 关闭连接,释放资源
             try {
-                httpclient.close();
+                if (httpclient != null) {
+                    httpclient.close();
+                }
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
-        return "";
+        return entityStringBuilder.toString();
     }
+
 
     /**
      * 发送 post请求访问,类似于表单提交数据
