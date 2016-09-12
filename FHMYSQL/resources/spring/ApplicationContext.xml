@@ -122,7 +122,7 @@
 			
 			<property name="filterChainDefinitions">
 				<value>
-
+				/test/**		=anon
 				/myInfoVehicleClient/**		=anon
 					/registerVehicleClient/**		=anon
 				/loginVehicleClient/**		= anon

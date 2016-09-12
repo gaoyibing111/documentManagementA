@@ -67,7 +67,7 @@ public class SerchVehicleController extends BaseController{
 			mv.addObject("msg", br.getMessage());
 		}
 		*/
-
+		String jsonString=remoteService.HttpClientGet("searchVehicleInfo/queryVehicleByPlate?searchKeyWord="+"1");
 		//=============test
 		List<BriefQueryResp>   _dataList  =new ArrayList<BriefQueryResp>();
 		BriefQueryResp  bqr=new BriefQueryResp();
