@@ -1,0 +1,20 @@
+{
+	"errorInfo":"info",
+    "success":true,
+    "data":[
+        {
+            "plateNumber":"陕A12345",
+            "hassisNumber":"xxx",
+            "carGenusUnit":"xxx",
+            "changeContent":"xxx",
+            "reviewStatus":"xxx"
+        },
+        {
+            "plateNumber":"陕A12346",
+            "hassisNumber":"xxx",
+            "carGenusUnit":"xxx",
+            "changeContent":"xxx",
+            "reviewStatus":"xxx"
+        }
+    ]
+}

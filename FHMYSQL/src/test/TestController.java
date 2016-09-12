@@ -6,15 +6,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 @Controller
 @RequestMapping("/test")
 public class TestController {
-    @RequestMapping("/{url}")
+    @RequestMapping(value="/{url}"/*, produces = "application/json; charset=utf-8"*/)
     @ResponseBody
-    public String sayHello2(HttpServletRequest request,@PathVariable String url) { //可以将参数直接绑定到这里  @RequestParam
+    public String sayHello2(HttpServletRequest request,@PathVariable String url,HttpServletResponse response) {
         String jsonString= null;
-        jsonString = Read.read(request,url);
+        jsonString = Read.read(request, url);
         return  jsonString;
     }
 }

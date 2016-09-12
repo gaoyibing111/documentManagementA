@@ -19,13 +19,7 @@ public class BriefQueryListResp implements Serializable {
 
    private List<BriefQueryResp> data;
 
-    public String getMessage() {
-        return message;
-    }
 
-    public void setMessage(String message) {
-        this.message = message;
-    }
 
     public boolean isSuccess() {
         return success;
@@ -35,7 +29,15 @@ public class BriefQueryListResp implements Serializable {
         this.success = success;
     }
 
-    private String message;
+    public String getErrorInfo() {
+        return errorInfo;
+    }
+
+    public void setErrorInfo(String errorInfo) {
+        this.errorInfo = errorInfo;
+    }
+
+    private String errorInfo;
     private boolean success;
 
 }

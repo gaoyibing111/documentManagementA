@@ -1,0 +1,18 @@
+{
+"success":true,
+"errorInfo":"info",
+"data":[
+{
+"plateNumber":"陕A12345",
+"releaseDate":"2012-10-4",
+"affiliatedFirm":"陕西省某某某运输公司",
+"reviewTime":"2016-6-10",
+"recentMaintenanceTime":"2016-06-10",
+"messageID":"XXXXXXXXXXX"},{
+                           "plateNumber":"陕A12345",
+                           "releaseDate":"2012-10-4",
+                           "affiliatedFirm":"陕西省某某某运输公司",
+                           "reviewTime":"2016-6-10",
+                           "recentMaintenanceTime":"2016-06-10",
+                           "messageID":"XXXXXXXXXXX"}]
+}

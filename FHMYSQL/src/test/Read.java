@@ -20,18 +20,22 @@ public class Read {
         byte[] b = new byte[8 * 1024];
 
         //todo  每次读文件前,判断 File.lastmodfiy返回的时间戳是否有变化(时间保存在CONcurrentMap),如果有就将InputStream.Reset().
-        InputStream in = null;
+     //   InputStream in = null;
         try
         {
             // 文件输入流
-            in = new FileInputStream(file);
-            while (in.read(b) != -1)
+      //      in = new FileInputStream(file);
+            BufferedReader reader = new BufferedReader(new InputStreamReader(
+                    new FileInputStream(file), "utf-8"));
+            String line = null;
+            while (((line = reader.readLine()) != null) )
             {
                 // 字符串拼接
-                txtContent.append(new String(b));
+                txtContent.append(line);
             }
             // 关闭流
-            in.close();
+        //    in.close();
+            reader.close();
         }
         catch (FileNotFoundException e)
         {
@@ -43,7 +47,7 @@ public class Read {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        finally
+      /*  finally
         {
             if (in != null)
             {
@@ -57,19 +61,53 @@ public class Read {
                     e.printStackTrace();
                 }
             }
-        }
+        }*/
         return txtContent.toString();
     }
     public static String  getUrl(String url){
         switch (url){
             case ("sendMessage"):  //sendMessage
                 return "sendMessage";
-            case ("validateUser"):
-                return "validateUser";
+
             case ("queryVehicleByPlate"):
                 return "queryVehicleByPlate";
+
             case ("queryVehicleByCompany"):
                 return "queryVehicleByCompany";
+
+            case ("queryBasicInfo"):
+                return "queryBasicInfo";
+
+            case ("queryVehicleChangeRecord"):
+                return "queryVehicleChangeRecord";
+
+            case ("queryFuelTestingRecord"):
+                return "queryFuelTestingRecord";
+
+            case ("querySecondMaintenanceRecords"):
+                return "querySecondMaintenanceRecords";
+
+            case ("queryVehicleDetectionRecords"):
+                return "queryVehicleDetectionRecords";
+
+            case ("queryCertificateReceivingRecords"):
+                return "queryCertificateReceivingRecords";
+
+            case ("queryPayVehicle"):
+                return "queryPayVehicle";
+
+            case ("queryMaintenancePlan"):
+                return "queryMaintenancePlan";
+
+            case ("queryMessageRemind"):
+                return "queryMessageRemind";
+
+            case ("payForDocument"):
+                return "payForDocument";
+
+            case ("renewal"):
+                return "renewal";
+
             default:
                 return "No filpath";
         }

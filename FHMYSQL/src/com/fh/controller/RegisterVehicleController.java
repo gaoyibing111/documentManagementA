@@ -2,6 +2,7 @@ package com.fh.controller;
 
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONException;
 import com.fh.controller.base.BaseController;
 import com.fh.entity.RemoteResp.BriefQueryListResp;
 import com.fh.entity.RemoteResp.BriefQueryResp;
@@ -105,23 +106,26 @@ public class RegisterVehicleController extends BaseController {
             removeCode(phone);
             registerCodeMap.put(phone, shortMessageInfo);
 
-          /*  //TODO 1 调用发短信接口(传入验证码&手机号)
+
             String jsonString=remoteService.HttpClientGet("sendMessage?phone="+phone+"&code="+registerCodeMap.get(phone).getCode());
             if(StringUtils.isBlank(jsonString)){
               jsonObject.put("msg", "验证码发送失败!");
                 return jsonObject.toString();
             }
-       */
-
-            String jsonString="{\"success\":true}"; //todo 0 模拟字符串
-
-            BriefQueryListResp br =JSON.parseObject(jsonString,BriefQueryListResp.class);
-            if(br.isSuccess()){
-                jsonObject.put("msg", "验证码已发出，请查收!");
-            }else {
+            try {
+                BriefQueryListResp br = JSON.parseObject(jsonString, BriefQueryListResp.class);
+                if(br.isSuccess()){
+                    jsonObject.put("msg", "验证码已发出，请查收!");
+                }else {
+                    jsonObject.put("msg", br.getErrorInfo()!=null?br.getErrorInfo():"验证码发送失败!");
+                }
+                return jsonObject.toString();
+            }catch (JSONException jsonex){
+                jsonex.printStackTrace();
                 jsonObject.put("msg", "验证码发送失败!");
+                return jsonObject.toString();
             }
-            return jsonObject.toString();
+
         }catch (Exception e){
             e.printStackTrace();
             throw new RuntimeException(e.getMessage());

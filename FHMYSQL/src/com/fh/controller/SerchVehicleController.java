@@ -49,48 +49,21 @@ public class SerchVehicleController extends BaseController{
 	@RequestMapping("queryVehicleByPlate")
 	public ModelAndView queryVehicleByPlate(@RequestParam("searchKeyWord") String searchKeyWord){
 		ModelAndView mv = this.getModelAndView();
-		//调用remoteService
-		/* todo 1 String jsonString=remoteService.HttpClientGet("queryVehicleByPlate?searchKeyWord="+searchKeyWord);
+
+	String jsonString=remoteService.HttpClientGet("queryVehicleByPlate?searchKeyWord="+searchKeyWord);
 		if(StringUtils.isBlank(jsonString)){
-		//	mv.setViewName("vehicleManage/showQueryDataList");
+			mv.setViewName("vehicleManage/showQueryDataList");
 		return mv;
 		}
 		BriefQueryListResp br =JSON.parseObject(jsonString,BriefQueryListResp.class);
-
 		if(br.isSuccess()){
 			//todo  拿到remote返回的list，判断是否有当前用户已经关注的车辆，如果有则加关注进行展示。
-			List<BriefQueryListResp>   _dataList  =new ArrayList<BriefQueryListResp>();
 
+			mv.addObject("dataList",br.getData());
 
-		//todo 1	mv.addObject("dataList",br.getData());
-		}else {
-			mv.addObject("msg", br.getMessage());
 		}
-		*/
-		String jsonString=remoteService.HttpClientGet("searchVehicleInfo/queryVehicleByPlate?searchKeyWord="+"1");
-		//=============test
-		List<BriefQueryResp>   _dataList  =new ArrayList<BriefQueryResp>();
-		BriefQueryResp  bqr=new BriefQueryResp();
-		bqr.setAffiliatedFirm("陕西省某某某运输公司");
-		bqr.setFollow(0);
-		bqr.setMessageID("1");
-		bqr.setPlateNumber("陕A6666");
-		bqr.setRecentMaintenanceTime("2016-6-10");
-		bqr.setReleaseDate("2016-6-10");
-		bqr.setReviewTime("2016-6-10");
-		_dataList.add(bqr);
-		BriefQueryResp  bqrs=new BriefQueryResp();
-		bqrs.setAffiliatedFirm("陕西省某某某运输公司");
-		bqrs.setFollow(1);
-		bqrs.setMessageID("2");
-		bqrs.setPlateNumber("陕A8888");
-		bqrs.setRecentMaintenanceTime("2016-6-10");
-		bqrs.setReleaseDate("2016-6-10");
-		bqrs.setReviewTime("2016-6-10");
-		_dataList.add(bqrs);
-		mv.addObject("dataList",_dataList);
 		mv.setViewName("vehicleManage/showQueryDataList");
-		//=============test
+
 		return  mv;
 	}
 
@@ -103,13 +76,25 @@ public class SerchVehicleController extends BaseController{
 	@RequestMapping("queryVehicleByCompany")
 	public ModelAndView queryVehicleByCompany(@RequestParam("searchKeyWord") String searchKeyWord){
 		ModelAndView mv = this.getModelAndView();
-		//todo 调用remoteService
+		String jsonString=remoteService.HttpClientGet("queryVehicleByCompany?searchKeyWord="+searchKeyWord);
+		if(StringUtils.isBlank(jsonString)){
+			mv.setViewName("vehicleManage/showQueryDataList");
+			return mv;
+		}
+		BriefQueryListResp br =JSON.parseObject(jsonString,BriefQueryListResp.class);
+		if(br.isSuccess()){
+			//todo  拿到remote返回的list，判断是否有当前用户已经关注的车辆，如果有则加关注进行展示。
+
+
+			mv.addObject("dataList",br.getData());
+
+		}
 		mv.setViewName("vehicleManage/showQueryDataList");
 		return  mv;
 	}
 
 	/**
-	 * 查看车辆的数据详情（该接口直接进入详情页的基本信息页面）
+	 * 查询基本信息接口（该接口直接进入详情页的基本信息页面）
 	 * 判断是否登入，没登入跳转登入页
 	 * 判断是否已经为该车辆付费，没付费提示付费。如果付费 传入messageId ，调用本接口
 	 */
@@ -117,29 +102,16 @@ public class SerchVehicleController extends BaseController{
      public ModelAndView getDataDetail(@RequestParam("messageID")String messageID){
 
 		ModelAndView mv = this.getModelAndView();
-		//======test
-		BaseInfoResp bir=new BaseInfoResp();
-		bir.setPlateNumber("陕A12345");
-		bir.setMessageID("asdada232432sdasdadsada232");
-		bir.setAffiliationStation("宇宙空间站");
-		bir.setBusinessLicenseNo("NASDNLJKASD");
-		bir.setChassisNo("NASDNLJKASD");
-		bir.setCheckTonnage("NASDNLJKASD");
-		bir.setBusinessLicenseNo("NASDNLJKASD");
-		bir.setContactPhone("NASDNLJKASD");
-		bir.setEngineNo("NASDNLJKASD");
-		bir.setFuelType("NASDNLJKASD");
-		bir.setRoadTransportNo("NASDNLJKASD");
-		bir.setVehicleRegistrationDate("NASDNLJKASD");
-		bir.setVehicleTypeNo("NASDNLJKASD");
-		bir.setVehicleType("卡车");
-		bir.setSuccess(true);
-		bir.setVehicleColor("灰色");
-		bir.setSubordinateUnits("废旧汽车厂");
-		bir.setVehicleState("报废");
-		mv.addObject("baseInfo",bir);
-		//======test
-		//todo 调用remoteService
+		String jsonString=remoteService.HttpClientGet("queryBasicInfo?messageID="+messageID);
+		if(StringUtils.isBlank(jsonString)){
+			mv.setViewName("vehicleManage/dataDetail");
+			return mv;
+		}
+		BaseInfoResp br =JSON.parseObject(jsonString,BaseInfoResp.class);
+		if(br.isSuccess()){
+			mv.addObject("baseInfo",br);
+		}
+
 		mv.setViewName("vehicleManage/dataDetail");
 
 		return  mv;
@@ -151,33 +123,21 @@ public class SerchVehicleController extends BaseController{
 	@RequestMapping("queryVehicleChangeRecord")
 	@ResponseBody
 	public String queryVehicleChangeRecord(@RequestParam("messageID")String messageID) {
-
 		JSONObject jsonObject=new JSONObject();
-
-		//=======test
-		VehicleChangeRecordListResp _vcrPojo=new VehicleChangeRecordListResp();//remote返回的对象
-		// 判断是否success
-		_vcrPojo.setSuccess(true);
-		//if(_vcrPojo.isSuccess){}
-		List<VehicleChangeRecordResp>  _vcrList=new ArrayList<VehicleChangeRecordResp>();
-		VehicleChangeRecordResp vcr= new VehicleChangeRecordResp();
-		vcr.setCarGenusUnit("汽车大队");
-		vcr.setChangeContent("换龙骨");
-		vcr.setHassisNumber("2016778820");
-		vcr.setPlateNumber("陕A12345");
-		vcr.setReviewStatus("审核中");
-		_vcrList.add(vcr);
-		VehicleChangeRecordResp vcr2= new VehicleChangeRecordResp();
-		vcr2.setCarGenusUnit("汽车大队2");
-		vcr2.setChangeContent("换龙骨2");
-		vcr2.setHassisNumber("2016778820");
-		vcr2.setPlateNumber("陕A123452");
-		vcr2.setReviewStatus("审核中");
-		_vcrList.add(vcr2);
-
-		//=======test
-		jsonObject.put("_vcrList",_vcrList);
+		String jsonString=remoteService.HttpClientGet("queryVehicleChangeRecord?messageID="+messageID);
+		if(StringUtils.isBlank(jsonString)){
+			return jsonString.toString();
+		}
+		VehicleChangeRecordListResp br =JSON.parseObject(jsonString,VehicleChangeRecordListResp.class);
+		if(br.isSuccess()){
+			jsonObject.put("_vcrList",br.getData());
+		}
 		return  jsonObject.toString();
 	}
+
+	/***
+	 * 查看remote数据中是否有当前用户关注的车辆，有的话，给加上已关注，否则设置 未关注
+	 */
+
 
 }

@@ -34,7 +34,7 @@ public class RemoteService {
 
         StringBuilder entityStringBuilder = null;
         try {
-            HttpGet get = new HttpGet("http://192.168.0.109:8080/"+urlandParam);
+            HttpGet get = new HttpGet("http://127.0.0.1:8000/test/"+urlandParam);
             CloseableHttpResponse httpResponse = null;
             httpResponse = httpclient.execute(get);
             try {

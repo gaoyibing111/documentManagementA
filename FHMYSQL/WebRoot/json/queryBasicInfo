@@ -1,0 +1,21 @@
+{
+"errorInfo":"info",
+ "success":true,
+ "messageID":"asdada232432sdasdadsada232",
+ "plateNumber":"陕A12345",
+"vehicleType":"xx",
+"vehicleTypeNo":"xx",
+"contactPhone":"11111111111",
+"roadTransportNo":"xx",
+"vehicleColor":"xx",
+"chassisNo":"xx",
+"subordinateUnits":"xx",
+"fuelType":"xx",
+"engineNo":"xx",
+"affiliationStation":"xx",
+"vehicleRegistrationDate":"2016-00-00",
+"businessLicenseNo":"xx",
+"vehicleType":"xx",
+"checkTonnage":"xx",
+"vehicleState":"xx"
+}

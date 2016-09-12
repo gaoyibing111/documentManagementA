@@ -21,9 +21,9 @@
 		</init-param>
 	</filter>
 	<filter-mapping>
-		<filter-name>encodingFilter</filter-name>
-		<url-pattern>/*</url-pattern>
-	</filter-mapping>
+	<filter-name>encodingFilter</filter-name>
+	<url-pattern>/*</url-pattern>
+</filter-mapping>
 
 	<!-- 连接池 启用Web监控统计功能   start-->
 	<filter>

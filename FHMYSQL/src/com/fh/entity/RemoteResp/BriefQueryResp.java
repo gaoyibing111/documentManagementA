@@ -20,12 +20,13 @@ import java.io.Serializable;
  */
 public class BriefQueryResp implements Serializable {
 
+
     private String  plateNumber;
     private String  releaseDate;
     private String  affiliatedFirm;
     private String  reviewTime;
-    private String recentMaintenanceTime;//维修时间
     private String  messageID;
+    private String recentMaintenanceTime;//维修时间
     private Integer  follow;//关注  1为已经关注 0为未关注 //页面<c:if(0) 显示关注
 
     public Integer getFollow() {
