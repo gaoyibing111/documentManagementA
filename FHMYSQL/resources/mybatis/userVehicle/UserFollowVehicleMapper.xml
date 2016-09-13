@@ -40,7 +40,11 @@
 		from 
 			user_follow_vehicle
 		where 
-			username = #{username} AND is_delete != 1
+			username = #{username}
+ 		<if test="plate_number != null and plate_number != ''">
+			AND	plate_number=#{plate_number}
+		</if>
+			AND is_delete != 1
 	</select>
 
 	<!--查询关注并且付费成功的-->
@@ -57,7 +61,12 @@
 		from
 		user_follow_vehicle
 		where
-		username = #{username} AND is_delete != 1 AND is_pay = 1
+		username = #{username}
+		AND is_delete != 1
+		AND is_pay = 1
+		<if test="plate_number != null and plate_number != ''">
+			AND	plate_number=#{plate_number}
+		</if>
 	</select>
 
 </mapper>

@@ -42,12 +42,18 @@ public class SerchVehicleController extends BaseController{
 	@Autowired
 	UserFollowVehicleService userFollowVehicleService;
 
+
+
+
 	@RequestMapping("/query")
 	public ModelAndView queryAll(ModelMap map) throws Exception{
 		ModelAndView mv = this.getModelAndView();
 		mv.setViewName("vehicleManage/index");
 		return mv;
 	}
+
+
+
 
 	/**
 	 *1.简要车辆查询接口(首页进来后查询的数据不需要登入和收费)
@@ -76,6 +82,8 @@ public class SerchVehicleController extends BaseController{
 	}
 
 
+
+
 	/**
 	 * 2.	简要所属企业查询接口(首页进来后查询的数据不需要登入和收费)
 	 * @param searchKeyWord
@@ -98,16 +106,33 @@ public class SerchVehicleController extends BaseController{
 		return  mv;
 	}
 
+
+
+
 	/**
 	 * 查询基本信息接口（该接口直接进入详情页的基本信息页面）
 	 * 判断是否登入，没登入跳转登入页
 	 * 判断是否已经为该车辆付费，没付费提示付费。如果付费 传入messageId ，调用本接口
 	 */
     @RequestMapping("getDataDetail")
-     public ModelAndView getDataDetail(@RequestParam("messageID")String messageID){
-		//todo case1: 未登录，进行登录页面跳转，case2:已登录,若没关注，就先让其关注 ,case3:关注是否付费？付费则返回：提示付费
-
+     public ModelAndView getDataDetail(@RequestParam("messageID")String messageID,@RequestParam("plateNumber")String plateNumber){
 		ModelAndView mv = this.getModelAndView();
+		//todo case1: 未登录，进行登录页面跳转，case2:已登录,若没关注，就先让其关注 ,case3:关注是否付费？付费则返回：提示付费
+		if(getUserInfo()==null){
+			mv.setViewName("vehicleManage/showQueryDataList");
+			return mv;
+		}
+		PageData pd = new PageData();
+		pd.put("username",getUserInfo().getUSERNAME());
+		pd.put("plate_number",plateNumber);
+		try {
+			if(userFollowVehicleService.findFollowIsPay(pd)==null){
+                mv.setViewName("vehicleManage/showQueryDataList");
+                return mv;
+            }
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		String jsonString=remoteService.HttpClientGet("queryBasicInfo?messageID="+messageID);
 		if(StringUtils.isBlank(jsonString)){
 			mv.setViewName("vehicleManage/dataDetail");
@@ -117,11 +142,16 @@ public class SerchVehicleController extends BaseController{
 		if(br.isSuccess()){
 			mv.addObject("baseInfo",br);
 		}
-
 		mv.setViewName("vehicleManage/dataDetail");
 
 		return  mv;
 	}
+
+
+
+
+
+
 
 	/**
 	 * 车辆变更信息
@@ -143,6 +173,10 @@ public class SerchVehicleController extends BaseController{
 
 
 
+
+
+
+
 	/**
 	 * 从session中获取用户信息
 	 */
@@ -154,14 +188,16 @@ public class SerchVehicleController extends BaseController{
 	}
 
 
+
+
 	/**
 	 * 如果用户登录后，再进行查询，组装用户关注和未关注的数据
 	 */
 	public BriefQueryListResp isLogin(BriefQueryListResp br){
 		if(getUserInfo()==null){
-			for(BriefQueryResp briefQueryResp:br.getData()){
-				briefQueryResp.setFollow(0);
-			}
+//			for(BriefQueryResp briefQueryResp:br.getData()){
+//				briefQueryResp.setFollow(0);
+//			}
 			return br;
 		}
 			PageData pd = new PageData();
@@ -169,23 +205,24 @@ public class SerchVehicleController extends BaseController{
 			try {
 				List<PageData>  isFollowData=userFollowVehicleService.findFollow(pd);
 				if(isFollowData==null){
-					for(BriefQueryResp briefQueryResp:br.getData()){
-						briefQueryResp.setFollow(0);
-					}
+//					for(BriefQueryResp briefQueryResp:br.getData()){
+//						briefQueryResp.setFollow(0);
+//					}
 					return br;
 				}
 				for(PageData pageData : isFollowData){
 							for(BriefQueryResp briefQueryResp:br.getData()){
 								if(pageData.get("plate_number").equals(briefQueryResp.getPlateNumber())){
 									briefQueryResp.setFollow(1);//设置关注状态 为已经关注
+									if(pageData.get("is_pay")==1){briefQueryResp.setIsPay(1);}//已经支付费用
 								}
 							}
 				}
-				for(BriefQueryResp briefQueryResp:br.getData()){
-					if(briefQueryResp.getFollow()!=1){
-						briefQueryResp.setFollow(0);
-					}
-				}
+//				for(BriefQueryResp briefQueryResp:br.getData()){
+//					if(briefQueryResp.getFollow()!=1){
+//						briefQueryResp.setFollow(0);
+//					}
+//				}
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

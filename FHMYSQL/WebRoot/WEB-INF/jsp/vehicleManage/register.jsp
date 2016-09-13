@@ -117,7 +117,7 @@
 			type: "POST",
 			url: '<%=basePath%>/registerVehicleClient/submitRegister',
 			data: {phone:phone,password:npw,code:code,forget:0},
-			async:false,
+			async:true,
 			cache: false,
 			dataType:'json',
 			success: function(msg){

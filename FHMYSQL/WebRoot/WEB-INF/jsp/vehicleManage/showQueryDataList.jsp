@@ -62,11 +62,15 @@
 								<td>
 									<form action="getDataDetail" method="post" name="userForm" id="getDataDetail" style="display:inline">
 										<input id="user" name="messageID" hidden="hidden" class="form-control-lg" type="text" value="${user.messageID}">
-									<a class="btn btn-primary btn-sm" onclick="getDataDetail()">查看详情</a>
+										<input id="plateNumber" name="plateNumber" hidden="hidden" class="form-control-lg" type="text" value="${user.plateNumber}">
+										<%--<input id="session" name="session" hidden="hidden" class="form-control-lg" type="text" value="${sessionScope.sessionUser.USERNAME}">--%>
+										<%--<input id="isPay" name="isPay" hidden="hidden" class="form-control-lg" type="text" value="${user.isPay}">--%>
+										<a id="isFollow" class="btn btn-primary btn-sm" follow="${user.follow}"
+										   session="${sessionScope.sessionUser.USERNAME}" isPay="${user.isPay}" onclick="getDataDetail(this)">查看详情</a>
 									</form>
 
 										<input id="user2" name="messageID" hidden="hidden" class="form-control-lg" type="text" value="${user.messageID}">
-									<c:if test="${user.follow == '0' }"><button class="btn btn-primary btn-sm"    value="${user.messageID}" onclick="follow(this)">关注</button></c:if>
+									<c:if test="${user.follow != '1' }"><button class="btn btn-primary btn-sm"    value="${user.messageID}" onclick="follow(this)">关注</button></c:if>
 
 									<c:if test="${user.follow == '1' }"><button class="btn btn-primary btn-sm"    value="${user.messageID}" style="background-color:#cccccc">已关注</button></c:if>
 								</td>
@@ -91,9 +95,30 @@
 	<script src="<%=basePath %>/static/vehicleManage/js/main.js"></script>
 	<script src="<%=basePath %>/static/vehicleManage/js/bootstrapValidator.js"></script>
 	<script  type="text/javascript">
-	function getDataDetail(){
+
+	function getDataDetail(val){
+		//var session=$("#session").val();
+		var session=val.getAttribute("session");
+			if(session.length==0){
+				alert('请登录,再查看');
+				return false;
+			}
+		var isFollow=val.getAttribute("isFollow");
+		if(isFollow=='0'){
+			alert('请关注后,再查看');
+			return false;
+		}
+		var isPay=val.getAttribute("isPay");
+		if(isPay=='0'){
+	//	if($("#isPay").attr("value")=='0'){
+			alert('该条详细信息需要付费查看，请付费。');
+
+			return false;
+		}
 	 	$("#getDataDetail").submit();
 	}
+
+
 	/*关注车辆*/
 		function follow(val){
 			// 	$("#followVehicle").submit();

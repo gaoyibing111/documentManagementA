@@ -20,7 +20,7 @@ import java.io.Serializable;
  */
 public class BriefQueryResp implements Serializable {
 
-
+    private int isPay;// 是否付费  0:未付费 1:已付费
     private String  plateNumber;
     private String  releaseDate;
     private String  affiliatedFirm;
@@ -96,6 +96,14 @@ public class BriefQueryResp implements Serializable {
     public void setMessageID(String messageID) {
         this.messageID = messageID;
     }
+    public int getIsPay() {
+        return isPay;
+    }
+
+    public void setIsPay(int isPay) {
+        this.isPay = isPay;
+    }
+
 
 
 
