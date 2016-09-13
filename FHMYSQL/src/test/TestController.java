@@ -15,6 +15,12 @@ public class TestController {
     @ResponseBody
     public String sayHello2(HttpServletRequest request,@PathVariable String url,HttpServletResponse response) {
         String jsonString= null;
+       String messageID= request.getParameter("messageID");
+
+        if(url.equals("queryBasicInfo")&&messageID.equals("XXXXXXXXXXX2"))
+        {
+            url="queryBasicInfo2";
+        }
         jsonString = Read.read(request, url);
         return  jsonString;
     }

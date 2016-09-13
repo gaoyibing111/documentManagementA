@@ -17,7 +17,6 @@ public class Read {
 
         StringBuffer txtContent = new StringBuffer();
         // 每次读取的byte数
-        byte[] b = new byte[8 * 1024];
 
         //todo  每次读文件前,判断 File.lastmodfiy返回的时间戳是否有变化(时间保存在CONcurrentMap),如果有就将InputStream.Reset().
      //   InputStream in = null;
@@ -77,6 +76,9 @@ public class Read {
 
             case ("queryBasicInfo"):
                 return "queryBasicInfo";
+
+            case ("queryBasicInfo2"):
+                return "queryBasicInfo2";
 
             case ("queryVehicleChangeRecord"):
                 return "queryVehicleChangeRecord";

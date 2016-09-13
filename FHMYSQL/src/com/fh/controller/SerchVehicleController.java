@@ -91,11 +91,8 @@ public class SerchVehicleController extends BaseController{
 		}
 		BriefQueryListResp br =JSON.parseObject(jsonString,BriefQueryListResp.class);
 		if(br.isSuccess()){
-			//todo  拿到remote返回的list，判断是否有当前用户已经关注的车辆，如果有则加关注进行展示。
-
-
-			mv.addObject("dataList",br.getData());
-
+			//拿到remote返回的list，判断是否有当前用户已经关注的车辆，如果有则加关注进行展示。
+			mv.addObject("dataList", isLogin(br).getData());
 		}
 		mv.setViewName("vehicleManage/showQueryDataList");
 		return  mv;
@@ -108,6 +105,7 @@ public class SerchVehicleController extends BaseController{
 	 */
     @RequestMapping("getDataDetail")
      public ModelAndView getDataDetail(@RequestParam("messageID")String messageID){
+		//todo case1: 未登录，进行登录页面跳转，case2:已登录,若没关注，就先让其关注 ,case3:关注是否付费？付费则返回：提示付费
 
 		ModelAndView mv = this.getModelAndView();
 		String jsonString=remoteService.HttpClientGet("queryBasicInfo?messageID="+messageID);
@@ -143,9 +141,7 @@ public class SerchVehicleController extends BaseController{
 		return  jsonObject.toString();
 	}
 
-	/***
-	 * 查看remote数据中是否有当前用户关注的车辆，有的话，给加上已关注，否则设置 未关注
-	 */
+
 
 	/**
 	 * 从session中获取用户信息
@@ -162,7 +158,12 @@ public class SerchVehicleController extends BaseController{
 	 * 如果用户登录后，再进行查询，组装用户关注和未关注的数据
 	 */
 	public BriefQueryListResp isLogin(BriefQueryListResp br){
-		if(	getUserInfo()!=null){
+		if(getUserInfo()==null){
+			for(BriefQueryResp briefQueryResp:br.getData()){
+				briefQueryResp.setFollow(0);
+			}
+			return br;
+		}
 			PageData pd = new PageData();
 			pd.put("username",getUserInfo().getUSERNAME());
 			try {
@@ -177,17 +178,24 @@ public class SerchVehicleController extends BaseController{
 							for(BriefQueryResp briefQueryResp:br.getData()){
 								if(pageData.get("plate_number").equals(briefQueryResp.getPlateNumber())){
 									briefQueryResp.setFollow(1);//设置关注状态 为已经关注
-								}else{
-									briefQueryResp.setFollow(0);
 								}
 							}
+				}
+				for(BriefQueryResp briefQueryResp:br.getData()){
+					if(briefQueryResp.getFollow()!=1){
+						briefQueryResp.setFollow(0);
+					}
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-		}else{
-			return br;
-		}
+
 		return br;
 	}
+
+
+
+
+
+
 }

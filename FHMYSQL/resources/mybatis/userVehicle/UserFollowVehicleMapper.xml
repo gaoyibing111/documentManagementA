@@ -14,7 +14,7 @@
 			create_date,
 			last_modify_date,
 			is_delete
-		NUMBER
+
 		) values (
 		#{username},
 		#{plate_number},
@@ -23,7 +23,6 @@
 		#{create_date},
 		#{last_modify_date},
 		#{is_delete}
-
 		)
 	</insert>
 	

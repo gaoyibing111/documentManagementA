@@ -139,7 +139,7 @@ public class RegisterVehicleController extends BaseController {
      * 2.查询用户是否存在
      * 3.注册时，手机号和username都填写手机号
      */
-   @RequestMapping(value = "submitRegister")
+   @RequestMapping(value = "submitRegister" , method = RequestMethod.POST )
    @ResponseBody
     public String submitRegister(@RequestParam("phone")String phone,
                                  @RequestParam("code")String code,

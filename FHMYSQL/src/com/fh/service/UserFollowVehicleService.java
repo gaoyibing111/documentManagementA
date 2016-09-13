@@ -24,13 +24,13 @@ public class UserFollowVehicleService {
      */
 
     public List<PageData> findFollow(PageData pd)throws Exception{
-        return (List<PageData>)dao.findForObject("UserFollowVehicleMapper.findFollow", pd);
+        return (List<PageData>)dao.findForList("UserFollowVehicleMapper.findFollow", pd);
     }
     /**
      * 查询用户关注且付费的车辆
      */
     public  List<PageData> findFollowIsPay(PageData pd)throws Exception{
-        return ( List<PageData>)dao.findForObject("UserFollowVehicleMapper.findFollowIsPay", pd);
+        return ( List<PageData>)dao.findForList("UserFollowVehicleMapper.findFollowIsPay", pd);
     }
     /**
      * 查询用户关注和未关注的车辆信息（该查询用于用户查询车辆时，区别已经关注和未关注）

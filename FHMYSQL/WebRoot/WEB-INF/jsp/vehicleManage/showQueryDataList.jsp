@@ -18,9 +18,12 @@
 	<div class="header">
 		<div class="topnav">
 			<div class="inner">
-				<c:if test="${sessionScope.sessionUser.USERNAME != null }"><a href="#">${sessionScope.sessionUser.USERNAME}</a></c:if>
+				<c:if test="${sessionScope.sessionUser.USERNAME != null }">
+					<a href="#">${sessionScope.sessionUser.USERNAME}</a>
+					<a href="<%=basePath%>/loginVehicleClient/loginOut">退出</a>
+				</c:if>
 				<c:if test="${sessionScope.sessionUser.USERNAME == null }"><a href="<%=basePath%>/registerVehicleClient/registerPage">注册</a>|<a href="<%=basePath%>/loginVehicleClient/loginPage">登录</a></c:if>
-				<a href="<%=basePath%>/loginVehicleClient/loginOut">退出</a>
+
 			</div>
 		</div>
 		<div class="logo">西安市道路运输车辆技术管理档案信息系统</div>
@@ -61,7 +64,10 @@
 										<input id="user" name="messageID" hidden="hidden" class="form-control-lg" type="text" value="${user.messageID}">
 									<a class="btn btn-primary btn-sm" onclick="getDataDetail()">查看详情</a>
 									</form>
-									<c:if test="${user.follow == '0' }"><button class="btn btn-primary btn-sm"    value="${user.messageID}" onclick="follow(${user.messageID})">关注</button></c:if>
+
+										<input id="user2" name="messageID" hidden="hidden" class="form-control-lg" type="text" value="${user.messageID}">
+									<c:if test="${user.follow == '0' }"><button class="btn btn-primary btn-sm"    value="${user.messageID}" onclick="follow(this)">关注</button></c:if>
+
 									<c:if test="${user.follow == '1' }"><button class="btn btn-primary btn-sm"    value="${user.messageID}" style="background-color:#cccccc">已关注</button></c:if>
 								</td>
 							</tr>
@@ -89,7 +95,9 @@
 	 	$("#getDataDetail").submit();
 	}
 	/*关注车辆*/
-		function follow(messageID){
+		function follow(val){
+			// 	$("#followVehicle").submit();
+			var messageID=val.getAttribute("value");
 			$.ajax({
 				type: "POST",
 				url: '<%=basePath%>/followVehicleClient/followVehicle',
@@ -99,8 +107,10 @@
 				dataType:'json',
 				success: function(msg){
 				 alert(msg.msg);
+				//	window.location.assign=("<%=basePath%>/vehicleManage/showQueryDataList");
 				}
 			});
+
 		}
 
 	</script>
