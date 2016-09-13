@@ -5,10 +5,17 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.fh.entity.Page;
 import com.fh.entity.RemoteResp.*;
+import com.fh.service.UserFollowVehicleService;
 import com.fh.service.remote.RemoteService;
+import com.fh.util.Const;
+import com.fh.util.PageData;
 import net.sf.json.JSONObject;
 import org.apache.commons.lang.StringUtils;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.session.Session;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -32,6 +39,8 @@ public class SerchVehicleController extends BaseController{
 
 	@Autowired
 	RemoteService remoteService;
+	@Autowired
+	UserFollowVehicleService userFollowVehicleService;
 
 	@RequestMapping("/query")
 	public ModelAndView queryAll(ModelMap map) throws Exception{
@@ -57,10 +66,9 @@ public class SerchVehicleController extends BaseController{
 		}
 		BriefQueryListResp br =JSON.parseObject(jsonString,BriefQueryListResp.class);
 		if(br.isSuccess()){
-			//todo  拿到remote返回的list，判断是否有当前用户已经关注的车辆，如果有则加关注进行展示。
-
-			mv.addObject("dataList",br.getData());
-
+			// 拿到remote返回的list，判断是否有当前用户已经关注的车辆，如果有则加关注进行展示。
+			//查看用户是否登录，如果已经登录就要查看用户是否已经关注了。
+			mv.addObject("dataList", isLogin(br).getData());
 		}
 		mv.setViewName("vehicleManage/showQueryDataList");
 
@@ -139,5 +147,47 @@ public class SerchVehicleController extends BaseController{
 	 * 查看remote数据中是否有当前用户关注的车辆，有的话，给加上已关注，否则设置 未关注
 	 */
 
+	/**
+	 * 从session中获取用户信息
+	 */
+	public static  User getUserInfo(){
+	Subject currentUser = SecurityUtils.getSubject();
+	Session session = currentUser.getSession();
+		User u=(User)session.getAttribute(Const.SESSION_USER);
+		return u;
+	}
 
+
+	/**
+	 * 如果用户登录后，再进行查询，组装用户关注和未关注的数据
+	 */
+	public BriefQueryListResp isLogin(BriefQueryListResp br){
+		if(	getUserInfo()!=null){
+			PageData pd = new PageData();
+			pd.put("username",getUserInfo().getUSERNAME());
+			try {
+				List<PageData>  isFollowData=userFollowVehicleService.findFollow(pd);
+				if(isFollowData==null){
+					for(BriefQueryResp briefQueryResp:br.getData()){
+						briefQueryResp.setFollow(0);
+					}
+					return br;
+				}
+				for(PageData pageData : isFollowData){
+							for(BriefQueryResp briefQueryResp:br.getData()){
+								if(pageData.get("plate_number").equals(briefQueryResp.getPlateNumber())){
+									briefQueryResp.setFollow(1);//设置关注状态 为已经关注
+								}else{
+									briefQueryResp.setFollow(0);
+								}
+							}
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}else{
+			return br;
+		}
+		return br;
+	}
 }

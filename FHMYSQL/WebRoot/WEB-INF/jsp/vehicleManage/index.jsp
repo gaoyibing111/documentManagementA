@@ -18,8 +18,13 @@
 	<div class="header">
 		<div class="topnav">
 			<div class="inner">
+				<c:if test="${sessionScope.sessionUser.USERNAME == null }">
 				<a href="<%=basePath%>/loginVehicleClient/loginPage">登录</a>
 				<a href="<%=basePath%>/registerVehicleClient/registerPage">注册</a>
+			</c:if>
+				<c:if test="${sessionScope.sessionUser.USERNAME != null }">
+					<a href="#">用户：${sessionScope.sessionUser.USERNAME}</a>
+				</c:if>
 			</div>
 		</div>
 		<div class="logo">西安市道路运输车辆技术管理档案信息系统</div>

@@ -61,7 +61,7 @@
 										<input id="user" name="messageID" hidden="hidden" class="form-control-lg" type="text" value="${user.messageID}">
 									<a class="btn btn-primary btn-sm" onclick="getDataDetail()">查看详情</a>
 									</form>
-									<c:if test="${user.follow == '0' }"><button class="btn btn-primary btn-sm"    value="${user.messageID}" onclick="follow()">关注</button></c:if>
+									<c:if test="${user.follow == '0' }"><button class="btn btn-primary btn-sm"    value="${user.messageID}" onclick="follow(${user.messageID})">关注</button></c:if>
 									<c:if test="${user.follow == '1' }"><button class="btn btn-primary btn-sm"    value="${user.messageID}" style="background-color:#cccccc">已关注</button></c:if>
 								</td>
 							</tr>
@@ -88,6 +88,20 @@
 	function getDataDetail(){
 	 	$("#getDataDetail").submit();
 	}
+	/*关注车辆*/
+		function follow(messageID){
+			$.ajax({
+				type: "POST",
+				url: '<%=basePath%>/followVehicleClient/followVehicle',
+				data: {messageID:messageID},
+				async:true,
+				cache: false,
+				dataType:'json',
+				success: function(msg){
+				 alert(msg.msg);
+				}
+			});
+		}
 
 	</script>
 </body>

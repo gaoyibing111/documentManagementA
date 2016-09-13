@@ -221,7 +221,7 @@ public class AppuserController extends BaseController {
 			page.setPd(pd);
 			List<PageData>	userList = appuserService.listPdPageUser(page);			//列出用户列表
 			List<Role> roleList = roleService.listAllappERRoles();					//列出所有会员二级角色
-			
+
 			mv.setViewName("system/appuser/appuser_list");
 			mv.addObject("userList", userList);
 			mv.addObject("roleList", roleList);
