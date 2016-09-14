@@ -1,4 +1,8 @@
 {
+	"errorInfo":"info",
+    "success":true,
+    "data":[
+    {
 "errorInfo":"info",
  "success":true,
  "plateNumber":"陕A12345",
@@ -8,4 +12,6 @@
 "detectionUnit":"xxx",
 "detectionTime":"xxx",
 "reviewStatus": 0
+}
+]
 }

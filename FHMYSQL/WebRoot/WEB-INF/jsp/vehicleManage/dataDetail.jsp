@@ -15,6 +15,28 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width,initial-scale=1">
 	<link rel="stylesheet" type="text/css" href="<%=basePath %>/static/vehicleManage/css/style.css" />
+	<link rel="stylesheet" type="text/css" href="<%=basePath %>/static/vehicleManage/css/jquery-ui-1.8.17.custom.css" />
+	<link rel="stylesheet" type="text/css" href="<%=basePath %>/static/vehicleManage/css/jquery-ui-timepicker-addon.css" />
+	<script src="<%=basePath %>/static/vehicleManage/js/jquery-1.7.1.min.js"></script>
+	<script src="<%=basePath %>/static/vehicleManage/js/jquery-ui-1.8.17.custom.min.js"></script>
+	<script src="<%=basePath %>/static/vehicleManage/js/jquery-ui-timepicker-addon.js"></script>
+	<script src="<%=basePath %>/static/vehicleManage/js/jquery-ui-timepicker-zh-CN.js"></script>
+
+	<script type="text/javascript">
+		//载入日期控件
+		$(function () {
+			$(".ui_timepicker").datetimepicker({
+			/*	showOn: "button",
+				buttonImage: "<%=basePath %>/static/vehicleManage/images/date/icon_calendar.gif",
+				buttonImageOnly: true,*/
+				showSecond: true,
+				timeFormat: 'hh:mm:ss',
+				stepHour: 1,
+				stepMinute: 1,
+				stepSecond: 1
+			})
+		})
+	</script>
 
 <style type="text/css">
 
@@ -50,24 +72,24 @@
 				<li>
 
 					<input id="user" name="messageID" hidden="hidden" class="form-control-lg" type="text" value="${baseInfo.messageID}">
-					<a href="#ChangeRecord" onclick="ChangeRecord()">车辆变更记录</a>
+					<a href="#ChangeRecord" value="changeRecord" onclick="getSearchUrl('queryVehicleChangeRecord')">车辆变更记录</a>
 
 				</li>
 				<li>
 					<input id="plateNumber" name="plateNumber" hidden="hidden" class="form-control-lg" type="text" value="${baseInfo.plateNumber}">
-					<a href="#FuelTestingRecord" onclick="FuelTestingRecord()">燃油检测记录</a>
+					<a href="#FuelTestingRecord"  value="fuelTestingRecord" onclick="getSearchUrl('queryFuelTestingRecord')">燃油检测记录</a>
 				</li>
 				<li>
-					<a href="#SecondMaintenanceRecords">二级维护记录</a>
+					<a href="#SecondMaintenanceRecords" value="secondMaintenanceRecords" onclick="getSearchUrl('querySecondMaintenanceRecords')">二级维护记录</a>
 				</li>
 				<li>
-					<a href="#VehicleDetectionRecords">车辆检测记录</a>
+					<a href="#VehicleDetectionRecords" onclick="getSearchUrl('queryVehicleDetectionRecords')">车辆检测记录</a>
 				</li>
 				<li>
-					<a href="#CertificateReceivingRecords">合格证领取记录</a>
+					<a href="#CertificateReceivingRecords" onclick="getSearchUrl('queryCertificateReceivingRecords')">合格证领取记录</a>
 				</li>
 				<li>
-					<a href="#RoutineMaintenanceRecords">日常维护记录</a>
+					<a href="#RoutineMaintenanceRecords" onclick="getSearchUrl('queryRoutineMaintenanceRecords')">日常维护记录</a>
 				</li>
 			</ul>
 			<div class="tab-content logic-tab-content">
@@ -132,6 +154,14 @@
 					</table>
 				</div>
 				<div class="tab-pane" id="FuelTestingRecord">
+					<div >
+						<span style="float:right;margin-bottom:5px">
+							送检人 <input type="text">
+							检测单位 <input type="text">
+							核查时间 <input type="text">
+							<button >搜索</button>
+						</span>
+					</div>
 					<table class="table table-center">
 						<thead>
 						<tr>
@@ -150,6 +180,14 @@
 					</table>
 				</div>
 				<div class="tab-pane" id="SecondMaintenanceRecords">
+					<div >
+						<span style="float:right;margin-bottom:5px">
+							送检人 <input type="text">
+							检测单位 <input type="text">
+							核查时间 <input type="text">
+							<button >搜索</button>
+						</span>
+					</div>
 					<table class="table table-center">
 						<thead>
 						<tr>
@@ -189,10 +227,14 @@
 					</table>
 				</div>
 				<div class="tab-pane" id="CertificateReceivingRecords">
-					<span>
-
-
-					</span>
+					<div >
+						<span style="float:right;margin-bottom:5px">
+							送检人 <input type="text">
+							检测单位 <input type="text">
+							进厂时间 <input type="text">
+							<button >搜索</button>
+						</span>
+					</div>
 					<table class="table table-center">
 						<thead>
 						<tr>
@@ -212,7 +254,21 @@
 					</table>
 				</div>
 				<div class="tab-pane" id="RoutineMaintenanceRecords">
-				<a class="btn btn-primary btn-sm">新增</a>
+				<div><span style="float:left;margin-bottom:5px"><button onclick="addRoutineMaintenanceRecords()">新增</button></span></div>
+					<div id="dlag_edit" style="display:none;width:300px;height:300px;margin-top:100px;margin-left:400px;margin-right:auto;z-index:99;position:absolute;border:#000000 solid; border-right-width:1px;border-left-width:1px;border-bottom-width:1px; border-top-width:1px;background-color:#cccccc" >
+						<div id="close" style="float:right;margin-top:0px;cursor:pointer;" onclick="close_dialog()" >×</div>
+						<div id="content" style="padding:50px;margin-top:0">
+							<form id="edit_form"  >
+								<span >维修时间:<input type="text" name="datetime" class="ui_timepicker" value="">   </span><br>
+								<span style="margin-top:10px ">维修项目:<input type="text" id="userName" name="userName"  value="" > </span><br>
+								<span  style="margin-top:10px ">维修内容：<input type="text" id="password" name="password"  value="" > </span><br>
+								<span  style="margin-top:10px ">备注<input type="textarea" id="mobile" name="mobile" style="height:50px;width:200px"> </span><br>
+								<span  style="margin-top:10px ">	<input type="button" id="cancel" value="取消" onClick="updateUserInformation()">
+								<input type="button" id="submit" style="margin-left:50px " value="确认" onClick="updateUserInformation()"></span>
+							</form>
+
+						</div>  <label id="msg" style="color:red;"></label>
+					</div>
 					<table class="table table-center">
 						<thead>
 						<tr>
@@ -245,14 +301,23 @@
 <script src="<%=basePath %>/static/vehicleManage/js/jquery.min.js"></script>
 	<script src="<%=basePath %>/static/vehicleManage/js/main.js"></script>
 	<script src="<%=basePath %>/static/vehicleManage/js/bootstrapValidator.js"></script>
+<script src="<%=basePath %>/static/vehicleManage/js/dataDetail.js"></script>
+
+
 <script type="text/javascript">
-	//查看车辆变更记录
+
+
+
+
+
 	var messageID=$("#user").val();
 	var plateNumber=$("#plateNumber").val();
-	function ChangeRecord(){
+	function getSearchUrl(url){
+
+
 		$.ajax({
 			type: "GET",
-			url: '<%=basePath%>/searchVehicleInfo/queryVehicleChangeRecord',
+			url: '<%=basePath%>/searchVehicleInfo/'+url,
 			data: {messageID:messageID,plateNumber:plateNumber},
 			async:true,
 			cache: false,
@@ -262,68 +327,15 @@
 					if(msg.msg=='请登录并付费查看'){
 						window.location.assign("<%=basePath%>/loginVehicleClient/loginPage");
 					}
-					changeRecordShow(msg._vcrList);
+					chooseUrl(url,msg._vcrList);
+
 				}else {
 
 				}
 			}
 		});
 	}
-	function changeRecordShow(_vcrList){
-		var dataArray=eval(_vcrList);
-		var aaa="";
-		for(var i in dataArray)
-		{
-			aaa+="<tr>";
-			aaa+="<td>"+dataArray[i].plateNumber+"</td>";
-			aaa+="<td>"+dataArray[i].hassisNumber+"</td>";
-			aaa+="<td>"+dataArray[i].carGenusUnit+"</td>";
-			aaa+="<td>"+dataArray[i].changeContent+"</td>";
-			aaa+="<td>"+dataArray[i].reviewStatus+"</td>";
-			aaa+="<tr/>";
-		}
-		$('#changeRecordTr').html(aaa);
-	}
 
-	/**
-	*  查询燃油检测记录接口
-	 */
-	function FuelTestingRecord(){
-		$.ajax({
-			type: "GET",
-			url: '<%=basePath%>/searchVehicleInfo/fuelTestingRecord',
-			data: {messageID:messageID,plateNumber:plateNumber},
-			async:true,
-			cache: false,
-			dataType:'json',
-			success: function(msg){
-				if(msg._vcrList!=""){
-					if(msg.msg=='请登录并付费查看'){
-						window.location.assign("<%=basePath%>/loginVehicleClient/loginPage");
-					}
-					fuelTestingRecord(msg._vcrList);
-				}else {
-
-				}
-			}
-		});
-		function fuelTestingRecord(_vcrList){
-			var dataArray=eval(_vcrList);
-			var aaa="";
-			for(var i in dataArray)
-			{
-				aaa+="<tr>";
-				aaa+="<td>"+dataArray[i].plateNumber+"</td>";
-				aaa+="<td>"+dataArray[i].hassisNumber+"</td>";
-				aaa+="<td>"+dataArray[i].carGenusUnit+"</td>";
-				aaa+="<td>"+dataArray[i].changeContent+"</td>";
-				aaa+="<td>"+dataArray[i].reviewStatus+"</td>";
-				aaa+="<tr/>";
-			}
-			$('#fuelTestingRecordTr').html(aaa);
-		}
-
-	}
 
 
 

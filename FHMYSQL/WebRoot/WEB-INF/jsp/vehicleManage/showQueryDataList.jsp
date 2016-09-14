@@ -95,8 +95,10 @@
 	<script src="<%=basePath %>/static/vehicleManage/js/jquery.min.js"></script>
 	<script src="<%=basePath %>/static/vehicleManage/js/main.js"></script>
 	<script src="<%=basePath %>/static/vehicleManage/js/bootstrapValidator.js"></script>
+	<script src="<%=basePath %>/static/vehicleManage/js/showQueryDATA.js"></script>
 	<script  type="text/javascript">
 
+		//获取车辆基本信息
 	function getDataDetail(val){
 		//var session=$("#session").val();
 		var session=val.getAttribute("session");
@@ -116,7 +118,7 @@
 			$("#payPanel").css("width","300");
 			$("#payPanel").css("height","200");
 			$("#payPanel").css("background-color","white");
-			$("#payPanel").html("该条详细信息需要付费查看，请付费。<br><button onclick='alert(\"传送付费接口\")'>付费</button><button onclick='javascript:document.getElementById(\"payPanel\").style.display=\"none\"'>X</button>");
+			$("#payPanel").html("该条详细信息需要付费查看，请付费。<br><button onclick='alert(\"传送付费接口\")'>付费</button><button onclick='javascript: document.getElementById(\"payPanel\").style.display=\"none\"'>X</button>");
 			$("#payPanel").css({
 				index:99,
 				position:'absolute',
@@ -125,7 +127,8 @@
 
 			});
 			document.getElementById("payPanel").style.zIndex=99;
-			//$("#payPanel").show();
+			$("#payPanel").show();
+
 			return false;
 		}
 	 	$("#getDataDetail").submit();
@@ -162,6 +165,11 @@
 
 		}
 
+		//打开对话框对话框
+		function closePayPanel(){
+			 document.getElementById("payPanel").style.display="none";
+			return ;
+		}
 	</script>
 </body>
 </html>

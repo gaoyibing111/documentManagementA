@@ -162,6 +162,30 @@ public class SerchVehicleController extends BaseController{
 		return  jsonObject.toString();
 	}
 
+	/**
+	 * 	查询燃油检测记录接口
+	 */
+	@RequestMapping("queryFuelTestingRecord")
+	@ResponseBody
+	public String queryFuelTestingRecord(@RequestParam("messageID")String messageID,@RequestParam("plateNumber")String plateNumber) {
+		JSONObject jsonObject=new JSONObject();
+		if(!checkUserLoginPay(plateNumber)){
+			jsonObject.put("msg", "请登录并付费查看");
+			return  jsonObject.toString();
+		}
+		String jsonString=remoteService.HttpClientGet("queryFuelTestingRecord?messageID="+messageID);
+		if(StringUtils.isBlank(jsonString)){
+			return jsonString.toString();
+		}
+		FuelTestingRecordListResp br =JSON.parseObject(jsonString,FuelTestingRecordListResp.class);
+		if(br.isSuccess()){
+			jsonObject.put("_vcrList",br.getData());
+		}
+		return  jsonObject.toString();
+
+	}
+
+
 
 
 	/**
@@ -206,9 +230,6 @@ public class SerchVehicleController extends BaseController{
 	 */
 	public BriefQueryListResp isLogin(BriefQueryListResp br){
 		if(getUserInfo()==null){
-//			for(BriefQueryResp briefQueryResp:br.getData()){
-//				briefQueryResp.setFollow(0);
-//			}
 			return br;
 		}
 			PageData pd = new PageData();
@@ -216,9 +237,6 @@ public class SerchVehicleController extends BaseController{
 			try {
 				List<PageData>  isFollowData=userFollowVehicleService.findFollow(pd);
 				if(isFollowData==null){
-//					for(BriefQueryResp briefQueryResp:br.getData()){
-//						briefQueryResp.setFollow(0);
-//					}
 					return br;
 				}
 				for(PageData pageData : isFollowData){
@@ -229,11 +247,6 @@ public class SerchVehicleController extends BaseController{
 								}
 							}
 				}
-//				for(BriefQueryResp briefQueryResp:br.getData()){
-//					if(briefQueryResp.getFollow()!=1){
-//						briefQueryResp.setFollow(0);
-//					}
-//				}
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
