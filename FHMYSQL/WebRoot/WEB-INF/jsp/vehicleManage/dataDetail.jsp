@@ -54,7 +54,8 @@
 
 				</li>
 				<li>
-					<a href="#FuelTestingRecord">燃油检测记录</a>
+					<input id="plateNumber" name="plateNumber" hidden="hidden" class="form-control-lg" type="text" value="${baseInfo.plateNumber}">
+					<a href="#FuelTestingRecord" onclick="FuelTestingRecord()">燃油检测记录</a>
 				</li>
 				<li>
 					<a href="#SecondMaintenanceRecords">二级维护记录</a>
@@ -245,19 +246,24 @@
 	<script src="<%=basePath %>/static/vehicleManage/js/main.js"></script>
 	<script src="<%=basePath %>/static/vehicleManage/js/bootstrapValidator.js"></script>
 <script type="text/javascript">
+	//查看车辆变更记录
+	var messageID=$("#user").val();
+	var plateNumber=$("#plateNumber").val();
 	function ChangeRecord(){
-		var messageID=$("#user").val();
 		$.ajax({
 			type: "GET",
 			url: '<%=basePath%>/searchVehicleInfo/queryVehicleChangeRecord',
-			data: {messageID:messageID},
+			data: {messageID:messageID,plateNumber:plateNumber},
 			async:true,
 			cache: false,
 			dataType:'json',
 			success: function(msg){
 				if(msg._vcrList!=""){
+					if(msg.msg=='请登录并付费查看'){
+						window.location.assign("<%=basePath%>/loginVehicleClient/loginPage");
+					}
 					changeRecordShow(msg._vcrList);
-				}else{
+				}else {
 
 				}
 			}
@@ -278,6 +284,49 @@
 		}
 		$('#changeRecordTr').html(aaa);
 	}
+
+	/**
+	*  查询燃油检测记录接口
+	 */
+	function FuelTestingRecord(){
+		$.ajax({
+			type: "GET",
+			url: '<%=basePath%>/searchVehicleInfo/fuelTestingRecord',
+			data: {messageID:messageID,plateNumber:plateNumber},
+			async:true,
+			cache: false,
+			dataType:'json',
+			success: function(msg){
+				if(msg._vcrList!=""){
+					if(msg.msg=='请登录并付费查看'){
+						window.location.assign("<%=basePath%>/loginVehicleClient/loginPage");
+					}
+					fuelTestingRecord(msg._vcrList);
+				}else {
+
+				}
+			}
+		});
+		function fuelTestingRecord(_vcrList){
+			var dataArray=eval(_vcrList);
+			var aaa="";
+			for(var i in dataArray)
+			{
+				aaa+="<tr>";
+				aaa+="<td>"+dataArray[i].plateNumber+"</td>";
+				aaa+="<td>"+dataArray[i].hassisNumber+"</td>";
+				aaa+="<td>"+dataArray[i].carGenusUnit+"</td>";
+				aaa+="<td>"+dataArray[i].changeContent+"</td>";
+				aaa+="<td>"+dataArray[i].reviewStatus+"</td>";
+				aaa+="<tr/>";
+			}
+			$('#fuelTestingRecordTr').html(aaa);
+		}
+
+	}
+
+
+
 
 </script>
 </body>

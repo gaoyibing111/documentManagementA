@@ -1,0 +1,11 @@
+{
+"errorInfo":"info",
+ "success":true,
+ "plateNumber":"陕A12345",
+"chassisNumber":"xxx",
+"carGenusUnit":"xxx",
+"sendCheckPeople":"xxx",
+"detectionUnit":"xxx",
+"detectionTime":"xxx",
+"reviewStatus": 0
+}

@@ -117,21 +117,8 @@ public class SerchVehicleController extends BaseController{
     @RequestMapping("getDataDetail")
      public ModelAndView getDataDetail(@RequestParam("messageID")String messageID,@RequestParam("plateNumber")String plateNumber){
 		ModelAndView mv = this.getModelAndView();
-		//todo case1: 未登录，进行登录页面跳转，case2:已登录,若没关注，就先让其关注 ,case3:关注是否付费？付费则返回：提示付费
-		if(getUserInfo()==null){
-			mv.setViewName("vehicleManage/showQueryDataList");
-			return mv;
-		}
-		PageData pd = new PageData();
-		pd.put("username",getUserInfo().getUSERNAME());
-		pd.put("plate_number",plateNumber);
-		try {
-			if(userFollowVehicleService.findFollowIsPay(pd)==null){
-                mv.setViewName("vehicleManage/showQueryDataList");
-                return mv;
-            }
-		} catch (Exception e) {
-			e.printStackTrace();
+		if(!checkUserLoginPay(plateNumber)){
+			mv.setViewName("vehicleManage/login");
 		}
 		String jsonString=remoteService.HttpClientGet("queryBasicInfo?messageID="+messageID);
 		if(StringUtils.isBlank(jsonString)){
@@ -158,8 +145,12 @@ public class SerchVehicleController extends BaseController{
 	 */
 	@RequestMapping("queryVehicleChangeRecord")
 	@ResponseBody
-	public String queryVehicleChangeRecord(@RequestParam("messageID")String messageID) {
+	public String queryVehicleChangeRecord(@RequestParam("messageID")String messageID,@RequestParam("plateNumber")String plateNumber) {
 		JSONObject jsonObject=new JSONObject();
+		if(!checkUserLoginPay(plateNumber)){
+			jsonObject.put("msg", "请登录并付费查看");
+			return  jsonObject.toString();
+		}
 		String jsonString=remoteService.HttpClientGet("queryVehicleChangeRecord?messageID="+messageID);
 		if(StringUtils.isBlank(jsonString)){
 			return jsonString.toString();
@@ -173,6 +164,26 @@ public class SerchVehicleController extends BaseController{
 
 
 
+	/**
+	 * 检查当前用户是否登录并已经付费
+	 */
+		public   boolean checkUserLoginPay(String plateNumber){
+			boolean flag=false;
+			if(getUserInfo()==null){
+			 return  flag;
+			}
+			PageData pd = new PageData();
+			pd.put("username",getUserInfo().getUSERNAME());
+			pd.put("plate_number",plateNumber);
+			try {
+				if(userFollowVehicleService.findFollowIsPay(pd)==null){
+					return  flag;
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			return true;
+		}
 
 
 

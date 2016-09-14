@@ -70,7 +70,7 @@
 									</form>
 
 										<input id="user2" name="messageID" hidden="hidden" class="form-control-lg" type="text" value="${user.messageID}">
-									<c:if test="${user.follow != '1' }"><button class="btn btn-primary btn-sm"    value="${user.messageID}" onclick="follow(this)">关注</button></c:if>
+									<c:if test="${user.follow != '1' }"><button class="btn btn-primary btn-sm"    value="${user.messageID}" plateNumber="${user.plateNumber}" onclick="follow(this)">关注</button></c:if>
 
 									<c:if test="${user.follow == '1' }"><button class="btn btn-primary btn-sm"    value="${user.messageID}" style="background-color:#cccccc">已关注</button></c:if>
 								</td>
@@ -86,11 +86,12 @@
 		</div>
 		<div class="bg"></div>
 	</div>
+
 	<div class="footer">
 		版权所有©西安市汽车维修行业管理处 陕ICP备14011688号-1 <br>
 		地址: 西安市建设西路111号
 	</div>
-
+	<div id="payPanel"></div>
 	<script src="<%=basePath %>/static/vehicleManage/js/jquery.min.js"></script>
 	<script src="<%=basePath %>/static/vehicleManage/js/main.js"></script>
 	<script src="<%=basePath %>/static/vehicleManage/js/bootstrapValidator.js"></script>
@@ -111,8 +112,20 @@
 		var isPay=val.getAttribute("isPay");
 		if(isPay=='0'){
 	//	if($("#isPay").attr("value")=='0'){
-			alert('该条详细信息需要付费查看，请付费。');
 
+			$("#payPanel").css("width","300");
+			$("#payPanel").css("height","200");
+			$("#payPanel").css("background-color","white");
+			$("#payPanel").html("该条详细信息需要付费查看，请付费。<br><button onclick='alert(\"传送付费接口\")'>付费</button><button onclick='javascript:document.getElementById(\"payPanel\").style.display=\"none\"'>X</button>");
+			$("#payPanel").css({
+				index:99,
+				position:'absolute',
+				left: ($(window).width() - $("#payPanel").outerWidth())/2,
+				top: ($(window).height() - $("#payPanel").outerHeight())/2 + $(document).scrollTop(),
+
+			});
+			document.getElementById("payPanel").style.zIndex=99;
+			//$("#payPanel").show();
 			return false;
 		}
 	 	$("#getDataDetail").submit();
@@ -123,10 +136,12 @@
 		function follow(val){
 			// 	$("#followVehicle").submit();
 			var messageID=val.getAttribute("value");
+			var plateNumber=val.getAttribute("plateNumber");
+
 			$.ajax({
 				type: "POST",
 				url: '<%=basePath%>/followVehicleClient/followVehicle',
-				data: {messageID:messageID},
+				data: {messageID:messageID,plateNumber:plateNumber},
 				async:true,
 				cache: false,
 				dataType:'json',
@@ -137,7 +152,7 @@
 						if($(this).val()==messageID){
 							$(this).html("已关注");
 							$(this).css("background-color","#cccccc");
-							$(this).disableButton.true;
+							$(this).attr("disabled", true);
 						}
 					})
 				}

@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.List;
+
 /**
  * 用户关注车辆
  */
@@ -33,14 +35,25 @@ public class UserFollowVehicleController {
      */
     @RequestMapping(value ="followVehicle", method = RequestMethod.POST )
     @ResponseBody
-    public String followVehicle(@Param("messageID")String messageID){
+    public String followVehicle(@Param("messageID")String messageID,@Param("plateNumber")String plateNumber){
          JSONObject jsonObject=new JSONObject();
         if(SerchVehicleController.getUserInfo()==null){
             jsonObject.put("msg","请先登录");
             return jsonObject.toString();
         }
-         String jsonString=remoteService.HttpClientGet("queryBasicInfo?messageID="+messageID);
-         PageData pd =new PageData();
+        PageData pd =new PageData();
+        pd.put("plate_number",plateNumber);
+        pd.put("username",SerchVehicleController.getUserInfo().getUSERNAME());
+        try {
+            List<PageData> pdList= userFollowVehicleService.findFollow(pd);
+            if(pdList!=null && pdList.size()>0){
+                jsonObject.put("msg","您已经关注了此车");
+                return jsonObject.toString();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        String jsonString=remoteService.HttpClientGet("queryBasicInfo?messageID="+messageID);
          try {
              BaseInfoResp br = JSON.parseObject(jsonString, BaseInfoResp.class);
              User u =SerchVehicleController.getUserInfo();
