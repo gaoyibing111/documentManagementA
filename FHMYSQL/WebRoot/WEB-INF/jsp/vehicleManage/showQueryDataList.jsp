@@ -132,7 +132,16 @@
 				dataType:'json',
 				success: function(msg){
 				 alert(msg.msg);
-				//	window.location.assign=("<%=basePath%>/vehicleManage/showQueryDataList");
+				if(msg.msg=='关注成功'){
+					$('button').each(function(){//遍历
+						if($(this).val()==messageID){
+							$(this).html("已关注");
+							$(this).css("background-color","#cccccc");
+							$(this).disableButton.true;
+						}
+					})
+				}
+				window.location.assign=("<%=basePath%>/vehicleManage/showQueryDataList");
 				}
 			});
 
