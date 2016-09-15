@@ -15,28 +15,8 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width,initial-scale=1">
 	<link rel="stylesheet" type="text/css" href="<%=basePath %>/static/vehicleManage/css/style.css" />
-	<link rel="stylesheet" type="text/css" href="<%=basePath %>/static/vehicleManage/css/jquery-ui-1.8.17.custom.css" />
-	<link rel="stylesheet" type="text/css" href="<%=basePath %>/static/vehicleManage/css/jquery-ui-timepicker-addon.css" />
-	<script src="<%=basePath %>/static/vehicleManage/js/jquery-1.7.1.min.js"></script>
-	<script src="<%=basePath %>/static/vehicleManage/js/jquery-ui-1.8.17.custom.min.js"></script>
-	<script src="<%=basePath %>/static/vehicleManage/js/jquery-ui-timepicker-addon.js"></script>
-	<script src="<%=basePath %>/static/vehicleManage/js/jquery-ui-timepicker-zh-CN.js"></script>
 
-	<script type="text/javascript">
-		//载入日期控件
-		$(function () {
-			$(".ui_timepicker").datetimepicker({
-			/*	showOn: "button",
-				buttonImage: "<%=basePath %>/static/vehicleManage/images/date/icon_calendar.gif",
-				buttonImageOnly: true,*/
-				showSecond: true,
-				timeFormat: 'hh:mm:ss',
-				stepHour: 1,
-				stepMinute: 1,
-				stepSecond: 1
-			})
-		})
-	</script>
+
 
 <style type="text/css">
 
@@ -259,7 +239,10 @@
 						<div id="close" style="float:right;margin-top:0px;cursor:pointer;" onclick="close_dialog()" >×</div>
 						<div id="content" style="padding:50px;margin-top:0">
 							<form id="edit_form"  >
-								<span >维修时间:<input type="text" name="datetime" class="ui_timepicker" value="">   </span><br>
+								<input type="text" name="datetime" class="ui_timepicker" value="">
+
+
+								</span><br>
 								<span style="margin-top:10px ">维修项目:<input type="text" id="userName" name="userName"  value="" > </span><br>
 								<span  style="margin-top:10px ">维修内容：<input type="text" id="password" name="password"  value="" > </span><br>
 								<span  style="margin-top:10px ">备注<input type="textarea" id="mobile" name="mobile" style="height:50px;width:200px"> </span><br>
