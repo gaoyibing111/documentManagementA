@@ -9,10 +9,10 @@
                 queryFuelTestingRecord(_vcrList);
                 break;
             case  "querySecondMaintenanceRecords":
-                querysecondMaintenanceRecords(_vcrList);
+                querySecondMaintenanceRecords(_vcrList);
                 break;
             case  "queryVehicleDetectionRecords":
-                queryvehicleDetectionRecords(_vcrList);
+                queryVehicleDetectionRecords(_vcrList);
                 break;
             case  "queryCertificateReceivingRecords":
                 queryCertificateReceivingRecords(_vcrList);
@@ -70,14 +70,82 @@ function queryVehicleChangeRecord(_vcrList){
         }
         $('#fuelTestingRecordTr').html(aaa);
     }
+    /**
+     * 查询二级维护记录接口
+     */
 
-
-    function  addRoutineMaintenanceRecords(){
-
-        document.getElementById("dlag_edit").style.display="block";
+        function  querySecondMaintenanceRecords(_vcrList){
+        var dataArray=eval(_vcrList);
+        var aaa="";
+        for(var i in dataArray)
+        {
+            aaa+="<tr>";
+            aaa+="<td>"+dataArray[i].icCardNumber+"</td>";
+            aaa+="<td>"+dataArray[i].chassisNumber+"</td>";
+            aaa+="<td>"+dataArray[i].licensePlateColor+"</td>";
+            aaa+="<td>"+dataArray[i].vehicleType+"</td>";
+            aaa+="<td>"+dataArray[i].roadTransportLicense+"</td>";
+            aaa+="<td>"+dataArray[i].maintainTimes+"</td>";
+            aaa+="<td>"+dataArray[i].maintainRegistrationTime+"</td>";
+            aaa+="<td>"+dataArray[i].maintainState+"</td>";
+            aaa+="<td><a style=\"cursor:pointer\">查看详情<a/></td>";
+            aaa+="<tr/>";
+        }
+        $('#secondMaintenanceRecordTr').html(aaa);
     }
 
-    function close_dialog(){
-        document.getElementById("dlag_edit").style.display="none";
+    /**
+     * 车辆检测记录
+     */
+    function  queryVehicleDetectionRecords(_vcrList){
+        var dataArray=eval(_vcrList);
+        var aaa="";
+        for(var i in dataArray)
+        {
+            aaa+="<tr>";
+            aaa+="<td>"+dataArray[i].icCardNumber+"</td>";
+            aaa+="<td>"+dataArray[i].chassisNumber+"</td>";
+            aaa+="<td>"+dataArray[i].licensePlateColor+"</td>";
+            aaa+="<td>"+dataArray[i].vehicleType+"</td>";
+            aaa+="<td>"+dataArray[i].roadTransportLicense+"</td>";
+            aaa+="<td>"+dataArray[i].maintainTimes+"</td>";
+            aaa+="<td>"+dataArray[i].maintainRegistrationTime+"</td>";
+            aaa+="<td>"+dataArray[i].maintainTwoDimensionalEnterprises+"</td>";
+            aaa+="<td>"+dataArray[i].maintainState+"</td>";
+            aaa+="<td><a style=\"cursor:pointer\">查看详情<a/></td>";
+            aaa+="<tr/>";
+        }
+        $('#vehicleDetectionRecordTr').html(aaa);
     }
+    /**
+     * 车辆合格证领取记录
+     */
+    function  queryCertificateReceivingRecords(_vcrList){
+        var dataArray=eval(_vcrList);
+        var aaa="";
+        for(var i in dataArray)
+        {
+            aaa+="<tr>";
+            aaa+="<td>"+dataArray[i].toraRepairParty+"</td>";
+            aaa+="<td>"+dataArray[i].licensePlateNumber+"</td>";
+            aaa+="<td>"+dataArray[i].carModel+"</td>";
+            aaa+="<td>"+dataArray[i].maintenanceCategory+"</td>";
+            aaa+="<td>"+dataArray[i].maintenanceContractNumber+"</td>";
+            aaa+="<td>"+dataArray[i].outFactoryMileageValues+"</td>";
+            aaa+="<td>"+dataArray[i].intoFactoryDate+"</td>";
+            aaa+="<td>"+dataArray[i].outFactoryDate+"</td>";
+            aaa+="<td><a style=\"cursor:pointer\">查看详情<a/></td>";
+            aaa+="<tr/>";
+        }
+        $('#certificateReceivingRecordTr').html(aaa);
+    }
+
+
+
+
+
+
+
+
+
 

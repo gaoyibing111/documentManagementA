@@ -18,8 +18,13 @@
 	<div class="header">
 		<div class="topnav">
 			<div class="inner">
-				<a href="">超级管理员</a>
-				<a href="">退出</a>
+				<c:if test="${sessionScope.sessionUser.USERNAME == null }">
+					<a href="<%=basePath%>/loginVehicleClient/loginPage">登录</a>
+					<a href="<%=basePath%>/registerVehicleClient/registerPage">注册</a>
+				</c:if>
+				<c:if test="${sessionScope.sessionUser.USERNAME != null }">
+					<a href="<%=basePath%>/myInfoVehicleClient/myInfoPage">用户：${sessionScope.sessionUser.USERNAME}</a>
+				</c:if>
 			</div>
 		</div>
 		<div class="logo">西安市道路运输车辆技术管理档案信息系统</div>
@@ -35,8 +40,8 @@
 				<div class="my-info">
 					<img class="img" src="images/bg1.jpg" alt="">
 					<ul>
-						<li>账号：112233445566</li>
-						<li>昵称：1122334455</li>
+						<li>账号：${sessionScope.sessionUser.USERNAME}</li>
+						<li>昵称：${sessionScope.sessionUser.NAME}</li>
 					</ul>
 					<button class="btn btn-primary logic-editor-myinfo">编 辑</button>
 				</div>
@@ -62,7 +67,7 @@
 									</div>
 									<div class="col-xs-7 col-right">
 										<div class="form-control-key">
-											dfdfd
+											${sessionScope.sessionUser.USERNAME}
 										</div>
 									</div>
 								</div>
@@ -95,7 +100,7 @@
 									<div class="col-xs-7 col-right">
 										<div class="row">
 											<div class="col-xs-6">
-												<button class="btn btn-primary btn-lg btn-block" id="logic-editor-submit" type="submit">确 认</button>
+												<button class="btn btn-primary btn-lg btn-block" id="logic-editor-submit" onclick="submitUpdateNameAndPass()">确 认</button>
 											</div>
 											<div class="col-xs-6">
 												<button class="btn btn-secondary btn-lg btn-block" data-dismiss="modal">取 消</button>
@@ -120,5 +125,35 @@
 	<script src="<%=basePath %>/static/vehicleManage/js/jquery.min.js"></script>
 	<script src="<%=basePath %>/static/vehicleManage/js/main.js"></script>
 	<script src="<%=basePath %>/static/vehicleManage/js/bootstrapValidator.js"></script>
+
+<script type="text/javascript">
+
+
+	//提交修改昵称密码信息
+	function submitUpdateNameAndPass(){
+		var name = $("#user").val();
+		var npw = $("#npw").val();
+		if($("#cpw").val().length<8 || $("#npw").val().length<8 ){
+			alert("密码不能少于8位");
+			return  false;
+		}
+		$.ajax({
+			type: "POST",
+			url: '<%=basePath%>/myInfoVehicleClient/getMyInfoPageJsp',
+			data: {name:name,password:npw},
+			async:true,
+			cache: false,
+			dataType:'json',
+			success: function(msg){
+				if(msg.msg=='密码修改成功'){
+				alert("信息修改成功!");
+				}else {
+					alert(msg.msg);
+				}
+			}
+		});
+
+	}
+</script>
 </body>
 </html>

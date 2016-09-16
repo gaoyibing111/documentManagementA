@@ -18,7 +18,7 @@
 <div class="header">
 	<div class="topnav">
 		<div class="inner">
-			<a href="">${sessionScope.sessionUser.USERNAME} </a>
+			<a href="<%=basePath%>/myInfoVehicleClient/myInfoPage">${sessionScope.sessionUser.USERNAME} </a>
 			<a href="<%=basePath%>/loginVehicleClient/loginOut">退出</a>
 		</div>
 	</div>
@@ -37,13 +37,13 @@
 			</div>
 			<ul class="my-info-home">
 				<li class="mih-item-1">
-					<a class="mih-link" href="">
+					<a class="mih-link" href="<%=basePath%>/myInfoVehicleClient/getmyInfoPageJsp">
 						<span class="mih-icon"></span>
 						<span class="mih-title">个人信息</span>
 					</a>
 				</li>
 				<li class="mih-item-2">
-					<a class="mih-link" href="">
+					<a class="mih-link" href="<%=basePath%>/followVehicleClient/queryUserfollowVehicle">
 						<span class="mih-icon"></span>
 						<span class="mih-title">关注车辆</span>
 					</a>

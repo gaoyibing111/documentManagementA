@@ -7,6 +7,7 @@ import com.fh.controller.base.BaseController;
 import com.fh.entity.RemoteResp.BriefQueryListResp;
 import com.fh.entity.RemoteResp.BriefQueryResp;
 import com.fh.entity.task.ShortMessageInfo;
+import com.fh.service.RegisterVehicleService;
 import com.fh.service.remote.RemoteService;
 import com.fh.service.system.appuser.AppuserService;
 import com.fh.util.MD5;
@@ -38,6 +39,9 @@ public class RegisterVehicleController extends BaseController {
     AppuserService appuserService;
     @Autowired
     RemoteService remoteService;
+    @Autowired
+    RegisterVehicleService registerVehicleService;
+
     //临时存验证码，用于校验
     private static ConcurrentHashMap<String, ShortMessageInfo> registerCodeMap = new ConcurrentHashMap<String, ShortMessageInfo>();
     public static ConcurrentHashMap<String, ShortMessageInfo> getRegisterCodeMap() {
@@ -161,14 +165,8 @@ public class RegisterVehicleController extends BaseController {
        if(jsonObject.size()>0){
           return jsonObject.toString();
        }
-
-       if(password.length()>12||password.length()<8){
-           jsonObject.put("msg", "密码必须8-12位");
-           return jsonObject.toString();
-       }
-
        try {
-           jsonObject =fixPageData(phone,password,forget);
+           jsonObject =registerVehicleService.fixPageData(phone,password,forget,"");
            removeCode(phone);
        } catch (Exception e) {
            e.printStackTrace();
@@ -176,48 +174,6 @@ public class RegisterVehicleController extends BaseController {
        return jsonObject.toString();
    }
 
-    /**
-     * update or add
-     */
-        public JSONObject fixPageData(String phone,String password,int forget){
-            PageData pd = new PageData();
-            JSONObject jsonObject=new JSONObject();
-            //update user
-            if(forget==1){//forget password ,only update password
-            pd.put("USERNAME",phone);
-            try {
-                pd=appuserService.findByUId(pd);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            pd.put("PASSWORD", MD5.md5(password)); //cover old password
-            try {
-                appuserService.editU(pd);
-                jsonObject.put("msg", "密码修改成功");
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            return jsonObject;
-        }
-            //add user
-            pd.put("USERNAME",phone);
-            pd.put("PHONE",phone);
-            pd.put("START_TIME",System.currentTimeMillis());
-            pd.put("USER_ID", this.get32UUID());
-            pd.put("RIGHTS", "");
-            pd.put("LAST_LOGIN", "");
-            pd.put("IP", "");
-            pd.put("PASSWORD", MD5.md5(password));
-            pd.put("STATUS",1);
-            pd.put("ROLE_ID","f944a9df72634249bbcb8cb73b0c9b86");// new user is default low level
-            try {
-                appuserService.saveU(pd);
-                jsonObject.put("msg", "注册成功，前往登录页面");
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            return jsonObject;
-        }
 
     /**
      * clear verification  code

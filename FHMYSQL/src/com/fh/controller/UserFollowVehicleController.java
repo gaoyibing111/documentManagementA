@@ -2,20 +2,24 @@ package com.fh.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONException;
-import com.fh.entity.RemoteResp.BaseInfoResp;
+import com.fh.controller.base.BaseController;
+import com.fh.entity.RemoteResp.*;
 import com.fh.entity.system.User;
 import com.fh.service.UserFollowVehicleService;
 import com.fh.service.remote.RemoteService;
 import com.fh.util.PageData;
 import com.google.gson.JsonObject;
 import net.sf.json.JSONObject;
+import org.apache.commons.lang.StringUtils;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -23,7 +27,7 @@ import java.util.List;
  */
 @Controller
 @RequestMapping("/followVehicleClient")
-public class UserFollowVehicleController {
+public class UserFollowVehicleController extends BaseController{
     @Autowired
     UserFollowVehicleService userFollowVehicleService;
     @Autowired
@@ -78,6 +82,49 @@ public class UserFollowVehicleController {
 
          return jsonObject.toString();
     }
+
+
+    /**
+     * 个人主页——用户关注的车辆数据列表
+     */
+    @RequestMapping("/queryUserfollowVehicle")
+    public ModelAndView queryUserfollowVehicle(){
+        ModelAndView mv = this.getModelAndView();
+        User u=SerchVehicleController.getUserInfo();
+        if(u==null){
+            mv.setViewName("vehicleManage/login");
+            return  mv;
+        }
+        List<MaintenancePlanResp> listResp=new ArrayList<MaintenancePlanResp>();
+        //查询用户关注的所有车辆的messageID
+        PageData pd=new PageData();
+        pd.put("username",u.getUSERNAME());
+        List<PageData>  pageDataListp=null;
+        try {
+             pageDataListp  =userFollowVehicleService.findFollow(pd);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        for(PageData pageData:pageDataListp){
+        //根据文档理解,可利用维修计划接口,传入MESSAGEID来获取车辆最新数据
+        String jsonString=remoteService.HttpClientGet("queryMaintenancePlan?messageID="+pageData.get("message_id"));
+        if(StringUtils.isBlank(jsonString)){
+            continue;
+        }
+            MaintenancePlanResp br = JSON.parseObject(jsonString,MaintenancePlanResp.class);
+        if(br!=null){
+            if(pageData.get("is_pay")==1){
+            br.setIsPay(1);
+            }
+            listResp.add(br);
+        }
+        }
+        mv.addObject("dataList", listResp);
+        mv.setViewName("vehicleManage/personalInfo_FocusOnVehicles");
+
+        return  mv;
+    }
+
 
 
 

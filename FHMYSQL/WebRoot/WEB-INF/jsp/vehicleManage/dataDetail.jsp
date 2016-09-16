@@ -31,8 +31,8 @@
 	<script type="text/javascript" src="<%=basePath %>/static/vehicleManage/date/js/jquery-ui-timepicker-zh-CN.js"></script>
 	<script type="text/javascript">
 		$(function () {
-			$(".ui_timepicker").datetimepicker({
-				defaultDate: $('.ui_timepicker').val(),
+			$("#wxsj").datetimepicker({
+				defaultDate: $('#wxsj').val(),
 //				dateFormat: "yy-mm-dd",
 				showSecond: true,
 				timeFormat: 'HH:mm:ss',
@@ -55,7 +55,7 @@
 <div class="header">
 	<div class="topnav">
 		<div class="inner">
-			<c:if test="${sessionScope.sessionUser.USERNAME != null }"><a href="#">${sessionScope.sessionUser.USERNAME}</a>
+			<c:if test="${sessionScope.sessionUser.USERNAME != null }"><a href="<%=basePath%>/myInfoVehicleClient/myInfoPage">${sessionScope.sessionUser.USERNAME}</a>
 				<a href="<%=basePath%>/loginVehicleClient/loginOut">退出</a>
 			</c:if>
 			<c:if test="${sessionScope.sessionUser.USERNAME == null }"><a href="<%=basePath%>/registerVehicleClient/registerPage">注册</a>|<a href="<%=basePath%>/loginVehicleClient/loginPage">登录</a></c:if>
@@ -261,25 +261,10 @@
 					</table>
 				</div>
 				<div class="tab-pane" id="RoutineMaintenanceRecords">
-				<div><span style="float:left;margin-bottom:5px"><button onclick="addRoutineMaintenanceRecords()">新增</button></span></div>
-					<div id="dlag_edit" style="display:none;width:300px;height:300px;margin-top:100px;margin-left:400px;margin-right:auto;z-index:99;position:absolute;border:#000000 solid; border-right-width:1px;border-left-width:1px;border-bottom-width:1px; border-top-width:1px;background-color:#cccccc" >
-						<div id="close" style="float:right;margin-top:0px;cursor:pointer;" onclick="close_dialog()" >×</div>
-						<div id="content" style="padding:50px;margin-top:0">
-							<form id="edit_form"  >
-								<span style="margin-top:10px ">维修时间:
-								<input type="text" name="datetime" class="ui_timepicker" value="">
+				<div><span style="float:left;margin-bottom:5px"><button class="btn btn-primary logic-editor-myinfo">新增</button></span></div>
 
-								</span><br>
-								<span style="margin-top:10px ">维修项目:<input type="text" id="userName" name="userName"  value="" > </span><br>
-								<span  style="margin-top:10px ">维修内容：<input type="text" id="password" name="password"  value="" > </span><br>
-								<span  style="margin-top:10px ">备注<input type="textarea" id="mobile" name="mobile" style="height:50px;width:200px"> </span><br>
-								<span  style="margin-top:10px ">	<input type="button" id="cancel" value="取消" onClick="updateUserInformation()">
-								<input type="button" id="submit" style="margin-left:50px " value="确认" onClick="updateUserInformation()"></span>
-							</form>
 
-						</div>  <label id="msg" style="color:red;"></label>
-					</div>
-					<table class="table table-center">
+				<table class="table table-center">
 						<thead>
 						<tr>
 							<td>车牌号码</td>
@@ -301,6 +286,73 @@
 	</div>
 	<div class="bg"></div>
 </div>
+
+
+<%--st--%>
+<div class="modal fade" id="myinfoEditorModal" data-backdrop="static">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<button type="button" class="close vms-modal-close" data-dismiss="modal">
+				<span aria-hidden="true">&times;</span>
+			</button>
+			<div class="modal-body">
+				<div id="dlag_edit" class="editor-form">
+					<div class="container-fluid">
+						<form id="myinfoEditorForm" class="form-horizontal" method="post">
+							<div class="row login-form-item form-group">
+								<div class="col-xs-4 col-left">
+									<label for="wxsj">维修时间:</label>
+								</div>
+								<div class="col-xs-7 col-right">
+									<input id="wxsj" type="text" name="wxsj" class="form-control-lg" value="">
+								</div>
+							</div>
+							<div class="row login-form-item form-group">
+								<div class="col-xs-4 col-left">
+									<label for="wxxm">维修项目:</label>
+								</div>
+								<div class="col-xs-7 col-right">
+									<input id="wxxm" name="wxxm" class="form-control-lg" type="text">
+								</div>
+							</div>
+							<div class="row login-form-item form-group">
+								<div class="col-xs-4 col-left">
+									<label for="wxnr">维修内容:</label>
+								</div>
+								<div class="col-xs-7 col-right">
+									<input id="wxnr" name="wxnr" class="form-control-lg" type="text">
+								</div>
+							</div>
+							<div class="row login-form-item form-group">
+								<div class="col-xs-4 col-left">
+									<label for="bz">备注:</label>
+								</div>
+								<div class="col-xs-7 col-right">
+									<textarea id="bz" name="bz" rows="4" class="form-control-lg"></textarea>
+								</div>
+							</div>
+							<div class="row login-form-item">
+								<div class="col-xs-4 col-left"></div>
+								<div class="col-xs-7 col-right">
+									<div class="row">
+										<div class="col-xs-6">
+											<button class="btn btn-primary btn-lg btn-block" id="logic-editor-submit" onclick="">确 认</button>
+										</div>
+										<div class="col-xs-6">
+											<button class="btn btn-secondary btn-lg btn-block" data-dismiss="modal">取 消</button>
+										</div>
+									</div>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<%--ed--%>
+
 <div class="footer">
 	版权所有©西安市汽车维修行业管理处 陕ICP备14011688号-1 <br>
 	地址: 西安市建设西路111号

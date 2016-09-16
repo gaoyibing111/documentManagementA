@@ -186,6 +186,76 @@ public class SerchVehicleController extends BaseController{
 	}
 
 
+	/**
+	 * 二级维护记录
+	 */
+	@RequestMapping("querySecondMaintenanceRecords")
+	@ResponseBody
+	public String querySecondMaintenanceRecords(@RequestParam("messageID")String messageID,@RequestParam("plateNumber")String plateNumber) {
+		JSONObject jsonObject=new JSONObject();
+		if(!checkUserLoginPay(plateNumber)){
+			jsonObject.put("msg", "请登录并付费查看");
+			return  jsonObject.toString();
+		}
+		String jsonString=remoteService.HttpClientGet("querySecondMaintenanceRecords?messageID="+messageID);
+		if(StringUtils.isBlank(jsonString)){
+			return jsonString.toString();
+		}
+		SecondMaintenanceRecordListResp br =JSON.parseObject(jsonString,SecondMaintenanceRecordListResp.class);
+		if(br.isSuccess()){
+			jsonObject.put("_vcrList",br.getData());
+		}
+		return  jsonObject.toString();
+
+	}
+
+	/**
+	 * 查询车辆检测记录接口
+	 */
+	@RequestMapping("queryVehicleDetectionRecords")
+	@ResponseBody
+	public String queryVehicleDetectionRecords(@RequestParam("messageID")String messageID,@RequestParam("plateNumber")String plateNumber) {
+		JSONObject jsonObject=new JSONObject();
+		if(!checkUserLoginPay(plateNumber)){
+			jsonObject.put("msg", "请登录并付费查看");
+			return  jsonObject.toString();
+		}
+		String jsonString=remoteService.HttpClientGet("queryVehicleDetectionRecords?messageID="+messageID);
+		if(StringUtils.isBlank(jsonString)){
+			return jsonString.toString();
+		}
+		VehicleDetectionRecordListResp br =JSON.parseObject(jsonString,VehicleDetectionRecordListResp.class);
+		if(br.isSuccess()){
+			jsonObject.put("_vcrList",br.getData());
+		}
+		return  jsonObject.toString();
+
+	}
+
+
+	/**
+	 * 查询合格证书领取记录接口
+	 */
+	@RequestMapping("queryCertificateReceivingRecords")
+	@ResponseBody
+	public String queryCertificateReceivingRecords(@RequestParam("messageID")String messageID,@RequestParam("plateNumber")String plateNumber) {
+		JSONObject jsonObject=new JSONObject();
+		if(!checkUserLoginPay(plateNumber)){
+			jsonObject.put("msg", "请登录并付费查看");
+			return  jsonObject.toString();
+		}
+		String jsonString=remoteService.HttpClientGet("queryCertificateReceivingRecords?messageID="+messageID);
+		if(StringUtils.isBlank(jsonString)){
+			return jsonString.toString();
+		}
+		CertificateReceivingRecordListResp br =JSON.parseObject(jsonString,CertificateReceivingRecordListResp.class);
+		if(br.isSuccess()){
+			jsonObject.put("_vcrList",br.getData());
+		}
+		return  jsonObject.toString();
+
+	}
+
 
 
 	/**

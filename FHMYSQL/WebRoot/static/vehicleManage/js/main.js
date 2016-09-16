@@ -608,12 +608,40 @@ $(function(){
 					}
 				},
 				cpw : {
-					validators : {
-						notEmpty : {
-							message : '确认密码不能为空'
-						}
-					}
-				}
+                    validators : {
+                        notEmpty : {
+                            message : '确认密码不能为空'
+                        }
+                    }
+                },
+                wxxm : {
+                    validators : {
+                        notEmpty : {
+                            message : '维修项目不能为空'
+                        }
+                    }
+                },
+                wxsj : {
+                    validators : {
+                        notEmpty : {
+                            message : '维修时间不能为空'
+                        }
+                    }
+                } ,
+                wxnr : {
+                    validators : {
+                        notEmpty : {
+                            message : '维修内容不能为空'
+                        }
+                    }
+                } ,
+                bz : {
+                    validators : {
+                        notEmpty : {
+                            message : '备注不能为空'
+                        }
+                    }
+                }
 			}
 		});
 	}
@@ -659,7 +687,35 @@ $(function(){
 							message : '确认密码不能为空'
 						}
 					}
-				}
+				},
+                wxxm : {
+                    validators : {
+                        notEmpty : {
+                            message : '维修项目不能为空'
+                        }
+                    }
+                },
+                wxsj : {
+                    validators : {
+                        notEmpty : {
+                            message : '维修时间不能为空'
+                        }
+                    }
+                } ,
+                wxnr : {
+                    validators : {
+                        notEmpty : {
+                            message : '维修内容不能为空'
+                        }
+                    }
+                } ,
+                bz : {
+                    validators : {
+                        notEmpty : {
+                            message : '备注不能为空'
+                        }
+                    }
+                }
 			}
 	    });		
 	}

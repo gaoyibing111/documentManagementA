@@ -19,7 +19,7 @@
 		<div class="topnav">
 			<div class="inner">
 				<c:if test="${sessionScope.sessionUser.USERNAME != null }">
-					<a href="#">${sessionScope.sessionUser.USERNAME}</a>
+					<a href="<%=basePath%>/myInfoVehicleClient/myInfoPage">${sessionScope.sessionUser.USERNAME}</a>
 					<a href="<%=basePath%>/loginVehicleClient/loginOut">退出</a>
 				</c:if>
 				<c:if test="${sessionScope.sessionUser.USERNAME == null }"><a href="<%=basePath%>/registerVehicleClient/registerPage">注册</a>|<a href="<%=basePath%>/loginVehicleClient/loginPage">登录</a></c:if>

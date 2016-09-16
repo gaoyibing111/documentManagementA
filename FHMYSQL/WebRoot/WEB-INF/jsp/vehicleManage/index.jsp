@@ -23,7 +23,7 @@
 				<a href="<%=basePath%>/registerVehicleClient/registerPage">注册</a>
 			</c:if>
 				<c:if test="${sessionScope.sessionUser.USERNAME != null }">
-					<a href="#">用户：${sessionScope.sessionUser.USERNAME}</a>
+					<a href="<%=basePath%>/myInfoVehicleClient/myInfoPage">用户：${sessionScope.sessionUser.USERNAME}</a>
 				</c:if>
 			</div>
 		</div>

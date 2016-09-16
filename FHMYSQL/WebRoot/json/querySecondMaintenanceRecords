@@ -1,0 +1,17 @@
+{
+	"errorInfo":"info",
+    "success":true,
+    "data":[
+        {
+            "icCardNumber":"12345",
+            "chassisNumber":"xxx",
+            "licensePlateColor":"xxx",
+            "vehicleType":"xxx",
+            "roadTransportLicense":"xxx",
+            "maintainTimes":"xxx",
+            "maintainRegistrationTime":"2016-00-00",
+            "maintainState":0
+
+        }
+    ]
+}

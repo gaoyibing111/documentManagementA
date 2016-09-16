@@ -18,8 +18,12 @@
 	<div class="header">
 		<div class="topnav">
 			<div class="inner">
-				<a href="">超级管理员</a>
-				<a href="">退出</a>
+				<c:if test="${sessionScope.sessionUser.USERNAME != null }">
+					<a href="<%=basePath%>/myInfoVehicleClient/myInfoPage">${sessionScope.sessionUser.USERNAME}</a>
+					<a href="<%=basePath%>/loginVehicleClient/loginOut">退出</a>
+				</c:if>
+				<c:if test="${sessionScope.sessionUser.USERNAME == null }"><a href="<%=basePath%>/registerVehicleClient/registerPage">注册</a>|<a href="<%=basePath%>/loginVehicleClient/loginPage">登录</a></c:if>
+
 			</div>
 		</div>
 		<div class="logo">西安市道路运输车辆技术管理档案信息系统</div>
@@ -33,7 +37,7 @@
 			</ul>
 			<div class="vms-inner">
 				<div class="vms-inner-hd">
-					<button class="btn btn-primary btn-sm">关注车辆</button>
+					<button class="btn btn-primary btn-sm" onclick="addFollow()">新增关注</button>
 					<div class="list-search">
 						<input class="text-sm" type="text" placeholder="车牌号">
 						<button class="btn btn-primary btn-sm">搜 索</button>
@@ -53,45 +57,29 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr>
-								<td>01</td>
-								<td>陕A12456</td>
-								<td>2016年6月6日</td>
-								<td>陕西汽车总公司</td>
-								<td>2016年6月6日</td>
-								<td>2016年6月6日</td>
-								<td>
-									<a href="">详情</a>
-									<a href="">导出</a>
-									<a href="">续费</a>
-								</td>
-							</tr>
-							<tr>
-								<td>01</td>
-								<td>陕A12456</td>
-								<td>2016年6月6日</td>
-								<td>陕西汽车总公司</td>
-								<td>2016年6月6日</td>
-								<td>2016年6月6日</td>
-								<td>
-									<a href="">详情</a>
-									<a href="">导出</a>
-									<a href="">续费</a>
-								</td>
-							</tr>
-							<tr>
-								<td>01</td>
-								<td>陕A12456</td>
-								<td>2016年6月6日</td>
-								<td>陕西汽车总公司</td>
-								<td>2016年6月6日</td>
-								<td>2016年6月6日</td>
-								<td>
-									<a href="">详情</a>
-									<a href="">导出</a>
-									<a href="">续费</a>
-								</td>
-							</tr>
+						<c:choose>
+							<c:when test="${not empty dataList}">
+								<c:forEach items="${dataList}" var="user" varStatus="vs">
+									<tr>
+										<td class='center' style="width: 30px;">${vs.index+1}</td>
+										<td>${user.plateNumber}</td>
+										<td>${user.releaseDate}</td>
+										<td>${user.affiliatedFirm}</td>
+										<td>${user.reviewTime}</td>
+										<td>${user.recentMaintenanceTime}</td>
+										<td>
+
+
+											<input id="user2" name="messageID" hidden="hidden" class="form-control-lg" type="text" >
+											<c:if test="${user.isPay != '1' }"><button class="btn btn-primary btn-sm"    plateNumber="${user.plateNumber}" onclick="follow(this)">付费</button></c:if>
+
+											<c:if test="${user.isPay == '1' }"><button class="btn btn-primary btn-sm"     style="background-color:#cccccc">已付费</button></c:if>
+										</td>
+									</tr>
+
+								</c:forEach>
+							</c:when>
+						</c:choose>
 						</tbody>
 					</table>
 				</div>
@@ -106,5 +94,12 @@
 	<script src="<%=basePath %>/static/vehicleManage/js/jquery.min.js"></script>
 	<script src="<%=basePath %>/static/vehicleManage/js/main.js"></script>
 	<script src="<%=basePath %>/static/vehicleManage/js/bootstrapValidator.js"></script>
+<script type="text/javascript">
+	function  addFollow(){
+		window.location.assign("<%=basePath%>/searchVehicleInfo/query");
+	}
+
+</script>
+
 </body>
 </html>
