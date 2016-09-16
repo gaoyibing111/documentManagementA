@@ -17,8 +17,33 @@
 	<link rel="stylesheet" type="text/css" href="<%=basePath %>/static/vehicleManage/css/style.css" />
 
 
+	<script src="<%=basePath %>/static/vehicleManage/js/jquery.min.js"></script>
+	<script src="<%=basePath %>/static/vehicleManage/js/main.js"></script>
+	<script src="<%=basePath %>/static/vehicleManage/js/bootstrapValidator.js"></script>
+	<script src="<%=basePath %>/static/vehicleManage/js/dataDetail.js"></script>
 
-<style type="text/css">
+
+	<link type="text/css" href="<%=basePath %>/static/vehicleManage/date/css/jquery-ui-1.11.4.css" rel="stylesheet" />
+	<link type="text/css" href="<%=basePath %>/static/vehicleManage/date/css/jquery-ui-timepicker-addon.css" rel="stylesheet" />
+	<%--<script type="text/javascript" src="<%=basePath %>/static/vehicleManage/date/js/jquery-1.11.1.js"></script>--%>
+	<script type="text/javascript" src="<%=basePath %>/static/vehicleManage/date/js/jquery-ui-1.11.4.js"></script>
+	<script type="text/javascript" src="<%=basePath %>/static/vehicleManage/date/js/jquery-ui-timepicker-addon.js"></script>
+	<script type="text/javascript" src="<%=basePath %>/static/vehicleManage/date/js/jquery-ui-timepicker-zh-CN.js"></script>
+	<script type="text/javascript">
+		$(function () {
+			$(".ui_timepicker").datetimepicker({
+				defaultDate: $('.ui_timepicker').val(),
+//				dateFormat: "yy-mm-dd",
+				showSecond: true,
+				timeFormat: 'HH:mm:ss',
+//				stepHour: 1,
+//				stepMinute: 1,
+				stepSecond: 1
+			})
+		})
+	</script>
+
+	<style type="text/css">
 
 	.title-color {
 		background-color: #048;
@@ -30,9 +55,11 @@
 <div class="header">
 	<div class="topnav">
 		<div class="inner">
-			<c:if test="${sessionScope.sessionUser.USERNAME != null }"><a href="#">${sessionScope.sessionUser.USERNAME}</a></c:if>
+			<c:if test="${sessionScope.sessionUser.USERNAME != null }"><a href="#">${sessionScope.sessionUser.USERNAME}</a>
+				<a href="<%=basePath%>/loginVehicleClient/loginOut">退出</a>
+			</c:if>
 			<c:if test="${sessionScope.sessionUser.USERNAME == null }"><a href="<%=basePath%>/registerVehicleClient/registerPage">注册</a>|<a href="<%=basePath%>/loginVehicleClient/loginPage">登录</a></c:if>
-			<a href="<%=basePath%>/loginVehicleClient/loginOut">退出</a>
+
 		</div>
 	</div>
 	<div class="logo">西安市道路运输车辆技术管理档案信息系统</div>
@@ -239,8 +266,8 @@
 						<div id="close" style="float:right;margin-top:0px;cursor:pointer;" onclick="close_dialog()" >×</div>
 						<div id="content" style="padding:50px;margin-top:0">
 							<form id="edit_form"  >
+								<span style="margin-top:10px ">维修时间:
 								<input type="text" name="datetime" class="ui_timepicker" value="">
-
 
 								</span><br>
 								<span style="margin-top:10px ">维修项目:<input type="text" id="userName" name="userName"  value="" > </span><br>
@@ -281,10 +308,6 @@
 
 
 
-<script src="<%=basePath %>/static/vehicleManage/js/jquery.min.js"></script>
-	<script src="<%=basePath %>/static/vehicleManage/js/main.js"></script>
-	<script src="<%=basePath %>/static/vehicleManage/js/bootstrapValidator.js"></script>
-<script src="<%=basePath %>/static/vehicleManage/js/dataDetail.js"></script>
 
 
 <script type="text/javascript">
@@ -318,8 +341,6 @@
 			}
 		});
 	}
-
-
 
 
 
