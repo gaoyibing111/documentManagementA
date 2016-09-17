@@ -18,8 +18,12 @@
 	<div class="header">
 		<div class="topnav">
 			<div class="inner">
-				<a href="">超级管理员</a>
-				<a href="">退出</a>
+				<c:if test="${sessionScope.sessionUser.USERNAME != null }">
+					<a href="<%=basePath%>/myInfoVehicleClient/myInfoPage">${sessionScope.sessionUser.USERNAME}</a>
+					<a href="<%=basePath%>/loginVehicleClient/loginOut">退出</a>
+				</c:if>
+				<c:if test="${sessionScope.sessionUser.USERNAME == null }"><a href="<%=basePath%>/registerVehicleClient/registerPage">注册</a>|<a href="<%=basePath%>/loginVehicleClient/loginPage">登录</a></c:if>
+
 			</div>
 		</div>
 		<div class="logo">西安市道路运输车辆技术管理档案信息系统</div>

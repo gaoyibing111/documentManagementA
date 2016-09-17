@@ -65,7 +65,10 @@
 		AND is_delete != 1
 		AND is_pay = 1
 		<if test="plate_number != null and plate_number != ''">
-			AND	plate_number=#{plate_number}
+		AND	plate_number=#{plate_number}
+	</if>
+		<if test="message_id != null and message_id != ''">
+			AND	message_id=#{message_id}
 		</if>
 	</select>
 

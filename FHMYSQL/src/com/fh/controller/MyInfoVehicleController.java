@@ -3,11 +3,13 @@ package com.fh.controller;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.fh.controller.base.BaseController;
-import com.fh.entity.RemoteResp.BriefQueryListResp;
-import com.fh.entity.RemoteResp.BriefQueryResp;
+import com.fh.entity.RemoteResp.*;
 import com.fh.entity.system.User;
 import com.fh.service.RegisterVehicleService;
+import com.fh.service.UserFollowVehicleService;
 import com.fh.service.remote.RemoteService;
+import com.fh.util.Jurisdiction;
+import com.fh.util.ObjectExcelView;
 import com.fh.util.PageData;
 import org.apache.commons.lang.StringUtils;
 import org.apache.ibatis.annotations.Param;
@@ -20,6 +22,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 @RequestMapping("/myInfoVehicleClient")
 @Controller
 public class MyInfoVehicleController extends BaseController {
@@ -27,6 +34,10 @@ public class MyInfoVehicleController extends BaseController {
     RegisterVehicleService registerVehicleService;
     @Autowired
     RemoteService remoteService;
+    @Autowired
+    UserFollowVehicleService userFollowVehicleService;
+
+
 
 
     @RequestMapping("/myInfoPage")
@@ -70,10 +81,131 @@ public class MyInfoVehicleController extends BaseController {
     }
 
 
+    /**
+     * 个人主页——查询付费车辆
+     */
+    @RequestMapping("queryPayVehicle")
+    public ModelAndView queryPayVehicle() {
+        ModelAndView mv = this.getModelAndView();
+        List<PayVehicleResp> respList=new ArrayList<PayVehicleResp>();
+        User u=SerchVehicleController.getUserInfo();
+        if(u==null){
+            mv.setViewName("vehicleManage/login");
+            return  mv;
+        }
+        PageData pd = new PageData();
+        pd.put("username",u.getUSERNAME());
+        List<PageData> pageDataList=null;
+        try {
+           pageDataList=userFollowVehicleService.findFollowIsPay(pd);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        for(PageData pageData : pageDataList){
+            String jsonString=remoteService.HttpClientGet("queryPayVehicle?messageID="+pageData.get("message_id"));
+            if(StringUtils.isBlank(jsonString)){
+               continue;
+            }
+            PayVehicleResp br =JSON.parseObject(jsonString,PayVehicleResp.class);
+            if(br!=null){
+                br.setMessageID(pageData.get("message_id").toString());
+                respList.add(br);
+            }
+        }
+        mv.addObject("dataList", respList);
+        mv.setViewName("vehicleManage/personalInfo_PremiumVehicle");
+          return  mv;
+
+    }
+
+    /*
+ * 导出车辆详细信息到excel
+ * @return
+ */
+    @RequestMapping(value="/excel")
+    public ModelAndView exportExcel(@RequestParam("messageID")String messageID){
+        ModelAndView mv = this.getModelAndView();
+        User u=SerchVehicleController.getUserInfo();
+        if(u==null){
+            mv.setViewName("vehicleManage/login");
+            return  mv;
+        }
+        PageData pd = new PageData();
+        pd.put("username",u.getUSERNAME());
+        pd.put("message_id",messageID);
+        try {
+          List<PageData>  pageDataList=userFollowVehicleService.findFollowIsPay(pd);
+            if(pageDataList==null || pageDataList.size()<1){
+              mv.setViewName("vehicleManage/login");
+                return  mv;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        try{
+
+                Map<String,Object> dataMap = new HashMap<String,Object>();
+                List<String> titles = new ArrayList<String>();
+
+                titles.add("车牌号"); 		//1
+                titles.add("车辆种类");  		//2
+                titles.add("车辆型号");			//3
+                titles.add("联系电话");		//4
+                titles.add("道路运输证号");		//5
+                titles.add("车辆颜色");			//6
+                titles.add("底盘号");			//7
+                titles.add("所属单位");		//8
+                titles.add("燃油类型");		//9
+                titles.add("发动机号");	//10
+                titles.add("所属运管站");	//11
+                 titles.add("车辆登记日期");	//12
+                 titles.add("企业许可证号");	//13
+                titles.add("车辆类型");	//14
+             titles.add("核定吨位");	//15
+             titles.add("车辆状态");	//16
+                dataMap.put("titles", titles);
+
+            String jsonString=remoteService.HttpClientGet("queryBasicInfo?messageID="+messageID);
+            if(StringUtils.isBlank(jsonString)){
+                mv.setViewName("vehicleManage/dataDetail");
+                return mv;
+            }
+            BaseInfoResp br =JSON.parseObject(jsonString,BaseInfoResp.class);
+            if(br.isSuccess()) {
+                List<PageData> varList = new ArrayList<PageData>();
+                pd.put("var1",br.getPlateNumber());
+                pd.put("var2",br.getVehicleType());
+                pd.put("var3",br.getVehicleTypeNo());
+                pd.put("var4",br.getContactPhone());
+                pd.put("var5",br.getRoadTransportNo());
+                pd.put("var6",br.getVehicleColor());
+                pd.put("var7",br.getChassisNo());
+                pd.put("var8",br.getSubordinateUnits());
+                pd.put("var9",br.getFuelType());
+                pd.put("var10",br.getEngineNo());
+                pd.put("var11",br.getAffiliationStation());
+                pd.put("var12",br.getVehicleRegistrationDate());
+                pd.put("var13",br.getBusinessLicenseNo());
+                pd.put("var14",br.getVehicleType());
+                pd.put("var15",br.getCheckTonnage());
+                pd.put("var16",br.getVehicleState());
+
+                varList.add(pd);
+                dataMap.put("varList", varList);
+            }
+                ObjectExcelView erv = new ObjectExcelView();
+                mv = new ModelAndView(erv,dataMap);
+
+        } catch(Exception e){
+            logger.error(e.toString(), e);
+        }
+        return mv;
+    }
 
     /**
      * 个人主页——维修计划==关注已经付费的车辆,可以给每条已经关注付费的记录(关注表) 添加一组维修计划数据(MaintenancePlan)
      */
+
 
 
 

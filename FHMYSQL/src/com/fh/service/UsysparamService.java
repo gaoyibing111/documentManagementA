@@ -51,4 +51,7 @@ public class UsysparamService {
 	public void deleteByGcodeAndMcode(Usysparam usysparam) throws Exception {
 		dao.save("UsysparamMapper.delete", usysparam);
 	}
+
+
+
 }

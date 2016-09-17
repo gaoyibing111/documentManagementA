@@ -19,10 +19,7 @@ import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.alibaba.fastjson.JSON;
@@ -114,10 +111,10 @@ public class SerchVehicleController extends BaseController{
 	 * 判断是否登入，没登入跳转登入页
 	 * 判断是否已经为该车辆付费，没付费提示付费。如果付费 传入messageId ，调用本接口
 	 */
-    @RequestMapping("getDataDetail")
+    @RequestMapping(value="getDataDetail")
      public ModelAndView getDataDetail(@RequestParam("messageID")String messageID,@RequestParam("plateNumber")String plateNumber){
 		ModelAndView mv = this.getModelAndView();
-		if(!checkUserLoginPay(plateNumber)){
+		if(!userFollowVehicleService.checkUserLoginPay(plateNumber)){
 			mv.setViewName("vehicleManage/login");
 		}
 		String jsonString=remoteService.HttpClientGet("queryBasicInfo?messageID="+messageID);
@@ -147,7 +144,7 @@ public class SerchVehicleController extends BaseController{
 	@ResponseBody
 	public String queryVehicleChangeRecord(@RequestParam("messageID")String messageID,@RequestParam("plateNumber")String plateNumber) {
 		JSONObject jsonObject=new JSONObject();
-		if(!checkUserLoginPay(plateNumber)){
+		if(!userFollowVehicleService.checkUserLoginPay(plateNumber)){
 			jsonObject.put("msg", "请登录并付费查看");
 			return  jsonObject.toString();
 		}
@@ -169,7 +166,7 @@ public class SerchVehicleController extends BaseController{
 	@ResponseBody
 	public String queryFuelTestingRecord(@RequestParam("messageID")String messageID,@RequestParam("plateNumber")String plateNumber) {
 		JSONObject jsonObject=new JSONObject();
-		if(!checkUserLoginPay(plateNumber)){
+		if(!userFollowVehicleService.checkUserLoginPay(plateNumber)){
 			jsonObject.put("msg", "请登录并付费查看");
 			return  jsonObject.toString();
 		}
@@ -193,7 +190,7 @@ public class SerchVehicleController extends BaseController{
 	@ResponseBody
 	public String querySecondMaintenanceRecords(@RequestParam("messageID")String messageID,@RequestParam("plateNumber")String plateNumber) {
 		JSONObject jsonObject=new JSONObject();
-		if(!checkUserLoginPay(plateNumber)){
+		if(!userFollowVehicleService.checkUserLoginPay(plateNumber)){
 			jsonObject.put("msg", "请登录并付费查看");
 			return  jsonObject.toString();
 		}
@@ -216,7 +213,7 @@ public class SerchVehicleController extends BaseController{
 	@ResponseBody
 	public String queryVehicleDetectionRecords(@RequestParam("messageID")String messageID,@RequestParam("plateNumber")String plateNumber) {
 		JSONObject jsonObject=new JSONObject();
-		if(!checkUserLoginPay(plateNumber)){
+		if(!userFollowVehicleService.checkUserLoginPay(plateNumber)){
 			jsonObject.put("msg", "请登录并付费查看");
 			return  jsonObject.toString();
 		}
@@ -240,7 +237,7 @@ public class SerchVehicleController extends BaseController{
 	@ResponseBody
 	public String queryCertificateReceivingRecords(@RequestParam("messageID")String messageID,@RequestParam("plateNumber")String plateNumber) {
 		JSONObject jsonObject=new JSONObject();
-		if(!checkUserLoginPay(plateNumber)){
+		if(!userFollowVehicleService.checkUserLoginPay(plateNumber)){
 			jsonObject.put("msg", "请登录并付费查看");
 			return  jsonObject.toString();
 		}
@@ -258,26 +255,6 @@ public class SerchVehicleController extends BaseController{
 
 
 
-	/**
-	 * 检查当前用户是否登录并已经付费
-	 */
-		public   boolean checkUserLoginPay(String plateNumber){
-			boolean flag=false;
-			if(getUserInfo()==null){
-			 return  flag;
-			}
-			PageData pd = new PageData();
-			pd.put("username",getUserInfo().getUSERNAME());
-			pd.put("plate_number",plateNumber);
-			try {
-				if(userFollowVehicleService.findFollowIsPay(pd)==null){
-					return  flag;
-				}
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			return true;
-		}
 
 
 

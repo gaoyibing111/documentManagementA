@@ -49,7 +49,7 @@
 					</a>
 				</li>
 				<li class="mih-item-3">
-					<a class="mih-link" href="">
+					<a class="mih-link" href="<%=basePath%>/myInfoVehicleClient/queryPayVehicle">
 						<span class="mih-icon"></span>
 						<span class="mih-title">付费车辆</span>
 					</a>

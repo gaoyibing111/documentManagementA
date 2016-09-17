@@ -1,5 +1,6 @@
 package com.fh.service;
 
+import com.fh.controller.SerchVehicleController;
 import com.fh.dao.DaoSupport;
 import com.fh.util.PageData;
 import org.springframework.stereotype.Service;
@@ -32,9 +33,28 @@ public class UserFollowVehicleService {
     public  List<PageData> findFollowIsPay(PageData pd)throws Exception{
         return ( List<PageData>)dao.findForList("UserFollowVehicleMapper.findFollowIsPay", pd);
     }
+
+
     /**
-     * 查询用户关注和未关注的车辆信息（该查询用于用户查询车辆时，区别已经关注和未关注）
+     * 检查当前用户是否登录并已经付费
      */
+    public   boolean checkUserLoginPay(String plateNumber){
+        boolean flag=false;
+        if(SerchVehicleController.getUserInfo()==null){
+            return  flag;
+        }
+        PageData pd = new PageData();
+        pd.put("username",SerchVehicleController.getUserInfo().getUSERNAME());
+        pd.put("plate_number",plateNumber);
+        try {
+            if(findFollowIsPay(pd)==null){
+                return  flag;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return true;
+    }
 
 
 }
