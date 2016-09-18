@@ -151,7 +151,7 @@ public class MyInfoVehicleController extends BaseController {
             }
             MaintenancePlanResp br = JSON.parseObject(jsonString,MaintenancePlanResp.class);
             if(br!=null){
-                if(pageData.get("is_pay")==1){
+                if(pageData.get("is_pay").toString().equals("1")){
                     br.setIsPay(1);
                 }
                 listResp.add(br);

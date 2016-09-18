@@ -33,7 +33,7 @@ public class MaintainPlanVehicleController {
     public String saveMaintainPlan(@Param("plateNumber")String plateNumber,@Param("planTime")String planTime,@Param("remark")String remark){
         JSONObject jsonObject=new JSONObject();
         if(!userFollowVehicleService.checkUserLoginPay(plateNumber)) {
-            return "redirect:/loginVehicleClient/loginPage";
+            return "";
         }
         PageData pd =new PageData();
         pd.put("id", UuidUtil.get32UUID());
@@ -61,7 +61,7 @@ public class MaintainPlanVehicleController {
     public String findMaintainPlan(@Param("plateNumber")String plateNumber){
         JSONObject jsonObject=new JSONObject();
         if(!userFollowVehicleService.checkUserLoginPay(plateNumber)) {
-            return "redirect:/loginVehicleClient/loginPage";
+            return "";
         }
         PageData pd =new PageData();
         pd.put("username",SerchVehicleController.getUserInfo().getUSERNAME());
@@ -86,7 +86,8 @@ public class MaintainPlanVehicleController {
     public String deleteAllMaintainPlan(@Param("plateNumber")String plateNumber,@Param("id")String id){
         JSONObject jsonObject=new JSONObject();
         if(!userFollowVehicleService.checkUserLoginPay(plateNumber)) {
-            return "redirect:/loginVehicleClient/loginPage";
+            jsonObject.put("msg","删除失败");
+            return jsonObject.toString();
         }
         PageData pd =new PageData();
         pd.put("id",id);

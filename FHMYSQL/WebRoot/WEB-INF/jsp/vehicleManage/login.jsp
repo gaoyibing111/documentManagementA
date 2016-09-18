@@ -84,13 +84,12 @@
 				type: "POST",
 				url: '<%=basePath%>/loginVehicleClient/login',
 				data: {phone:phone,password:pw},
-				async:true,
 				cache: false,
 				dataType:'json',
 				success: function(msg){
 					if(msg.msg=="success"){
 						window.location.assign("<%=basePath%>/myInfoVehicleClient/myInfoPage");
-						 //window.location.href="<%=basePath%>/myInfoVehicleClient/myInfoPage";
+						// window.location.href="<%=basePath%>/myInfoVehicleClient/myInfoPage";
 					}else{
 						alert("账号密码错误");
 					}

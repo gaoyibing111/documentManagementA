@@ -290,7 +290,8 @@ public class SerchVehicleController extends BaseController{
 							for(BriefQueryResp briefQueryResp:br.getData()){
 								if(pageData.get("plate_number").equals(briefQueryResp.getPlateNumber())){
 									briefQueryResp.setFollow(1);//设置关注状态 为已经关注
-									if(pageData.get("is_pay")==1){briefQueryResp.setIsPay(1);}//已经支付费用
+									if(pageData.get("is_pay").toString().equals("1")){
+										briefQueryResp.setIsPay(1);}//已经支付费用
 								}
 							}
 				}
