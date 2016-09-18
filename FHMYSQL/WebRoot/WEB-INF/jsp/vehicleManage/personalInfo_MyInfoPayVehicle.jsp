@@ -55,7 +55,7 @@
 					</a>
 				</li>
 				<li class="mih-item-4">
-					<a class="mih-link" href="">
+					<a class="mih-link" href="<%=basePath%>/myInfoVehicleClient/queryUserMaintainPlanVehicle">
 						<span class="mih-icon"></span>
 						<span class="mih-title">维修计划</span>
 					</a>

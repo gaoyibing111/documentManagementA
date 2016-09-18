@@ -7,6 +7,7 @@ import com.fh.entity.RemoteResp.*;
 import com.fh.entity.system.User;
 import com.fh.service.RegisterVehicleService;
 import com.fh.service.UserFollowVehicleService;
+import com.fh.service.UserMaintainPlanVehicleService;
 import com.fh.service.remote.RemoteService;
 import com.fh.util.Jurisdiction;
 import com.fh.util.ObjectExcelView;
@@ -36,7 +37,8 @@ public class MyInfoVehicleController extends BaseController {
     RemoteService remoteService;
     @Autowired
     UserFollowVehicleService userFollowVehicleService;
-
+    @Autowired
+    UserMaintainPlanVehicleService userMaintainPlanVehicleService;
 
 
 
@@ -117,6 +119,54 @@ public class MyInfoVehicleController extends BaseController {
           return  mv;
 
     }
+
+
+
+    /**
+     * 个人主页——维修计划==关注已经付费的车辆,可以给每条已经关注付费的记录(关注表) 添加一组维修计划数据(MaintenancePlan)
+     */
+    @RequestMapping("/queryUserMaintainPlanVehicle")
+    public ModelAndView queryUserMaintainPlanVehicle(){
+        ModelAndView mv = this.getModelAndView();
+        User u=SerchVehicleController.getUserInfo();
+        if(u==null){
+            mv.setViewName("vehicleManage/login");
+            return  mv;
+        }
+        List<MaintenancePlanResp> listResp=new ArrayList<MaintenancePlanResp>();
+        //查询用户关注的所有车辆的messageID
+        PageData pd=new PageData();
+        pd.put("username",u.getUSERNAME());
+        List<PageData>  pageDataListp=null;
+        try {
+            pageDataListp  =userFollowVehicleService.findFollowIsPay(pd);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        for(PageData pageData:pageDataListp){
+            //根据文档理解,可利用维修计划接口,传入MESSAGEID来获取车辆最新数据
+            String jsonString=remoteService.HttpClientGet("queryMaintenancePlan?messageID="+pageData.get("message_id"));
+            if(StringUtils.isBlank(jsonString)){
+                continue;
+            }
+            MaintenancePlanResp br = JSON.parseObject(jsonString,MaintenancePlanResp.class);
+            if(br!=null){
+                if(pageData.get("is_pay")==1){
+                    br.setIsPay(1);
+                }
+                listResp.add(br);
+            }
+        }
+        mv.addObject("dataList", listResp);
+        mv.setViewName("vehicleManage/personalInfo_MaintenancePlan");
+
+        return  mv;
+    }
+
+
+
+
+
 
     /*
  * 导出车辆详细信息到excel
@@ -202,9 +252,7 @@ public class MyInfoVehicleController extends BaseController {
         return mv;
     }
 
-    /**
-     * 个人主页——维修计划==关注已经付费的车辆,可以给每条已经关注付费的记录(关注表) 添加一组维修计划数据(MaintenancePlan)
-     */
+
 
 
 

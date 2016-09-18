@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="UserMaintainPlanVehicleMapper">
+
+
+	<!--新增关注-->
+	<insert id="saveMaintainPlan" parameterType="pd">
+		insert into user_maintainplan_vehicle (
+		id,
+			 username,
+			plate_number,
+			plan_time,
+			remark,
+			create_date
+		) values (
+			#{id},
+		#{username},
+		#{plate_number},
+		#{plan_time},
+		#{remark},
+		#{create_date}
+ 		)
+	</insert>
+	
+	<!-- 查找车辆维修计划列表 -->
+	<select id="findMaintainPlan" parameterType="pd" resultType="pd">
+		select
+		id,
+		username,
+		plate_number,
+		plan_time,
+		remark,
+		create_date
+
+		from
+		user_maintainplan_vehicle
+		where
+		<if test="username != null and username != ''">
+			username = #{username}
+		</if>
+ 		<if test="plate_number != null and plate_number != ''">
+			AND	plate_number=#{plate_number}
+		</if>
+
+	</select>
+
+	<!-- 批量删车辆计划-->
+	<delete id="deleteAllMaintainPlan" parameterType="String">
+		delete from user_maintainplan_vehicle
+		where
+		USER_ID in
+		<foreach item="item" index="index" collection="array" open="(" separator="," close=")">
+			#{item}
+		</foreach>
+	</delete>
+
+	<delete id="deleteMaintainPlan" parameterType="pd">
+		delete from user_maintainplan_vehicle
+		where
+		id = #{id}
+	</delete>
+
+
+</mapper>
