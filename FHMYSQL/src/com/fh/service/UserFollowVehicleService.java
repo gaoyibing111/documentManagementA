@@ -47,7 +47,7 @@ public class UserFollowVehicleService {
         pd.put("username",SerchVehicleController.getUserInfo().getUSERNAME());
         pd.put("plate_number",plateNumber);
         try {
-            if(findFollowIsPay(pd)==null){
+            if(findFollowIsPay(pd)==null || findFollowIsPay(pd).size()<1){
                 return  flag;
             }
         } catch (Exception e) {

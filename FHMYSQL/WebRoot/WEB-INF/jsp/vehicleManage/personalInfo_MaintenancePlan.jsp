@@ -98,7 +98,7 @@
 									<%--<div class="checkbox">
 									<input class="input hidden" type="checkbox" name="" id="c1" value="${user.plateNumber}">
 									<label class="label" for="c1"></label></div>--%>
-								<a style="cursor:pointer" plateNumber="${user.plateNumber}" onclick="openDeletePlan()">建立计划|删除计划</a>
+								<a style="cursor:pointer" plateNumber="${user.plateNumber}" onclick="openDeletePlan(this)">建立计划|删除计划</a>
 
 								</td>
 								<td><a style="cursor:pointer" plateNumber="${user.plateNumber}" <%--onclick="queryPlanList(this)"--%>>${user.plateNumber}</a></td>
@@ -350,11 +350,13 @@
 		}
 
 
-		function openDeletePlan(){
+		function openDeletePlan(val){
 		//	checkChoose();
 		//	if(ss==1) {
 				$('#deletemyinfo').modal('show');
-				var plateNumber=$("#plateNumber").val();
+		//		var plateNumber=$("#plateNumber").val();
+			var plateNumber=val.getAttribute("plateNumber");
+			$("#plateNumber").val(plateNumber);
 				queryPlan(plateNumber);
 		//	}
 		}
