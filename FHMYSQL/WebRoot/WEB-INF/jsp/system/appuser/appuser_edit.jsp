@@ -300,7 +300,7 @@
 				<td>
 					<select name="STATUS" title="状态">
 					<option value="1" <c:if test="${pd.STATUS == '1' }">selected</c:if> >正常</option>
-					<option value="0" <c:if test="${pd.STATUS == '0' }">selected</c:if> >停用</option>
+					<option value="0" <c:if test="${pd.STATUS == '0' }">selected</c:if> >冻结</option>
 					</select>
 				</td>
 			</tr>
