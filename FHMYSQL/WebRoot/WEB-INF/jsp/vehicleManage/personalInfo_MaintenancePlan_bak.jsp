@@ -64,10 +64,10 @@
 				<li>维修计划</li>
 			</ul>
 			<div class="vms-inner">
-				<%--	<div class="vms-inner-hd">
-                        <button class="btn btn-primary " onclick="openPlan()">建立计划</button>
-                     <button class="btn btn-primary" onclick="openDeletePlan()">删除计划</button>
-				</div>--%>
+				<div class="vms-inner-hd">
+					<button class="btn btn-primary " onclick="openPlan()">建立计划</button>
+		 		<button class="btn btn-primary" onclick="openDeletePlan()">删除计划</button>
+				</div>
 				<div class="vms-inner-bd">
 					<table class="table table-center">
 						<thead>
@@ -94,13 +94,10 @@
 								<c:when test="${not empty dataList}">
 								<c:forEach items="${dataList}" var="user" varStatus="vs">
 							<tr>
-								<td>
-									<%--<div class="checkbox">
+								<td><div class="checkbox">
 									<input class="input hidden" type="checkbox" name="" id="c1" value="${user.plateNumber}">
-									<label class="label" for="c1"></label></div>--%>
-								<a style="cursor:pointer" plateNumber="${user.plateNumber}" onclick="openDeletePlan()">建立计划|删除计划</a>
-
-								</td>
+									<label class="label" for="c1"></label>
+								</div></td>
 								<td><a style="cursor:pointer" plateNumber="${user.plateNumber}" <%--onclick="queryPlanList(this)"--%>>${user.plateNumber}</a></td>
 								<td>${user.releaseDate}</td>
 								<td>${user.affiliatedFirm}</td>
@@ -185,10 +182,6 @@
 							<div class="container-fluid">
 			<div class="vms-inner-bd">
 		<div class="vms-inner">
-			<div class="vms-inner-hd">
-				<button class="btn btn-primary"  onclick="openPlan()">建立计划</button>
-			<%--	<button class="btn btn-primary" onclick="openDeletePlan()">删除计划</button>--%>
-			</div>
 		<div class="vms-inner-bd">
 			<table class="table table-center">
 
@@ -249,11 +242,10 @@
 		}
 
 		function openPlan(){
-		//	checkChoose();
-		//	if(ss==1){
+			checkChoose();
+			if(ss==1){
 			$('#myinfo').modal('show');
-			$('#deletemyinfo').modal('hide');
-		//	}
+			}
 		}
 
 
@@ -302,11 +294,10 @@
 				aaa+="<tr id="+dataArray[i].id+">";
 				aaa+="<td>"+dataArray[i].plan_time+"</td>";
 				aaa+="<td>"+dataArray[i].remark+"</td>";
-				aaa+="<td><a style=\"cursor:pointer\"   plateNumber="+dataArray[i].plate_number+"   \"\" planid="+dataArray[i].id+"  onclick=\"deletePlan(this)\">删除</a></td>";
+				aaa+="<td><a style=\"cursor:pointer\" plateNumber="+dataArray[i].plate_number+" planid="+dataArray[i].id+" onclick=\"deletePlan(this)\">删除</a></td>";
 				aaa+="<tr/>";
 			}
 			$('#planTr').html(aaa);
-			$('#deletemyinfo').modal('show');
 		}
 
 
@@ -351,12 +342,12 @@
 
 
 		function openDeletePlan(){
-		//	checkChoose();
-		//	if(ss==1) {
+			checkChoose();
+			if(ss==1) {
 				$('#deletemyinfo').modal('show');
 				var plateNumber=$("#plateNumber").val();
 				queryPlan(plateNumber);
-		//	}
+			}
 		}
 
 	</script>
