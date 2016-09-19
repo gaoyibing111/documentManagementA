@@ -65,7 +65,7 @@
 										<input id="plateNumber" name="plateNumber" hidden="hidden" class="form-control-lg" type="text" value="${user.plateNumber}">
 										<%--<input id="session" name="session" hidden="hidden" class="form-control-lg" type="text" value="${sessionScope.sessionUser.USERNAME}">--%>
 										<%--<input id="isPay" name="isPay" hidden="hidden" class="form-control-lg" type="text" value="${user.isPay}">--%>
-										<a id="isFollow" class="btn btn-primary btn-sm" follow="${user.follow}"
+										<a id="isFollow" class="btn btn-primary btn-sm" follow="${user.follow}"  plateNumber="${user.plateNumber}"
 										   session="${sessionScope.sessionUser.USERNAME}" isPay="${user.isPay}" onclick="getDataDetail(this)">查看详情</a>
 									</form>
 
@@ -84,8 +84,55 @@
 				</div>
 			</div>
 		</div>
+
+
+		<%--st--%>
+		<div class="modal fade" id="myinfo" data-backdrop="static" >
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<button type="button" class="close vms-modal-close" data-dismiss="modal">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<div class="modal-body">
+						<div id="dlag_edit" class="editor-form">
+							<div class="container-fluid">
+								<%--	<form id="planForm" class="form-horizontal" method="post" action="<%=basePath%>/maintainPlanVehicleClient/saveMaintainPlan">--%>
+								<div class="row login-form-item">
+									<div class="col-xs-3 col-left"></div>
+									<div class="col-xs-7 col-right">
+									<div class="row">
+									<div class="col-xs-12">
+										<label  >该条详细信息需要付费查看，请付费。</label>
+									</div>
+								</div>
+								</div>
+								</div>
+									<input id="payPlateNumber" name="payPlateNumber" hidden="hidden" class="form-control-lg" type="text" >
+								<div class="row login-form-item">
+									<div class="col-xs-4 col-left"></div>
+									<div class="col-xs-7 col-right">
+										<div class="row">
+											<div class="col-xs-6">
+												<button class="btn btn-primary btn-lg btn-block" id="logic-editor-submit" onclick="pay()">付 费</button>
+											</div>
+
+										</div>
+									</div>
+								</div>
+								<%--</form>--%>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<%--ed--%>
+
 		<div class="bg"></div>
 	</div>
+
+
+
 
 	<div class="footer">
 		版权所有©西安市汽车维修行业管理处 陕ICP备14011688号-1 <br>
@@ -95,7 +142,7 @@
 	<script src="<%=basePath %>/static/vehicleManage/js/jquery.min.js"></script>
 	<script src="<%=basePath %>/static/vehicleManage/js/main.js"></script>
 	<script src="<%=basePath %>/static/vehicleManage/js/bootstrapValidator.js"></script>
-	<script src="<%=basePath %>/static/vehicleManage/js/showQueryDATA.js"></script>
+
 	<script  type="text/javascript">
 
 		//获取车辆基本信息
@@ -114,8 +161,12 @@
 		var isPay=val.getAttribute("isPay");
 		if(isPay=='0'){
 	//	if($("#isPay").attr("value")=='0'){
+			var plateNumber=val.getAttribute("plateNumber");
+			$("#payPlateNumber").val(plateNumber);
+			$('#myinfo').modal('show');
 
-			$("#payPanel").css("width","300");
+
+		/*	$("#payPanel").css("width","300");
 			$("#payPanel").css("height","200");
 			$("#payPanel").css("background-color","white");
 			$("#payPanel").html("该条详细信息需要付费查看，请付费。<br><button onclick='alert(\"传送付费接口\")'>付费</button><button onclick='javascript: document.getElementById(\"payPanel\").style.display=\"none\"'>X</button>");
@@ -128,7 +179,7 @@
 			});
 			document.getElementById("payPanel").style.zIndex=99;
 			$("#payPanel").show();
-
+*/
 			return false;
 		}
 	 	$("#getDataDetail").submit();
@@ -170,6 +221,10 @@
 			 document.getElementById("payPanel").style.display="none";
 			return ;
 		}
+
+
+
+
 	</script>
 </body>
 </html>

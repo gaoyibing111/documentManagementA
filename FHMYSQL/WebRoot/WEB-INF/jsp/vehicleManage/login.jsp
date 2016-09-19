@@ -45,7 +45,7 @@
 							<div class="col-xs-7 col-right">
 								<div class="row">
 									<div class="col-xs-6">
-										<button class="btn btn-primary btn-lg btn-block" type="submit" onclick="login()">登录</button>
+										<button class="btn btn-primary btn-lg btn-block"  onclick="login()">登录</button>
 									</div>
 									<div class="col-xs-6">
 										<button class="btn btn-secondary btn-lg btn-block" onclick="openRegUrl()">注册</button>
