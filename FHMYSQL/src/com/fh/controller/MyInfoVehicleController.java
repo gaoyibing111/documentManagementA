@@ -73,6 +73,7 @@ public class MyInfoVehicleController extends BaseController {
         User u=SerchVehicleController.getUserInfo();
         if(u==null){
             jsonObject.put("msg","未登录!");
+            return jsonObject.toString();
         }
         if(StringUtils.isBlank(name)){
             jsonObject.put("msg","昵称不能为空!");
