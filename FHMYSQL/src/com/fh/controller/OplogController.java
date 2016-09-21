@@ -212,7 +212,7 @@ public class OplogController extends BaseController {
 			titles.add("日志所属模块");	//3
 			titles.add("操作人");	//4
 			titles.add("操作人角色");	//5
-			titles.add("用户名（appuser表username）");	//6
+			titles.add("用户名");	//6
 			titles.add("记录生成时间");	//7
 			dataMap.put("titles", titles);
 			List<PageData> varOList = oplogService.listAll(pd);
@@ -225,7 +225,7 @@ public class OplogController extends BaseController {
 				vpd.put("var4", varOList.get(i).getString("OPERATOR"));	//4
 				vpd.put("var5", varOList.get(i).getString("OPERATOR_ROLE"));	//5
 				vpd.put("var6", varOList.get(i).getString("USERNAME"));	//6
-				vpd.put("var7", varOList.get(i).getString("CREATE_DATE"));	//7
+				vpd.put("var7", varOList.get(i).get("CREATE_DATE").toString());	//7
 				varList.add(vpd);
 			}
 			dataMap.put("varList", varList);
@@ -252,10 +252,10 @@ public class OplogController extends BaseController {
 	}
 
 
-	//=====非生成的代码
+	//=====以下是非生成的代码
 
 	/**
-	 * 根据日期查询日志
+	 * 根据日期和关键字查询日志
 	 * @param page
 	 * @return
 	 */
@@ -279,9 +279,7 @@ public class OplogController extends BaseController {
 		return mv;
 	}
 
-	/**
-	 * 根据关键字查询日志
-	 */
+
 
 
 

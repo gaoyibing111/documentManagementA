@@ -7,6 +7,7 @@ import com.fh.entity.RemoteResp.*;
 import com.fh.entity.system.User;
 import com.fh.service.UserFollowVehicleService;
 import com.fh.service.remote.RemoteService;
+import com.fh.util.DateUtil;
 import com.fh.util.PageData;
 import com.google.gson.JsonObject;
 import net.sf.json.JSONObject;
@@ -65,8 +66,8 @@ public class UserFollowVehicleController extends BaseController{
              pd.put("plate_number",br.getPlateNumber());
              pd.put("message_id",messageID);
              pd.put("is_pay",0);
-             pd.put("create_date",System.currentTimeMillis());
-             pd.put("last_modify_date",System.currentTimeMillis());
+             pd.put("create_date", DateUtil.getTime());
+             pd.put("last_modify_date",DateUtil.getTime());
              pd.put("is_delete",0);
          }catch (JSONException jsonException){
              jsonObject.put("msg","关注失败");

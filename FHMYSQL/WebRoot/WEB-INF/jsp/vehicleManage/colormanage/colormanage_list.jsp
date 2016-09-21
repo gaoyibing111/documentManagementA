@@ -58,7 +58,7 @@
 						<th class="center">
 						<label><input type="checkbox" id="zcheckbox" /><span class="lbl"></span></label>
 						</th>
-						<th class="center">序号</th>
+
 						<th class="center">序号</th>
 						<th class="center">车辆颜色</th>
 						<th class="center">状态</th>
@@ -78,7 +78,7 @@
 									<label><input type='checkbox' name='ids' value="${var.ID}" /><span class="lbl"></span></label>
 								</td>
 								<td class='center' style="width: 30px;">${vs.index+1}</td>
-										<td>${var.ID}</td>
+									<%--	<td>${var.ID}</td>--%>
 										<td>${var.COLOR}</td>
 								<c:if test="${var.STATUS == 0 }">
 										<td>停用</td>

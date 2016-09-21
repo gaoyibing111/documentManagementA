@@ -67,16 +67,13 @@ public class OplogService {
 	}
 
 	/**
-	 * 通过时间查询日志
+	 * 通过时间和关键字查询日志
 	 */
 
 	public List<PageData> queryByDate(Page page)throws Exception{
 		return (List<PageData>)dao.findForList("OplogMapper.queryByDate", page);
 	}
 
-	/**
-	 * 通过关键字查询日志
-	 */
 	
 }
 

@@ -2,6 +2,7 @@ package com.fh.controller;
 
 import com.fh.service.UserFollowVehicleService;
 import com.fh.service.UserMaintainPlanVehicleService;
+import com.fh.util.DateUtil;
 import com.fh.util.PageData;
 import com.fh.util.UuidUtil;
 import net.sf.json.JSONObject;
@@ -41,7 +42,7 @@ public class MaintainPlanVehicleController {
         pd.put("username",SerchVehicleController.getUserInfo().getUSERNAME());
         pd.put("remark",remark);
         pd.put("plan_time",planTime);
-        pd.put("create_date",System.currentTimeMillis());
+        pd.put("create_date", DateUtil.getTime());
         try {
             userMaintainPlanVehicleService.saveMaintainPlan(pd);
             jsonObject.put("msg","新增维修");

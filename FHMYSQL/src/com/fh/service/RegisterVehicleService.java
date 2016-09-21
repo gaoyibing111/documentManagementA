@@ -2,6 +2,7 @@ package com.fh.service;
 
 
 import com.fh.service.system.appuser.AppuserService;
+import com.fh.util.DateUtil;
 import com.fh.util.MD5;
 import com.fh.util.PageData;
 import com.fh.util.UuidUtil;
@@ -47,7 +48,7 @@ public class RegisterVehicleService {
         //add user
         pd.put("USERNAME",phone);
         pd.put("PHONE",phone);
-        pd.put("START_TIME",System.currentTimeMillis());
+        pd.put("START_TIME", DateUtil.getTime());
         pd.put("USER_ID", UuidUtil.get32UUID());
         pd.put("RIGHTS", "");
         pd.put("LAST_LOGIN", "");

@@ -110,7 +110,7 @@
 		</foreach>
 	</delete>
 
-	<!--按时间查询日志-->
+	<!--按时间和关键字查询日志-->
 	<select id="queryByDate" parameterType="page" resultType="pd">
 		select
 		a.LOG_TYPE,
