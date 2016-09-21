@@ -31,8 +31,8 @@
 	<div class="main">
 		<div class="content">
 			<ul class="crumb">
-				<li>首页</li>
-				<li>查询</li>
+				<li><a href="<%=basePath%>/searchVehicleInfo/query">首页</a></li>
+				<li><a href="#">查询</a></li>
 			</ul>
 			<div class="vms-inner">
 				<div class="vms-inner-bd">
@@ -61,11 +61,11 @@
 								<td>${user.recentMaintenanceTime}</td>
 								<td>
 									<form action="getDataDetail" method="post" name="userForm" id="getDataDetail" style="display:inline">
-										<input id="user" name="messageID" hidden="hidden" class="form-control-lg" type="text" value="${user.messageID}">
+										<input id="messageID" name="messageID" hidden="hidden" class="form-control-lg" type="text" value="${user.messageID}">
 										<input id="plateNumber" name="plateNumber" hidden="hidden" class="form-control-lg" type="text" value="${user.plateNumber}">
 										<%--<input id="session" name="session" hidden="hidden" class="form-control-lg" type="text" value="${sessionScope.sessionUser.USERNAME}">--%>
 										<%--<input id="isPay" name="isPay" hidden="hidden" class="form-control-lg" type="text" value="${user.isPay}">--%>
-										<a id="isFollow" class="btn btn-primary btn-sm" follow="${user.follow}"  plateNumber="${user.plateNumber}"
+										<a id="isFollow" class="btn btn-primary btn-sm" follow="${user.follow}"  plateNumber="${user.plateNumber}" messageID="${user.messageID}"
 										   session="${sessionScope.sessionUser.USERNAME}" isPay="${user.isPay}" onclick="getDataDetail(this)">查看详情</a>
 									</form>
 
@@ -148,6 +148,8 @@
 		//获取车辆基本信息
 	function getDataDetail(val){
 		//var session=$("#session").val();
+		var messageID=val.getAttribute("messageID");
+		var plateNumber=val.getAttribute("plateNumber");
 		var session=val.getAttribute("session");
 			if(session.length==0){
 				alert('请登录,再查看');
@@ -161,7 +163,6 @@
 		var isPay=val.getAttribute("isPay");
 		if(isPay=='0'){
 	//	if($("#isPay").attr("value")=='0'){
-			var plateNumber=val.getAttribute("plateNumber");
 			$("#payPlateNumber").val(plateNumber);
 			$('#myinfo').modal('show');
 
@@ -182,6 +183,8 @@
 */
 			return false;
 		}
+		$('#messageID').val(messageID);
+		$('#plateNumber').val(plateNumber);
 	 	$("#getDataDetail").submit();
 	}
 

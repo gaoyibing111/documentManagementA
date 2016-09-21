@@ -61,8 +61,7 @@ public class SerchVehicleController extends BaseController{
 	@RequestMapping("queryVehicleByPlate")
 	public ModelAndView queryVehicleByPlate(@RequestParam("searchKeyWord") String searchKeyWord){
 		ModelAndView mv = this.getModelAndView();
-
-	String jsonString=remoteService.HttpClientGet("queryVehicleByPlate?searchKeyWord="+searchKeyWord);
+		String jsonString=remoteService.HttpClientGet("queryVehicleByPlate?searchKeyWord="+searchKeyWord);
 		if(StringUtils.isBlank(jsonString)){
 			mv.setViewName("vehicleManage/showQueryDataList");
 		return mv;
@@ -74,7 +73,6 @@ public class SerchVehicleController extends BaseController{
 			mv.addObject("dataList", isLogin(br).getData());
 		}
 		mv.setViewName("vehicleManage/showQueryDataList");
-
 		return  mv;
 	}
 
@@ -116,6 +114,7 @@ public class SerchVehicleController extends BaseController{
 		ModelAndView mv = this.getModelAndView();
 		if(!userFollowVehicleService.checkUserLoginPay(plateNumber)){
 			mv.setViewName("vehicleManage/login");
+			return  mv;
 		}
 		String jsonString=remoteService.HttpClientGet("queryBasicInfo?messageID="+messageID);
 		if(StringUtils.isBlank(jsonString)){
@@ -179,7 +178,6 @@ public class SerchVehicleController extends BaseController{
 			jsonObject.put("_vcrList",br.getData());
 		}
 		return  jsonObject.toString();
-
 	}
 
 
@@ -203,7 +201,6 @@ public class SerchVehicleController extends BaseController{
 			jsonObject.put("_vcrList",br.getData());
 		}
 		return  jsonObject.toString();
-
 	}
 
 	/**
@@ -226,7 +223,6 @@ public class SerchVehicleController extends BaseController{
 			jsonObject.put("_vcrList",br.getData());
 		}
 		return  jsonObject.toString();
-
 	}
 
 
@@ -250,7 +246,6 @@ public class SerchVehicleController extends BaseController{
 			jsonObject.put("_vcrList",br.getData());
 		}
 		return  jsonObject.toString();
-
 	}
 
 

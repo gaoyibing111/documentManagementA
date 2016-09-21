@@ -31,9 +31,9 @@
 	<div class="main">
 		<div class="content">
 			<ul class="crumb">
-				<li>首页</li>
-				<li>个人信息</li>
-				<li>关注车辆</li>
+				<li><a href="<%=basePath%>/searchVehicleInfo/query">首页</a></li>
+				<li><a href="<%=basePath%>/myInfoVehicleClient/myInfoPage">个人主页</a></li>
+				<li><a href="<%=basePath%>/followVehicleClient/queryUserfollowVehicle">关注车辆</a></li>
 			</ul>
 			<div class="vms-inner">
 				<div class="vms-inner-hd">

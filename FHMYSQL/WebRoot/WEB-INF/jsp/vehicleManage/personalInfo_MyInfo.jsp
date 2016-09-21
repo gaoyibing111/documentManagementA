@@ -23,7 +23,7 @@
 					<a href="<%=basePath%>/registerVehicleClient/registerPage">注册</a>
 				</c:if>
 				<c:if test="${sessionScope.sessionUser.USERNAME != null }">
-					<a href="<%=basePath%>/myInfoVehicleClient/myInfoPage">用户：${sessionScope.sessionUser.USERNAME}</a>
+					<a  href="<%=basePath%>/myInfoVehicleClient/myInfoPage">用户：${sessionScope.sessionUser.USERNAME}</a>
 				</c:if>
 			</div>
 		</div>
@@ -32,16 +32,16 @@
 	<div class="main">
 		<div class="content">
 			<ul class="crumb">
-				<li>首页</li>
-				<li>个人信息</li>
-				<li>我的信息</li>
+				<li><a href="<%=basePath%>/searchVehicleInfo/query">首页</a></li>
+				<li><a href="<%=basePath%>/myInfoVehicleClient/myInfoPage">个人主页</a></li>
+				<li><a href="<%=basePath%>/myInfoVehicleClient/getmyInfoPageJsp">我的信息</a></li>
 			</ul>
 			<div class="vms-inner">
 				<div class="my-info">
 					<img class="img" src="images/bg1.jpg" alt="">
 					<ul>
 						<li>账号：${sessionScope.sessionUser.USERNAME}</li>
-						<li>昵称：${sessionScope.sessionUser.NAME}</li>
+						<li><a id="updateName">昵称：${sessionScope.sessionUser.NAME}</a></li>
 					</ul>
 					<button class="btn btn-primary logic-editor-myinfo">编 辑</button>
 				</div>
@@ -147,6 +147,9 @@
 			success: function(msg){
 				if(msg.msg=='密码修改成功'){
 				alert("信息修改成功!");
+					$('#myinfoEditorModal').modal('hide');
+
+					location.reload();
 				}else {
 					alert(msg.msg);
 				}

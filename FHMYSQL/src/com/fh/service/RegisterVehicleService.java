@@ -1,12 +1,14 @@
 package com.fh.service;
 
 
+import com.fh.controller.SerchVehicleController;
+import com.fh.entity.system.User;
 import com.fh.service.system.appuser.AppuserService;
-import com.fh.util.DateUtil;
-import com.fh.util.MD5;
-import com.fh.util.PageData;
-import com.fh.util.UuidUtil;
+import com.fh.util.*;
 import net.sf.json.JSONObject;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.session.Session;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -35,6 +37,12 @@ public class RegisterVehicleService {
             }
             if(org.apache.commons.lang.StringUtils.isNotBlank(name)){//修改昵称
                 pd.put("NAME",name);
+                User u= SerchVehicleController.getUserInfo();
+                u.setNAME(name);
+                Subject currentUser = SecurityUtils.getSubject();
+                Session session = currentUser.getSession();
+                session.removeAttribute(Const.SESSION_USER);
+                session.setAttribute(Const.SESSION_USER, u);
             }
             pd.put("PASSWORD", MD5.md5(password)); //cover old password
             try {

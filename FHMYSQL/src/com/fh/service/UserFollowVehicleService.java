@@ -39,21 +39,21 @@ public class UserFollowVehicleService {
      * 检查当前用户是否登录并已经付费
      */
     public   boolean checkUserLoginPay(String plateNumber){
-        boolean flag=false;
+        boolean flag=true;
         if(SerchVehicleController.getUserInfo()==null){
-            return  flag;
+            return  flag=false;
         }
         PageData pd = new PageData();
         pd.put("username",SerchVehicleController.getUserInfo().getUSERNAME());
         pd.put("plate_number",plateNumber);
         try {
             if(findFollowIsPay(pd)==null || findFollowIsPay(pd).size()<1){
-                return  flag;
+                return  flag=false;
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return true;
+       return flag;
     }
 
 

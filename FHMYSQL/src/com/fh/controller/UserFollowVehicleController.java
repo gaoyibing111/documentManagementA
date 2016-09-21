@@ -80,7 +80,6 @@ public class UserFollowVehicleController extends BaseController{
              e.printStackTrace();
              jsonObject.put("msg","关注失败");
          }
-
          return jsonObject.toString();
     }
 
@@ -122,7 +121,6 @@ public class UserFollowVehicleController extends BaseController{
         }
         mv.addObject("dataList", listResp);
         mv.setViewName("vehicleManage/personalInfo_FocusOnVehicles");
-
         return  mv;
     }
 
