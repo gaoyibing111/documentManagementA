@@ -21,6 +21,9 @@ public class TestController {
         {
             url="queryBasicInfo2";
         }
+        if(url.equals("queryPayVehicle")&&messageID.equals("XXXXXXXXXXX2")){
+            url="queryPayVehicle2";
+        }
         jsonString = Read.read(request, url);
         return  jsonString;
     }

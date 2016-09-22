@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="PayRecordMapper">
+	
+		<!-- 列表 -->
+	<select id="datalistPage" parameterType="page" resultType="pd">
+		select
+				a.username,
+				a.plate_number,
+				a.pay_channel,
+				a.pay_time
+		from 
+				user_paywater_vehicle a
+		WHERE
+		1=1
+		<if test="pd.field1 !=null and pd.field1!=''">
+			AND (
+			a.plate_number LIKE ('%' + #{pd.field1} + '%')
+			or
+			a.username LIKE ('%' + #{pd.field1} + '%')
+			)
+		</if>
+	</select>
+
+
+	<!--渠道分流统计-->
+	<select id="splitFlowStatistics" parameterType="page" resultType="pd">
+		select
+		a.username,
+		a.plate_number,
+		a.pay_channel,
+		a.source_of_channel,
+		a.pay_time
+		from
+		user_paywater_vehicle a
+		WHERE
+		<if test="pd.startDate!=null and pd.startDate!='' and pd.endDate!=null and pd.endDate!=''">
+			a.pay_time between   #{pd.startDate} AND  #{pd.endDate} AND
+		</if>
+		1=1
+		<if test="pd.field1 !=null and pd.field1!=''">
+			AND (
+			a.plate_number LIKE ('%' + #{pd.field1} + '%')
+			or
+			a.username LIKE ('%' + #{pd.field1} + '%')
+			)
+		</if>
+		<if test="pd.field2 !=null and pd.field2!=''">
+			and a.source_of_channel=#{pd.field2}
+		</if>
+	</select>
+
+
+	
+
+</mapper>

@@ -181,7 +181,7 @@ public class DateUtil {
 	 * 获得默认的 date pattern
 	 */
 	public static String getDatePattern() {
-		return longDatePattern;
+		return defaultDatePattern;
 	}
 
 	/**

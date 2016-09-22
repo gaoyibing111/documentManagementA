@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="CustomerManagementMapper">
+	
+	
+	<!-- 新增-->
+	<insert id="save" parameterType="pd">
+		insert into TB_CUSTOMERMANAGEMENT(
+			USERNAME,	
+			NAME,	
+			START_TIME,	
+			COUNT_PAY_VEHICLE,	
+			CUSTOMERMANAGEMENT_ID
+		) values (
+			#{USERNAME},	
+			#{NAME},	
+			#{START_TIME},	
+			#{COUNT_PAY_VEHICLE},	
+			#{CUSTOMERMANAGEMENT_ID}
+		)
+	</insert>
+	
+	
+	<!-- 删除-->
+	<delete id="delete" parameterType="pd">
+		delete from TB_CUSTOMERMANAGEMENT
+		where 
+			CUSTOMERMANAGEMENT_ID = #{CUSTOMERMANAGEMENT_ID}
+	</delete>
+	
+	
+	<!-- 修改 -->
+	<update id="edit" parameterType="pd">
+		update  TB_CUSTOMERMANAGEMENT
+			set 
+				USERNAME = #{USERNAME},
+				NAME = #{NAME},
+				START_TIME = #{START_TIME},
+				COUNT_PAY_VEHICLE = #{COUNT_PAY_VEHICLE},
+			CUSTOMERMANAGEMENT_ID = CUSTOMERMANAGEMENT_ID
+			where 
+				CUSTOMERMANAGEMENT_ID = #{CUSTOMERMANAGEMENT_ID}
+	</update>
+	
+	
+	<!-- 通过ID获取数据 -->
+	<select id="findById" parameterType="pd" resultType="pd">
+		select 
+			USERNAME,	
+			NAME,	
+			START_TIME,	
+			COUNT_PAY_VEHICLE,	
+			CUSTOMERMANAGEMENT_ID
+		from 
+			TB_CUSTOMERMANAGEMENT
+		where 
+			CUSTOMERMANAGEMENT_ID = #{CUSTOMERMANAGEMENT_ID}
+	</select>
+	
+	
+	<!-- 列表 -->
+	<select id="datalistPage" parameterType="page" resultType="pd">
+	<!-- select
+            a.USERNAME,
+            a.NAME,
+            a.START_TIME,
+            a.COUNT_PAY_VEHICLE,
+            a.CUSTOMERMANAGEMENT_ID
+    from
+            TB_CUSTOMERMANAGEMENT a -->
+
+            select sau.username as USERNAME,
+            sau.name as NAME,
+            sau.START_TIME,
+             count(ufv.is_pay) as COUNT_PAY_VEHICLE
+
+             from  sys_app_user sau left join user_follow_vehicle ufv
+
+            on sau.USERNAME=ufv.username  where ufv.is_pay=1 and ufv.is_delete=0
+
+            GROUP BY ufv.is_pay,sau.username,sau.name,sau.START_TIME
+</select>
+
+<!-- 列表(全部) -->
+	<select id="listAll" parameterType="pd" resultType="pd">
+		select
+				a.USERNAME,	
+				a.NAME,	
+				a.START_TIME,	
+				a.COUNT_PAY_VEHICLE,	
+				a.CUSTOMERMANAGEMENT_ID
+		from 
+				TB_CUSTOMERMANAGEMENT a
+	</select>
+	
+	<!-- 批量删除 -->
+	<delete id="deleteAll" parameterType="String">
+		delete from TB_CUSTOMERMANAGEMENT
+		where 
+			CUSTOMERMANAGEMENT_ID in
+		<foreach item="item" index="index" collection="array" open="(" separator="," close=")">
+                 #{item}
+		</foreach>
+	</delete>
+
+	<!--根据用户名，获取 tb_count_exp_time 表数据-->
+	<select id="getCountExpTimeByUserName" parameterType="page" resultType="pd">
+	select PLATE_NUMBER,USERNAME,PAY_TIME,EXP_DATE
+	 FROM tb_count_exp_time
+		where
+		<if test="pd.USERNAME != null and pd.USERNAME != ''">
+			 	USERNAME=#{pd.USERNAME}
+		</if>
+
+	</select>
+
+
+	
+</mapper>

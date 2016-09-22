@@ -8,6 +8,7 @@ import com.fh.entity.system.User;
 import com.fh.service.RegisterVehicleService;
 import com.fh.service.UserFollowVehicleService;
 import com.fh.service.UserMaintainPlanVehicleService;
+import com.fh.service.UserPayVehicleService;
 import com.fh.service.remote.RemoteService;
 import com.fh.util.Jurisdiction;
 import com.fh.util.ObjectExcelView;
@@ -39,7 +40,8 @@ public class MyInfoVehicleController extends BaseController {
     UserFollowVehicleService userFollowVehicleService;
     @Autowired
     UserMaintainPlanVehicleService userMaintainPlanVehicleService;
-
+    @Autowired
+    UserPayVehicleService userPayVehicleService;
 
 
     @RequestMapping("/myInfoPage")
@@ -90,12 +92,12 @@ public class MyInfoVehicleController extends BaseController {
     @RequestMapping("queryPayVehicle")
     public ModelAndView queryPayVehicle() {
         ModelAndView mv = this.getModelAndView();
-        List<PayVehicleResp> respList=new ArrayList<PayVehicleResp>();
         User u=SerchVehicleController.getUserInfo();
         if(u==null){
             mv.setViewName("vehicleManage/login");
             return  mv;
         }
+  /*      List<PayVehicleResp> respList=new ArrayList<PayVehicleResp>();
         PageData pd = new PageData();
         pd.put("username",u.getUSERNAME());
         List<PageData> pageDataList=null;
@@ -114,7 +116,8 @@ public class MyInfoVehicleController extends BaseController {
                 br.setMessageID(pageData.get("message_id").toString());
                 respList.add(br);
             }
-        }
+        }*/
+        List<PayVehicleResp>   respList   =userPayVehicleService.userPayVehicleList(u.getUSERNAME());
         mv.addObject("dataList", respList);
         mv.setViewName("vehicleManage/personalInfo_PremiumVehicle");
           return  mv;

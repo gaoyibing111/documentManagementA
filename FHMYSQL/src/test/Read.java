@@ -98,6 +98,9 @@ public class Read {
             case ("queryPayVehicle"):
                 return "queryPayVehicle";
 
+            case ("queryPayVehicle2"):
+                return "queryPayVehicle2";
+
             case ("queryMaintenancePlan"):
                 return "queryMaintenancePlan";
 
