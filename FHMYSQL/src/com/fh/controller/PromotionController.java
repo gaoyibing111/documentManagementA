@@ -11,7 +11,10 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import com.alibaba.fastjson.JSONObject;
 import com.fh.service.PromotionService;
+
+import com.google.gson.JsonObject;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
@@ -242,4 +245,31 @@ public class PromotionController extends BaseController {
 		DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 		binder.registerCustomEditor(Date.class, new CustomDateEditor(format,true));
 	}
+
+	/**
+	 * 分流渠道统计下拉框查询 选择渠道公司
+	 * @param page
+	 * @return
+	 */
+	@RequestMapping(value="/queryChannel")
+	@ResponseBody
+	public String queryChannel(Page page){
+		logBefore(logger, "列表Promotion");
+		//if(!Jurisdiction.buttonJurisdiction(menuUrl, "cha")){return null;} //校验权限
+		JSONObject jsonObject=new JSONObject();
+		PageData pd = new PageData();
+		try{
+			pd = this.getPageData();
+			page.setPd(pd);
+			List<PageData>	varList = promotionService.list(page);	//列出Promotion列表
+			jsonObject.put("varList", varList);
+		} catch(Exception e){
+			logger.error(e.toString(), e);
+		}
+		return jsonObject.toString();
+	}
+
+
+
+
 }

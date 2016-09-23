@@ -24,7 +24,7 @@
 
 
 	<!--渠道分流统计-->
-	<select id="splitFlowStatistics" parameterType="page" resultType="pd">
+	<select id="splitFlowStatisticslistPage" parameterType="page" resultType="pd">
 		select
 		a.username,
 		a.plate_number,

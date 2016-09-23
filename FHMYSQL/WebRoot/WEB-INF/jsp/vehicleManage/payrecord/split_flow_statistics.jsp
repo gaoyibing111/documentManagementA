@@ -23,7 +23,7 @@
 	<div class="row-fluid">
 	
 			<!-- 检索  -->
-			<form action="payrecord/splitFlowStatistics" method="post" name="Form" id="Form">
+			<form action="payrecord/splitFlowStatistics.do" method="post" name="Form" id="Form">
 			<table>
 				<tr>
 					<td>
@@ -35,11 +35,11 @@
 					<td><input class="span10 date-picker" name="startDate" id="startDate"  type="text" data-date-format="yyyy-mm-dd" readonly="readonly" style="width:88px;" placeholder="付费日期"/></td>
 					<td><input class="span10 date-picker" name="endDate" id="endDate"   type="text" data-date-format="yyyy-mm-dd" readonly="readonly" style="width:88px;" placeholder="付费日期"/></td>
 					<td style="vertical-align:top;">
-					 	<select class="chzn-select" name="field2" id="field2" data-placeholder="请选择渠道来源" style="vertical-align:top;width: 120px;">
-							<option value=""></option>
-							<option value="">全部</option>
+					 	<select class="" name="field2" id="field2" placeholder="请选择渠道来源" style="vertical-align:top;width:180px;">
+							<option value="">请选择渠道来源</option>
+							<%--	<option value="">全部</option>
 							<option value="">1</option>
-							<option value="">2</option>
+							<option value="">2</option>--%>
 					  	</select>
 					</td>
 					<td style="vertical-align:top;"><button class="btn btn-mini btn-light" onclick="search();"  title="检索"><i id="nav-search-icon" class="icon-search"></i></button></td>
@@ -59,7 +59,7 @@
 						<label><input type="checkbox" id="zcheckbox" /><span class="lbl"></span></label>
 						</th>--%>
 						<th class="center">序号</th>
-							<th class="center">渠道来源</th>
+						<th class="center">渠道来源</th>
 						<th class="center">用户名</th>
 						<th class="center">车牌号</th>
 						<th class="center">付费渠道</th>
@@ -124,22 +124,22 @@
 				
 				</tbody>
 			</table>
-			
-		<%--<div class="page-header position-relative">
-		<table style="width:100%;">
-			<tr>
-				<td style="vertical-align:top;">
-					<c:if test="${QX.add == 1 }">
-					<a class="btn btn-small btn-success" onclick="add();">新增</a>
-					</c:if>
-					<c:if test="${QX.del == 1 }">
-					<a class="btn btn-small btn-danger" onclick="makeAll('确定要删除选中的数据吗?');" title="批量删除" ><i class='icon-trash'></i></a>
-					</c:if>
-				</td>
-				<td style="vertical-align:top;"><div class="pagination" style="float: right;padding-top: 0px;margin-top: 0px;">${page.pageStr}</div></td>
-			</tr>
-		</table>
-		</div>--%>
+
+				<div class="page-header position-relative">
+					<table style="width:100%;">
+						<tr>
+							<%--		<td style="vertical-align:top;">
+                                        <c:if test="${QX.add == 1 }">
+                                        <a class="btn btn-small btn-success" onclick="add();">新增</a>
+                                        </c:if>
+                                        <c:if test="${QX.del == 1 }">
+                                        <a class="btn btn-small btn-danger" onclick="makeAll('确定要删除选中的数据吗?');" title="批量删除" ><i class='icon-trash'></i></a>
+                                        </c:if>
+                                    </td>--%>
+							<td style="vertical-align:top;"><div class="pagination" style="float: right;padding-top: 0px;margin-top: 0px;">${page.pageStr}</div></td>
+						</tr>
+					</table>
+				</div>
 		</form>
 	</div>
  
@@ -169,7 +169,8 @@
 		<!-- 引入 -->
 		<script type="text/javascript" src="static/js/jquery.tips.js"></script><!--提示框-->
 		<script type="text/javascript">
-		
+
+
 		$(top.hangge());
 		
 		//检索
@@ -254,9 +255,29 @@
 				});
 					
 			});
+			queryChannel();
 			
 		});
-		
+
+		function queryChannel(){
+			$.ajax({
+			type: "POST",
+			url: '<%=basePath%>promotion/queryChannel',
+			data: {},
+			async:true,
+			cache: false,
+			dataType:'json',
+			success: function(msg){
+				var dataArray=eval(msg.varList);
+				var aaa="";
+				for (var i = 0; i < dataArray.length; i++) {
+					aaa+="<option value="+dataArray[i].COMPANY_NAME+">"+dataArray[i].COMPANY_NAME+"</option>";
+				}
+				$('#field2').append(aaa);
+			}
+		});
+
+		}
 		
 		//批量操作
 		function makeAll(msg){

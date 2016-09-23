@@ -50,7 +50,7 @@ public class PayRecordService {
 	*分流统计
 	*/
 	public List<PageData> splitFlowStatistics(Page page)throws Exception{
-		return (List<PageData>)dao.findForList("PayRecordMapper.splitFlowStatistics", page);
+		return (List<PageData>)dao.findForList("PayRecordMapper.splitFlowStatisticslistPage", page);
 	}
 	
 	/*
