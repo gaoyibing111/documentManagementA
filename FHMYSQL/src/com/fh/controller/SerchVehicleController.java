@@ -8,9 +8,12 @@ import javax.servlet.http.HttpServletRequest;
 import com.fh.entity.Page;
 import com.fh.entity.RemoteResp.*;
 import com.fh.service.UserFollowVehicleService;
+import com.fh.service.UserMaintainPlanVehicleService;
 import com.fh.service.remote.RemoteService;
 import com.fh.util.Const;
+import com.fh.util.DateUtil;
 import com.fh.util.PageData;
+import com.fh.util.UuidUtil;
 import net.sf.json.JSONObject;
 import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.SecurityUtils;
@@ -38,7 +41,8 @@ public class SerchVehicleController extends BaseController{
 	RemoteService remoteService;
 	@Autowired
 	UserFollowVehicleService userFollowVehicleService;
-
+	@Autowired
+	UserMaintainPlanVehicleService userMaintainPlanVehicleService;
 
 
 
@@ -247,6 +251,89 @@ public class SerchVehicleController extends BaseController{
 		}
 		return  jsonObject.toString();
 	}
+
+
+		/**
+		 * 查询日常维护记录
+		 */
+		@RequestMapping("queryRoutineMaintenanceRecords")
+		@ResponseBody
+		public String queryRoutineMaintenanceRecords(@RequestParam("messageID")String messageID,
+													 @RequestParam("plateNumber")String plateNumber,
+													 @RequestParam("id")String id) {
+			JSONObject jsonObject=new JSONObject();
+			if(!userFollowVehicleService.checkUserLoginPay(plateNumber)){
+				jsonObject.put("msg", "请登录并付费查看");
+				return  jsonObject.toString();
+			}
+			PageData pd =new PageData();
+			pd.put("plate_number",plateNumber);
+			pd.put("username",SerchVehicleController.getUserInfo().getUSERNAME());
+			if(StringUtils.isNotBlank(id)){
+				pd.put("id",id);//修改时查询记录
+			}
+			List<PageData> _vcrList=null;
+			try {
+				_vcrList =userMaintainPlanVehicleService.queryRoutineMaintenanceRecords(pd);
+				if(_vcrList!=null&&_vcrList.size()>0){
+					for(PageData pds:_vcrList){
+						pds.put("maintain_time", pds.get("maintain_time").toString());
+					}
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			jsonObject.put("_vcrList",_vcrList);
+
+			return  jsonObject.toString();
+		}
+
+
+
+		/**
+		 * 新增或修改日常维护记录
+	 	* 1.先查询该车辆的车辆颜色
+		 */
+		@RequestMapping("updateOrSaveRoutineMaintenance")
+		@ResponseBody
+		public String updateOrSaveRoutineMaintenance(@RequestParam("messageID")String messageID,
+													 @RequestParam("plateNumber")String plateNumber,
+													 @RequestParam("id")String id,
+													 @RequestParam("maintain_time")String maintain_time,
+													 @RequestParam("maintain_content")String maintain_content,
+													 @RequestParam("remark")String remark,
+													 @RequestParam("maintain_project")String maintain_project) {
+			JSONObject jsonObject=new JSONObject();
+			if(!userFollowVehicleService.checkUserLoginPay(plateNumber)){
+				jsonObject.put("msg", "请登录并付费查看");
+				return  jsonObject.toString();
+			}
+			PageData pd =new PageData();
+			try {
+				pd.put("maintain_time", DateUtil.getTime());
+				pd.put("maintain_project",maintain_project);
+				pd.put("remark",remark);
+				pd.put("maintain_content",maintain_content);
+				pd.put("username",SerchVehicleController.getUserInfo().getUSERNAME());
+				if(StringUtils.isBlank(id)) {
+					//先查询车辆颜色 vehicle_color
+					String jsonString=remoteService.HttpClientGet("queryBasicInfo?messageID="+messageID);
+					BaseInfoResp br =JSON.parseObject(jsonString,BaseInfoResp.class);
+					pd.put("id", UuidUtil.get32UUID());
+					pd.put("maintain_time", maintain_time);
+					pd.put("vehicle_color",br.getVehicleColor());
+					pd.put("plate_number",plateNumber);
+				 	userMaintainPlanVehicleService.saveRoutineMaintenanceRecord(pd);
+					return jsonObject.put("msg","新增成功").toString();
+				}
+				pd.put("id",id);
+				userMaintainPlanVehicleService.editRoutineMaintenanceRecord(pd);
+				return jsonObject.put("msg","修改成功").toString();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			return  jsonObject.toString();
+		}
 
 
 

@@ -104,6 +104,9 @@ public class Read {
             case ("queryMaintenancePlan"):
                 return "queryMaintenancePlan";
 
+            case ("queryMaintenancePlan2"):
+                return "queryMaintenancePlan2";
+
             case ("queryMessageRemind"):
                 return "queryMessageRemind";
 

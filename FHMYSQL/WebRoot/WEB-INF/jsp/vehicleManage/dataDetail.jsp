@@ -299,20 +299,22 @@
 				<div id="dlag_edit" class="editor-form">
 					<div class="container-fluid">
 						<form id="myinfoEditorForm" class="form-horizontal" method="post">
+							<input id="editMaintainId"   hidden="hidden" class="form-control-lg" type="text" >
 							<div class="row login-form-item form-group">
 								<div class="col-xs-4 col-left">
 									<label for="wxsj">维修时间:</label>
 								</div>
 								<div class="col-xs-7 col-right">
-									<input id="wxsj" type="text" name="wxsj" class="form-control-lg" value="">
+							 	<input id="wxsj" type="text"    class="form-control-lg">
 								</div>
+
 							</div>
 							<div class="row login-form-item form-group">
 								<div class="col-xs-4 col-left">
 									<label for="wxxm">维修项目:</label>
 								</div>
 								<div class="col-xs-7 col-right">
-									<input id="wxxm" name="wxxm" class="form-control-lg" type="text">
+									<input id="wxxm"  class="form-control-lg" type="text">
 								</div>
 							</div>
 							<div class="row login-form-item form-group">
@@ -320,7 +322,7 @@
 									<label for="wxnr">维修内容:</label>
 								</div>
 								<div class="col-xs-7 col-right">
-									<input id="wxnr" name="wxnr" class="form-control-lg" type="text">
+									<input id="wxnr"   class="form-control-lg" type="text">
 								</div>
 							</div>
 							<div class="row login-form-item form-group">
@@ -328,7 +330,7 @@
 									<label for="bz">备注:</label>
 								</div>
 								<div class="col-xs-7 col-right">
-									<textarea id="bz" name="bz" rows="4" class="form-control-lg"></textarea>
+									<textarea id="bz"   rows="4" class="form-control-lg"></textarea>
 								</div>
 							</div>
 							<div class="row login-form-item">
@@ -336,10 +338,10 @@
 								<div class="col-xs-7 col-right">
 									<div class="row">
 										<div class="col-xs-6">
-											<button class="btn btn-primary btn-lg btn-block" id="logic-editor-submit" onclick="">确 认</button>
+											<button class="btn btn-primary btn-lg btn-block" id="logic-editor-submit" onclick="saveOrUpdatemaintain()">确 认</button>
 										</div>
 										<div class="col-xs-6">
-											<button class="btn btn-secondary btn-lg btn-block" data-dismiss="modal">取 消</button>
+											<button class="btn btn-secondary btn-lg btn-block" data-dismiss="modal" onclick="cancelEditForm()">取 消</button>
 										</div>
 									</div>
 								</div>
@@ -365,18 +367,13 @@
 <script type="text/javascript">
 
 
-
-
-
 	var messageID=$("#user").val();
 	var plateNumber=$("#plateNumber").val();
 	function getSearchUrl(url){
-
-
 		$.ajax({
 			type: "GET",
 			url: '<%=basePath%>/searchVehicleInfo/'+url,
-			data: {messageID:messageID,plateNumber:plateNumber},
+			data: {messageID:messageID,plateNumber:plateNumber,id:''},
 			async:true,
 			cache: false,
 			dataType:'json',
@@ -390,6 +387,55 @@
 				}else {
 
 				}
+			}
+		});
+	}
+
+
+	//修改日常维护记录时先展示要修改的数据
+	function editmaintain(val){
+		var id=val.getAttribute("id");
+		var plateNumber=val.getAttribute("plateNumber");
+		$.ajax({
+			type: "GET",
+			url: '<%=basePath%>/searchVehicleInfo/queryRoutineMaintenanceRecords',
+			data: {id:id,plateNumber:plateNumber,messageID:messageID},
+			async:true,
+			cache: false,
+			dataType:'json',
+			success: function(msg){
+				if(msg._vcrList!=""){
+					if(msg.msg=='请登录并付费查看'){
+						window.location.assign("<%=basePath%>/loginVehicleClient/loginPage");
+					}
+					queryRoutineMaintenanceRecord(msg._vcrList);
+
+				}else {
+
+				}
+			}
+		});
+	}
+	//修改新增日常维护记录
+	function saveOrUpdatemaintain(){
+		var  maintain_time=$('#wxsj').val();
+		var  maintain_project=$("#wxxm").val();
+		var maintain_content=$("#wxnr").val();
+		var remark=$("#bz").val();
+		var id=$("#editMaintainId").val();
+
+		$.ajax({
+			type: "GET",
+			url: '<%=basePath%>/searchVehicleInfo/updateOrSaveRoutineMaintenance',
+			data: {id:id,plateNumber:plateNumber,messageID:messageID,remark:remark
+				,maintain_content:maintain_content,maintain_project:maintain_project,maintain_time:maintain_time},
+			async:true,
+			cache: false,
+			dataType:'json',
+			success: function(msg){
+				cancelEditForm();
+				$('#myinfoEditorModal').modal('hide');
+				getSearchUrl('queryRoutineMaintenanceRecords');
 			}
 		});
 	}

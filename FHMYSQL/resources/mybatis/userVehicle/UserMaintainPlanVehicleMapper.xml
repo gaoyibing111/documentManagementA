@@ -4,7 +4,7 @@
 <mapper namespace="UserMaintainPlanVehicleMapper">
 
 
-	<!--新增关注-->
+	<!--新增维修计划-->
 	<insert id="saveMaintainPlan" parameterType="pd">
 		insert into user_maintainplan_vehicle (
 		id,
@@ -60,6 +60,74 @@
 		where
 		id = #{id}
 	</delete>
+
+	<!--日常维护记录列表-->
+	<select id="queryRoutineMaintenanceRecords" parameterType="pd" resultType="pd">
+		select
+		id,
+		username,
+		plate_number,
+		vehicle_color,
+		maintain_time,
+		maintain_project,
+		remark,
+		maintain_content
+		from user_routine_maintain_vehicle
+		where
+		1=1
+		<if test="username != null and username != ''">
+		and username = #{username}
+		</if>
+		<if test="id != null and id != ''">
+		and	id = #{id}
+		</if>
+		<if test="plate_number != null and plate_number != ''">
+			and	plate_number = #{plate_number}
+		</if>
+
+	</select >
+
+
+	<!--日常维护记录新增-->
+	<insert id="saveRoutineMaintenanceRecord" parameterType="pd" >
+		insert into user_routine_maintain_vehicle (
+			id,
+			 username,
+			plate_number,
+			vehicle_color,
+			maintain_time,
+			maintain_project,
+			remark,
+			maintain_content
+		) values (
+			#{id},
+		#{username},
+		#{plate_number},
+		#{vehicle_color},
+		#{maintain_time},
+		#{maintain_project},
+		#{remark},
+		#{maintain_content}
+ 		)
+	</insert>
+
+
+	<!--日常维护记录修改-->
+	<update id="editRoutineMaintenanceRecord" parameterType="pd">
+		update  user_routine_maintain_vehicle
+		set
+		maintain_time = #{maintain_time},
+		maintain_project = #{maintain_project},
+		maintain_content = #{maintain_content},
+		remark = #{remark}
+				where
+		id = #{id}
+	</update>
+
+
+
+
+
 
 
 </mapper>

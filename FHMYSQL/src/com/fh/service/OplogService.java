@@ -1,9 +1,13 @@
 package com.fh.service;
 
 import java.util.List;
+import java.util.concurrent.Executors;
 
 import javax.annotation.Resource;
 
+import com.fh.controller.SerchVehicleController;
+import com.fh.util.DateUtil;
+import com.fh.util.UuidUtil;
 import org.springframework.stereotype.Service;
 
 import com.fh.dao.DaoSupport;
@@ -72,6 +76,33 @@ public class OplogService {
 
 	public List<PageData> queryByDate(Page page)throws Exception{
 		return (List<PageData>)dao.findForList("OplogMapper.queryByDate", page);
+	}
+
+	/**
+	 * 保存错误日志到表
+	 * @param pd
+	 */
+	public void saveLog( PageData pd){
+		pd.put("CREATE_DATE", DateUtil.getTime());
+		pd.put("OPLOG_ID", UuidUtil.get32UUID());
+		pd.put("OPERATOR", SerchVehicleController.getUserInfo().getNAME());
+		pd.put("OPERATOR_ROLE", SerchVehicleController.getUserInfo().getRole());
+		pd.put("USERNAME", SerchVehicleController.getUserInfo().getUSERNAME());
+		saveLogThread(pd);
+	}
+
+	//异步保存日志
+	public void saveLogThread(final PageData pd) {
+		Executors.newSingleThreadExecutor().execute(new Runnable() {
+			@Override
+			public void run() {
+				try {
+					dao.save("OplogMapper.save", pd);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
 	}
 
 	

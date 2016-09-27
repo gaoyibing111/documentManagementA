@@ -73,6 +73,13 @@ public class PayRecordService {
 	public void deleteAll(String[] ArrayDATA_IDS)throws Exception{
 		dao.delete("PayRecordMapper.deleteAll", ArrayDATA_IDS);
 	}
+
+
+	/**
+	 * 插入流水表
+	 */
+
+
 	
 }
 

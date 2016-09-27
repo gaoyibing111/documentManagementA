@@ -113,6 +113,10 @@
 		window.location.href='<%=basePath%>/myInfoVehicleClient/excel?messageID='+messageID;
 	}
 	function  queryDetail(val){
+		var messageID=val.getAttribute("messageID");
+		var plateNumber=val.getAttribute("plateNumber");
+		$("#user").val(messageID);
+		$("#plateNumber").val(plateNumber);
 		$("#getDataDetail").submit();
 	}
 </script>
