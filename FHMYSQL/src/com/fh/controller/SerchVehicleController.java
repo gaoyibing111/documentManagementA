@@ -324,11 +324,12 @@ public class SerchVehicleController extends BaseController{
 					pd.put("vehicle_color",br.getVehicleColor());
 					pd.put("plate_number",plateNumber);
 				 	userMaintainPlanVehicleService.saveRoutineMaintenanceRecord(pd);
-					return jsonObject.put("msg","新增成功").toString();
+					jsonObject.put("msg", "新增成功");
+				}else {
+					pd.put("id", id);
+					userMaintainPlanVehicleService.editRoutineMaintenanceRecord(pd);
+					jsonObject.put("msg", "修改成功");
 				}
-				pd.put("id",id);
-				userMaintainPlanVehicleService.editRoutineMaintenanceRecord(pd);
-				return jsonObject.put("msg","修改成功").toString();
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
