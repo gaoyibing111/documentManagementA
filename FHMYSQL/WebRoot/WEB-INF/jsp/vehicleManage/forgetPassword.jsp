@@ -68,7 +68,10 @@
 							<div class="col-xs-7 col-right">
 								<div class="row">
 									<div class="col-xs-6">
-										<button class="btn btn-primary btn-lg btn-block" type="submit" onclick="submitReg()">提 交</button>
+										<button class="btn btn-primary btn-lg btn-block" disabled="enabled"  onclick="submitReg()">提 交</button>
+									</div>
+									<div class="col-xs-6">
+										<button class="btn btn-primary btn-lg btn-block"  onclick="backLoginPage()">返 回</button>
 									</div>
 								</div>
 							</div>
@@ -130,7 +133,9 @@
 		});
 
 	}
-
+	function backLoginPage(){
+		window.location.assign("<%=basePath%>/loginVehicleClient/loginPage");
+	}
 
 </script>
 </body>

@@ -3,12 +3,10 @@ package com.fh.controller;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.fh.controller.base.BaseController;
+import com.fh.entity.Page;
 import com.fh.entity.RemoteResp.*;
 import com.fh.entity.system.User;
-import com.fh.service.RegisterVehicleService;
-import com.fh.service.UserFollowVehicleService;
-import com.fh.service.UserMaintainPlanVehicleService;
-import com.fh.service.UserPayVehicleService;
+import com.fh.service.*;
 import com.fh.service.remote.RemoteService;
 import com.fh.util.Jurisdiction;
 import com.fh.util.ObjectExcelView;
@@ -42,7 +40,10 @@ public class MyInfoVehicleController extends BaseController {
     UserMaintainPlanVehicleService userMaintainPlanVehicleService;
     @Autowired
     UserPayVehicleService userPayVehicleService;
-
+    @Autowired
+    ChargeService chargeService;
+    @Autowired
+    PayInterfaceService payInterfaceService;
 
     @RequestMapping("/myInfoPage")
     public ModelAndView myInfoPage() throws Exception{
@@ -50,6 +51,54 @@ public class MyInfoVehicleController extends BaseController {
         mv.setViewName("vehicleManage/personalInfo_MyInfoPayVehicle");
         return mv;
     }
+
+
+
+    /**
+     *     发送支付页面
+     *     @Param 用户信息
+     *     @Param 车牌号
+     */
+
+    @RequestMapping("/payPage")
+    public ModelAndView payPage(@RequestParam("plateNumber")String plateNumber) throws Exception{
+        ModelAndView mv = this.getModelAndView();
+        //车辆信息 支付费用
+        User u=SerchVehicleController.getUserInfo();
+        mv.addObject("username",u.getUSERNAME());
+        mv.addObject("plateNumber",plateNumber);
+        Page p=new Page();
+        List<PageData> list=chargeService.list(p);
+        if(list.size()>0) {
+            mv.addObject("charge", list.get(0)); //目前费用只有一种 50元 10年
+        }
+        mv.setViewName("vehicleManage/payPage");
+        return mv;
+    }
+
+    /**
+     * 支付接口
+     */
+        @RequestMapping("pay")
+        public  String pay(){
+            PageData pd = new PageData();
+            pd = this.getPageData();
+            payInterfaceService.pay(pd);
+            return "";//todo view 是否跳入第三方支付页面
+        }
+
+
+    /**todo
+     * 支付回调接口
+     * 成功{
+     * 1.开始计算到期时间  表： tb_count_exp_time
+     * 2.修改关注表支付状态   表：user_follow_vehicle
+     * }
+     */
+
+
+
+
 
     /**
      * 跳转到个人信息页面

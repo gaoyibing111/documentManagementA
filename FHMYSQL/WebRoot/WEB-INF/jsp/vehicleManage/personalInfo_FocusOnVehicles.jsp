@@ -98,6 +98,11 @@
 	function  addFollow(){
 		window.location.assign("<%=basePath%>/searchVehicleInfo/query");
 	}
+	//跳转支付页面
+	function follow(val){
+		window.location.href=("<%=basePath%>/myInfoVehicleClient/payPage?plateNumber="+val.getAttribute("plateNumber"));
+	}
+
 
 </script>
 

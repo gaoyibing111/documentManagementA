@@ -27,13 +27,14 @@ public class PayInterfaceService {
 
     @Transactional
     public String pay(PageData pd){
-
         //1.生成订单号
         String orderId=pd.get("username")+","+pd.get("plateNumber")+","+pd.get("charge") + "," +System.currentTimeMillis();
         pd.put("order_number",orderId);
         try {
             //插入流水表  user_paywater_vehicle
             saveWater(pd);
+            //todo 调用第三方支付接口
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -61,7 +62,6 @@ public class PayInterfaceService {
         try {
             dao.save("PayRecordMapper.saveWater", pd);
         } catch (Exception e) {
-
             e.printStackTrace();
             try {
                 logger.error(e.toString(), e);

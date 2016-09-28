@@ -23,44 +23,56 @@
 		<div class="content">
 			<div class="login-form">
 				<div class="container-fluid">
-					<form id="registerForm" method="post" action="">
+					<form id="payForm" method="post" action="pay" >
 						<div class="row login-form-item form-group">
 							<div class="col-xs-3 col-left">
-								<label for="user">手机号码：</label>
+								<label for="username">用户账号：</label>
 							</div>
 							<div class="col-xs-7 col-right">
-								<input id="user" name="user" class="form-control-lg" type="text">
+								<label id="username" name="username" class="form-control-lg" >${username}</label>
+								<input   name="username" hidden="hidden" class="form-control-lg" type="text" value="${username}">
+
 							</div>
 						</div>
 						<div class="row login-form-item">
 							<div class="col-xs-3 col-left">
-								<label for="code">验证码：</label>
+								<label for="plateNumber">车牌号码：</label>
 							</div>
 							<div class="col-xs-7 col-right">
 							<div class="row form-group">
 									<div class="col-xs-6">
-										<input id="code" name="code" class="form-control-lg" type="text">
+										<label id="plateNumber" name="plateNumber" class="form-control-lg" >${plateNumber}</label>
+										<input   name="plate_number" hidden="hidden" class="form-control-lg" type="text" value="${plateNumber}">
 									</div>
-									<div class="col-xs-6">
-										<button class="btn btn-secondary btn-lg btn-block" onclick="sendVcode()">发送短信获取验证码</button>
-									</div>
-								</div>
+							</div>
 							</div>
 						</div>
 						<div class="row login-form-item form-group">
 							<div class="col-xs-3 col-left">
-								<label for="npw">新密码：</label>
+								<label for="charge">费用信息：</label>
 							</div>
 							<div class="col-xs-7 col-right">
-								<input id="npw" name="npw" class="form-control-lg" type="password" maxlength="12">
+								<label id="chargeName" name="chargeName" class="form-control-lg" >${charge.CHARGE_NAME}</label>
+								<input   name="chargeName" hidden="hidden" class="form-control-lg" type="text" value="${charge.CHARGE_NAME}">
+
 							</div>
 						</div>
 						<div class="row login-form-item form-group">
 							<div class="col-xs-3 col-left">
-								<label for="cpw">确认新密码：</label>
+								<label for="charge">费用金额：</label>
 							</div>
 							<div class="col-xs-7 col-right">
-								<input id="cpw" name="cpw" class="form-control-lg" type="password" maxlength="12">
+								<label id="charge" name="charge" class="form-control-lg" >${charge.CHARGE}元</label>
+								<input   name="pay_money" hidden="hidden" class="form-control-lg" type="text" value="${charge.CHARGE}">
+							</div>
+						</div>
+						<div class="row login-form-item form-group">
+							<div class="col-xs-3 col-left">
+								<label for="chargeExpDate">费率截止日期：</label>
+							</div>
+							<div class="col-xs-7 col-right">
+								<label id="chargeExpDate" name="chargeExpDate" class="form-control-lg" >${charge.EXP_DATE}</label>
+								<input   name="chargeExpDate" hidden="hidden" class="form-control-lg" type="text" value="${charge.EXP_DATE}">
 							</div>
 						</div>
 						<div class="row login-form-item">
@@ -68,10 +80,10 @@
 							<div class="col-xs-7 col-right">
 								<div class="row">
 									<div class="col-xs-6">
-										<button class="btn btn-primary btn-lg btn-block" type="submit" onclick="submitReg()">提 交</button>
+										<button class="btn btn-primary btn-lg btn-block"  onclick="submitPay()">提 交</button>
 									</div>
 									<div class="col-xs-6">
-										<button class="btn btn-primary btn-lg btn-block"  onclick="backLoginPage()">返 回</button>
+										<button class="btn btn-primary btn-lg btn-block"  onclick="javascript:history.go(-1)">返 回</button>
 									</div>
 								</div>
 							</div>
@@ -92,47 +104,11 @@
 	<script src="<%=basePath %>/static/vehicleManage/js/bootstrapValidator.js"></script>
 <script type="text/javascript">
 
-	//获取验证码
-	function sendVcode(){
-		var phone = $("#user").val();
-		$.ajax({
-			type: "POST",
-			url: '<%=basePath%>/registerVehicleClient/getRegisterCode',
-			data: {phone:phone,forget:0},
-			async:false,
-			cache: false,
-			dataType:'json',
-			success: function(msg){
-				alert(msg.msg);
-			}
-		});
-	}
-	//提交注册信息
-	function submitReg(){
-		var phone = $("#user").val();
-		var code = $("#code").val();
-		var npw = $("#npw").val();
-		if($("#cpw").val().length<8 || $("#npw").val().length<8 ){
-			alert("密码不能少于8位");
-			return  false;
-		}
-		$.ajax({
-			type: "POST",
-			url: '<%=basePath%>/registerVehicleClient/submitRegister',
-			data: {phone:phone,password:npw,code:code,forget:0},
-			async:true,
-			cache: false,
-			dataType:'json',
-			success: function(msg){
-				window.location.assign("<%=basePath%>/loginVehicleClient/loginPage");
-			}
-		});
-
+	function submitPay(){
+		 $('#payForm').submit();
 	}
 
-	function backLoginPage(){
-		window.location.assign("<%=basePath%>/loginVehicleClient/loginPage");
-	}
+
 </script>
 </body>
 </html>

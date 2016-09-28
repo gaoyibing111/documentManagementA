@@ -180,7 +180,7 @@
 			});
 			document.getElementById("payPanel").style.zIndex=99;
 			$("#payPanel").show();
-*/
+	*/
 			return false;
 		}
 		$('#messageID').val(messageID);
@@ -225,7 +225,10 @@
 			return ;
 		}
 
-
+		function pay(){
+			window.location.href=("<%=basePath%>/myInfoVehicleClient/payPage?plateNumber="+$("#payPlateNumber").val());
+			//console.log( "<%=basePath%>/myInfoVehicleClient/payPage?plateNumber="+$("#payPlateNumber").val());
+		}
 
 
 	</script>
