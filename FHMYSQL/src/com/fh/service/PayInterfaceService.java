@@ -48,16 +48,12 @@ public class PayInterfaceService {
      */
     public void saveWater(PageData pd){
         pd.put("id", UuidUtil.get32UUID());
-        //        username 已经存在pd中
-        //          plate_number
          //         message_id
         //          pay_channel
         pd.put("pay_time", DateUtil.getTime());// pay_time
         //          source_of_channel
-        //          pay_money  用户选择资费后的金额
         //          exp_date   根据选择自费金额 计算到期时间
-        //        order_number
-        //          remark
+        pd.put("remark",pd.get("chargeName"));//存放费用信息
         pd.put("is_success",0);     //   is_success
         try {
             dao.save("PayRecordMapper.saveWater", pd);
