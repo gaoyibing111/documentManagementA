@@ -67,6 +67,12 @@ public class UserMaintainPlanVehicleService {
         dao.update("UserMaintainPlanVehicleMapper.editRoutineMaintenanceRecord", pd);
     }
 
+    /**
+     * 日常维护记录删除
+     */
+    public void delMaintenanceRecord(PageData pd)throws Exception{
+        dao.update("UserMaintainPlanVehicleMapper.deleteRoutineMaintenanceRecord", pd);
+    }
 
 
 

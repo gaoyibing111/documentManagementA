@@ -157,7 +157,7 @@ function queryVehicleChangeRecord(_vcrList){
             aaa+="<td>"+dataArray[i].maintain_project+"</td>";
             aaa+="<td>"+dataArray[i].maintain_content+"</td>";
             aaa+="<td>"+dataArray[i].remark+"</td>";
-            aaa+="<td><a style=\"cursor:pointer\" plateNumber="+dataArray[i].plate_number+"    id="+dataArray[i].id+" onclick=\"editmaintain(this)\">编辑<a/></td>";
+            aaa+="<td><a style=\"cursor:pointer\" plateNumber="+dataArray[i].plate_number+"    id="+dataArray[i].id+" onclick=\"editmaintain(this)\">编辑<a/>&nbsp;<a style=\"cursor:pointer\" plateNumber="+dataArray[i].plate_number+"    id="+dataArray[i].id+" onclick=\"delmaintain(this)\">删除<a/></td>";
             aaa+="<tr/>";
         }
 

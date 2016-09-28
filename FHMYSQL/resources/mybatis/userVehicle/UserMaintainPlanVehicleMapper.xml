@@ -124,8 +124,12 @@
 		id = #{id}
 	</update>
 
-
-
+	<!--删除日常维护记录-->
+	<delete id="deleteRoutineMaintenanceRecord" parameterType="pd">
+		delete from user_routine_maintain_vehicle
+		where
+		id = #{id}  and  username=#{username}
+	</delete>
 
 
 

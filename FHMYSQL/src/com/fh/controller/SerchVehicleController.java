@@ -336,7 +336,26 @@ public class SerchVehicleController extends BaseController{
 			return  jsonObject.toString();
 		}
 
-
+	/**
+	 * 删除日常维护记录
+	 * @param id
+	 * @return
+	 */
+	@RequestMapping("delRoutineMaintenance")
+	@ResponseBody
+	public String delRoutineMaintenance(@RequestParam("id")String id){
+		JSONObject jsonObject=new JSONObject();
+		PageData pd =new PageData();
+		pd.put("id",id);
+		pd.put("username",SerchVehicleController.getUserInfo().getUSERNAME());
+		try {
+			userMaintainPlanVehicleService.delMaintenanceRecord(pd);
+			jsonObject.put("msg","删除成功");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return jsonObject.toString();
+	}
 
 
 

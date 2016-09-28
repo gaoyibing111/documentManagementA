@@ -439,7 +439,23 @@
 			}
 		});
 	}
-
+	//删除日常维修记录
+	function delmaintain(val){
+		var id=val.getAttribute("id");//记录id
+		if (confirm('是否确认删除？')) {
+			$.ajax({
+				type: "GET",
+				url: '<%=basePath%>/searchVehicleInfo/delRoutineMaintenance',
+				data: {id: id},
+				async: true,
+				cache: false,
+				dataType: 'json',
+				success: function (msg) {
+					getSearchUrl('queryRoutineMaintenanceRecords');
+				}
+			});
+		}
+	}
 
 
 </script>
