@@ -102,19 +102,104 @@ public class TestAsmx {
 
     public static void main(String args[]) throws RemoteException, ServiceException, MalformedURLException {
         TestAsmx pw=new TestAsmx();
-      /*  String url="http://10.18.1.10:8001/YGTWebService.asmx?op=GetYeHu";
-        String soapaction="http://tempuri.org/";   */
-
         Map<String,String> map=new LinkedHashMap<String,String>();
-        map.put("ChePaiHM","陕A6TG06"); //param1 入参顺序严格执行
-        map.put("ChePaiHM2","陕A6TG062");
-        map.put("ChePaiHM3","陕A6TG063");
-        map.put("ChePaiHM4","陕A6TG064");
-     //todo  if(postString)
-        String op="GetRanYouJCJL";
-        String url="http://10.18.1.10:8002/ErBaoWebService.asmx?op=GetRanYouJCJL";
-        String soapaction="http://tempuri.org/";
-        pw.ERWebService(op,url,soapaction,map);
 
+        //todo list if(postString==二维系统数据服务接口测试)
+        //二维系统数据服务接口测试
+        String soapaction="http://tempuri.org/";
+        //1.	查询燃油检测记录
+       /*String url="http://10.18.1.10:8002/ErBaoWebService.asmx?op=GetRanYouJCJL";
+       String op="GetRanYouJCJL";
+       map.put("ChePaiHM","陕A6TG06"); //param1 入参顺序严格执行
+*/       //2.	查询二级维护记录
+      /* String url="http://10.18.1.10:8002/ErBaoWebService.asmx?op=GetErJiWHJL";
+       String op="GetErJiWHJL";
+       map.put("ChePaiHM","陕AN0711"); //param1 入参顺序严格执行
+       map.put("ChePaiYS","黄色"); //param1 入参顺序严格执行
+     //3.	查询车辆竣工出厂检测记录
+       String url="http://10.18.1.10:8002/ErBaoWebService.asmx?op=GetCheLiangCCJC";
+       String op="GetCheLiangCCJC";
+       map.put("ChePaiHM","陕AN0711"); //param1 入参顺序严格执行
+       map.put("ChePaiYS","黄色"); //param1 入参顺序严格执行
+       //4.	查询车辆等级评定检测
+       String url="http://10.18.1.10:8002/ErBaoWebService.asmx?op=GetCheLiangDJPD";
+       String op="GetCheLiangDJPD";
+       map.put("ChePaiHM","陕AN0711"); //param1 入参顺序严格执行
+         //5.	查询合格证书领取记录
+       String url="http://10.18.1.10:8002/ErBaoWebService.asmx?op=GetCheLiangHGZSLQJL";
+       String op="GetCheLiangHGZSLQJL";
+       map.put("ChePaiHM","陕AN0711"); //param1 入参顺序严格执行
+       map.put("ChePaiYS","黄色"); //param1 入参顺序严格执行
+       //todo list if(postString==运管通数据服务接口说明)
+       //1.	获取业户信息
+       String url="http://10.18.1.10:8001/YGTWebService.asmx?op=GetYeHu";
+       String op="GetYeHu";
+       map.put("xukezh","'610101909492'"); //param1 入参顺序严格执行
+          //2.	获取车辆信息
+        String url="http://10.18.1.10:8001/YGTWebService.asmx?op=GetCheLiangXX";
+       String op="GetCheLiangXX";
+       map.put("CheLiangDLYSZH","'610101909492'"); //param1 入参顺序严格执行
+       map.put("xukezh","610101909492"); //param1 入参顺序严格执行
+       //3.	通过车牌号码车牌颜色获取车辆信息
+        String url="http://10.18.1.10:8001/YGTWebService.asmx?op=GetCheLiangXXByCP";
+       String op="GetCheLiangXXByCP";
+       map.put("ChePaiHM","陕A535DD"); //param1 入参顺序严格执行
+       map.put("ChePaiYS","黄色"); //param1 入参顺序严格执行
+        //4.	获取业户更新信息
+       String url="http://10.18.1.10:8001/YGTWebService.asmx?op=GetYeHuGX";
+       String op="GetYeHuGX";
+       map.put("xukezh","'610101909492'"); //param1 入参顺序严格执行
+       map.put("kaishisj","2016-01-04 23:55:11"); //param1 入参顺序严格执行
+       map.put("jiezhisj","2016-01-04 23:55:11"); //param1 入参顺序严格执行
+         //5.	获取车辆更新信息
+       String url="http://10.18.1.10:8001/YGTWebService.asmx?op=GetCheLiangXXGX";
+       String op="GetCheLiangXXGX";
+       map.put("CheLiangDLYSZH","'610101909492'"); //param1 入参顺序严格执行
+       map.put("xukezh","'610101909492'"); //param1 入参顺序严格执行
+       map.put("kaishisj","2016-01-04 23:55:11"); //param1 入参顺序严格执行
+       map.put("jiezhisj","2016-01-04 23:55:11"); //param1 入参顺序严格执行
+        //6.	获取车辆投保信息
+       String url="http://10.18.1.10:8001/YGTWebService.asmx?op=GetCheLiangTBByBH";
+       String op="GetCheLiangTBByBH";
+       map.put("bianhao","WHCL00002687"); //param1 入参顺序严格执行
+          //7.	获取车辆二保信息
+       String url="http://10.18.1.10:8001/YGTWebService.asmx?op=GetCheLiangEBByBH";
+       String op="GetCheLiangEBByBH";
+       map.put("bianhao","WHCL00002687"); //param1 入参顺序严格执行
+      //8.	获取车辆性能检测信息
+       String url="http://10.18.1.10:8001/YGTWebService.asmx?op=GetCheLiangXNJCByBH";
+       String op="GetCheLiangXNJCByBH";
+       map.put("bianhao","WHCL00002687"); //param1 入参顺序严格执行
+           //9.	批量获取车辆信息
+       String url="http://10.18.1.10:8001/YGTWebService.asmx?op=GetCheLiangXXByCP";
+       String op="GetCheLiangXXByCP";
+       map.put("ChePaiHM","陕AY2205"); //param1 入参顺序严格执行
+       map.put("ChePaiYS","黄色"); //param1 入参顺序严格执行
+       //10.	批量获取业户信息
+       String url="http://10.18.1.10:8001/YGTWebService.asmx?op=GetYeHuPLBYBH";
+       String op="GetYeHuPLBYBH";
+       map.put("bianhao","'WHCL00002687'"); //param1 入参顺序严格执行
+          //11.	获取业户信息（业户名称）
+       String url="http://10.18.1.10:8001/YGTWebService.asmx?op=GetYeHuBYMC";
+       String op="GetYeHuBYMC";
+       map.put("YeHuMC","丰景"); //param1 入参顺序严格执行
+           //12.	获取车辆从业人员
+       String url="http://10.18.1.10:8001/YGTWebService.asmx?op=GetYeHuPLBYBH";
+       String op="GetYeHuPLBYBH";
+       map.put("bianhao","'WHCL00002687'"); //param1 入参顺序严格执行
+         //13.	获取客运运力储备目录 todo
+       String url="http://10.18.1.10:8001/YGTWebService.asmx?op=GetKeYunYLCBML";
+       String op="GetKeYunYLCBML";
+       map.put("mingcheng","WHCL00002687"); //param1 入参顺序严格执行
+       map.put("muluzt","WHCL00002687"); //param1 入参顺序严格执行
+       map.put("niandu","WHCL00002687"); //param1 入参顺序严格执行*/
+
+        //15.	获取车辆变更信息
+        String url="http://10.18.1.10:8001/YGTWebService.asmx?op=GetCheLiangBGXXByCP";
+        String op="GetCheLiangBGXXByCP";
+        map.put("ChePaiHM","陕AE3606"); //param1 入参顺序严格执行
+        map.put("ChePaiYS","黄色"); //param1 入参顺序严格执行
+
+        pw.ERWebService(op,url,soapaction,map);
     }
 }
