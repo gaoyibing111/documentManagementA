@@ -44,7 +44,7 @@
 						</ul>
 
 						<div class="tab-content">
-							<form action="queryVehicleByPlate" method="post" name="userForm" id="queryVehicleByPlate">
+							<form action="<%=basePath%>/searchVehicleInfo/queryVehicleByPlate" method="post" name="userForm" id="queryVehicleByPlate">
 							<div class="tab-pane active" id="vehicle">
 								<div class="row">
 									<div class="col-xs-10 col-left">
@@ -56,7 +56,7 @@
 								</div>
 							</div>
 								</form>
-							<form action="queryVehicleByCompany" method="post" name="userForm" id="queryVehicleByCompany">
+							<form action="<%=basePath%>/searchVehicleInfo/queryVehicleByCompany" method="post" name="userForm" id="queryVehicleByCompany">
 							<div class="tab-pane" id="business">
 								<div class="row">
 									<div class="col-xs-10 col-left">
