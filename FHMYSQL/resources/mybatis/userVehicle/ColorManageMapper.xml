@@ -81,5 +81,18 @@
                  #{item}
 		</foreach>
 	</delete>
+
+
+	<!-- 查询正常使用的颜色列表 -->
+	<select id="colorDataList" parameterType="page" resultType="pd">
+		select
+		a.ID,
+		a.COLOR,
+		a.STATUS
+
+		from
+		TB_COLORMANAGE a
+		where a.status=1
+	</select>
 	
 </mapper>

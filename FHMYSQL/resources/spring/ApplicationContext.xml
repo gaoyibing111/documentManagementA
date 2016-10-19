@@ -122,6 +122,8 @@
 			
 			<property name="filterChainDefinitions">
 				<value>
+					/login_toLogin   =anon
+					/colormanage/**   =anon
 					/maintainPlanVehicleClient/**     =anon
 					/followVehicleClient/**      =anon
 				/test/**		=anon

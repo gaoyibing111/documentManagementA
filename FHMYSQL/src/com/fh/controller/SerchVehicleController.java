@@ -59,13 +59,13 @@ public class SerchVehicleController extends BaseController{
 	/**
 	 *1.简要车辆查询接口(首页进来后查询的数据不需要登入和收费)
 	 *2.如果用户已经登入，拿返回的list的messageId查询用户关注的车辆，如果有关注setFollow=1
-	 * @param searchKeyWord
+	 * @param plateNumber
 	 * @return
 	 */
 	@RequestMapping("queryVehicleByPlate")
-	public ModelAndView queryVehicleByPlate(@RequestParam("searchKeyWord") String searchKeyWord){
+	public ModelAndView queryVehicleByPlate(@RequestParam("plateNumber") String plateNumber,@RequestParam("vehiclePlateColor") String vehiclePlateColor){
 		ModelAndView mv = this.getModelAndView();
-		String jsonString=remoteService.HttpClientGet("queryVehicleByPlate?searchKeyWord="+searchKeyWord);
+		String jsonString=remoteService.HttpClientGet("queryVehicleByPlate?searchKeyWord="+plateNumber);
 		if(StringUtils.isBlank(jsonString)){
 			mv.setViewName("vehicleManage/showQueryDataList");
 		return mv;
@@ -85,13 +85,13 @@ public class SerchVehicleController extends BaseController{
 
 	/**
 	 * 2.	简要所属企业查询接口(首页进来后查询的数据不需要登入和收费)
-	 * @param searchKeyWord
+	 * @param plateNumber
 	 * @return
 	 */
 	@RequestMapping("queryVehicleByCompany")
-	public ModelAndView queryVehicleByCompany(@RequestParam("searchKeyWord") String searchKeyWord){
+	public ModelAndView queryVehicleByCompany(@RequestParam("plateNumber") String plateNumber,@RequestParam("vehiclePlateColor") String vehiclePlateColor){
 		ModelAndView mv = this.getModelAndView();
-		String jsonString=remoteService.HttpClientGet("queryVehicleByCompany?searchKeyWord="+searchKeyWord);
+		String jsonString=remoteService.HttpClientGet("queryVehicleByCompany?searchKeyWord="+plateNumber);
 		if(StringUtils.isBlank(jsonString)){
 			mv.setViewName("vehicleManage/showQueryDataList");
 			return mv;

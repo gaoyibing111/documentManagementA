@@ -44,26 +44,34 @@
 						</ul>
 
 						<div class="tab-content">
-							<form action="<%=basePath%>/searchVehicleInfo/queryVehicleByPlate" method="post" name="userForm" id="queryVehicleByPlate">
+							<form action="<%=basePath%>/searchVehicleInfo/queryVehicleByPlate" onsubmit="return checkIsChooseVehicleColor(this)" method="post" name="userForm" id="queryVehicleByPlate">
 							<div class="tab-pane active" id="vehicle">
 								<div class="row">
-									<div class="col-xs-10 col-left">
-										<input id="user" class="form-control-lg" type="text"  name="searchKeyWord">
+									<div class="col-xs-7 col-left">
+										<input id="user" name="plateNumber" class="form-control-lg" type="text"  >
+									</div>
+									<div class="col-xs-3 col-left" >
+										<select  id="vehicleColor1" name="vehiclePlateColor" title="" class="form-control-lg">
+										</select>
 									</div>
 									<div class="col-xs-2 col-right">
-										<button id="userText" class="btn btn-primary btn-lg btn-block" onclick="queryVehicleByPlate()">查 询</button>
+										<button id="userText" class="btn btn-primary btn-lg btn-block"<%-- onclick="queryVehicleByPlate()"--%>>查 询</button>
 									</div>
 								</div>
 							</div>
 								</form>
-							<form action="<%=basePath%>/searchVehicleInfo/queryVehicleByCompany" method="post" name="userForm" id="queryVehicleByCompany">
+							<form action="<%=basePath%>/searchVehicleInfo/queryVehicleByCompany" onsubmit="return checkIsChooseVehicleColor(this)" method="post" name="userForm" id="queryVehicleByCompany">
 							<div class="tab-pane" id="business">
 								<div class="row">
-									<div class="col-xs-10 col-left">
-										<input id="user2" class="form-control-lg" type="text" name="searchKeyWord">
+									<div class="col-xs-7 col-left">
+										<input id="user2" class="form-control-lg" type="text" name="plateNumber">
+									</div>
+									<div class="col-xs-3 col-left">
+										<select id="vehicleColor2" name="vehiclePlateColor" title="" class="form-control-lg">
+										</select>
 									</div>
 									<div class="col-xs-2 col-right">
-										<button  id="userText2" class="btn btn-primary btn-lg btn-block" onclick="queryVehicleByCompany()">查 询</button>
+										<button  id="userText2" class="btn btn-primary btn-lg btn-block" <%--onclick="queryVehicleByCompany()"--%>>查 询</button>
 									</div>
 								</div>
 							</div>
@@ -87,6 +95,8 @@
  	<script src="<%=basePath %>/static/vehicleManage/js/main.js"></script>
 	<script src="<%=basePath %>/static/vehicleManage/js/bootstrapValidator.js"></script>
 	<script type="text/javascript">
+
+
 		//1.	简要车辆查询接口
 		function queryVehicleByPlate(){
 		 $('#queryVehicleByPlate').submit();
@@ -98,7 +108,57 @@
 		function hide_user(){
 			$('#user').hide();
 			$('#userText').hide();
+			$('#vehicleColor1').hide();
+			$('.help-block').hide();
 		}
+
+		jQuery(function($) {
+			/*首页查询车牌颜色记录集*/
+			$.ajax({
+				type: "GET",
+				url: '<%=basePath%>/colormanage/getVehicleColorDataList',
+				data: {},
+				async:true,
+				cache: false,
+				dataType:'json',
+				success: function(msg){
+					var dataArray=eval(msg.colorList);
+						console.log(dataArray);
+						$("select[name='vehiclePlateColor']").append("<option value=\"请选择车牌颜色\">请选择车牌颜色</option>");
+						for (var i = 0; i < dataArray.length; i++) {
+							$("select[name='vehiclePlateColor']").append("<option name=\"plateColor\" value=" + dataArray[i].COLOR+ ">" + dataArray[i].COLOR + "</option>");
+						}
+				}
+			});
+
+		});
+
+
+		function checkIsChooseVehicleColor(v){
+			var id=v.getAttribute("id");
+			if(id=='queryVehicleByPlate'){
+				if($('#user').val().trim()==''){
+					alert('请输入车牌号');
+					return false;
+				}
+				if($(vehicleColor1).val()=='请选择车牌颜色'){
+					alert('必须选择车牌颜色');
+					return false;
+				}
+			}
+			if(id=='queryVehicleByCompany'){
+				if($('#user2').val().trim()==''){
+					alert('请输入车牌号');
+					return false;
+				}
+				if($(vehicleColor2).val()=='请选择车牌颜色'){
+					alert('必须选择车牌颜色');
+					return false;
+				}
+			}
+
+		}
+
 
 	</script>
 </body>
