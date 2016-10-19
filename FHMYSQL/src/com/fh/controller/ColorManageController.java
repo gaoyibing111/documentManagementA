@@ -58,9 +58,9 @@ public class ColorManageController extends BaseController {
 		ModelAndView mv = this.getModelAndView();
 		PageData pd = new PageData();
 		pd = this.getPageData();
-		pd.put("ID", this.get32UUID());	//主键
-		pd.put("COLOR", pd.getString("COLOR"));	//车辆颜色
-		pd.put("STATUS", pd.getString("STATUS"));	//状态
+		pd.put("ID", this.get32UUID());	
+		pd.put("COLOR", pd.getString("COLOR"));	
+		pd.put("STATUS", pd.getString("STATUS"));	
 		colormanageService.save(pd);
 		mv.addObject("msg","success");
 		mv.setViewName("save_result");
@@ -73,7 +73,7 @@ public class ColorManageController extends BaseController {
 	@RequestMapping(value="/delete")
 	public void delete(PrintWriter out){
 		logBefore(logger, "删除ColorManage");
-		if(!Jurisdiction.buttonJurisdiction(menuUrl, "del")){return;} //校验权限
+		if(!Jurisdiction.buttonJurisdiction(menuUrl, "del")){return;}
 		PageData pd = new PageData();
 		try{
 			pd = this.getPageData();
@@ -92,7 +92,7 @@ public class ColorManageController extends BaseController {
 	@RequestMapping(value="/edit")
 	public ModelAndView edit() throws Exception{
 		logBefore(logger, "修改ColorManage");
-		if(!Jurisdiction.buttonJurisdiction(menuUrl, "edit")){return null;} //校验权限
+		if(!Jurisdiction.buttonJurisdiction(menuUrl, "edit")){return null;} 
 		ModelAndView mv = this.getModelAndView();
 		PageData pd = new PageData();
 		pd = this.getPageData();
@@ -114,7 +114,7 @@ public class ColorManageController extends BaseController {
 		try{
 			pd = this.getPageData();
 			page.setPd(pd);
-			List<PageData>	varList = colormanageService.list(page);	//列出ColorManage列表
+			List<PageData>	varList = colormanageService.list(page);	
 			mv.setViewName("vehicleManage/colormanage/colormanage_list");
 			mv.addObject("varList", varList);
 			mv.addObject("pd", pd);
@@ -170,7 +170,7 @@ public class ColorManageController extends BaseController {
 	@RequestMapping(value="/deleteAll")
 	@ResponseBody
 	public Object deleteAll() {
-		logBefore(logger, "批量删除ColorManage");
+		logBefore(logger, "批量删除ColorManage");//记录日志
 		if(!Jurisdiction.buttonJurisdiction(menuUrl, "dell")){return null;} //校验权限
 		PageData pd = new PageData();		
 		Map<String,Object> map = new HashMap<String,Object>();
@@ -209,18 +209,18 @@ public class ColorManageController extends BaseController {
 		try{
 			Map<String,Object> dataMap = new HashMap<String,Object>();
 			List<String> titles = new ArrayList<String>();
-			titles.add("序号");	//1
-			titles.add("车辆颜色");	//2
-			titles.add("状态");	//3
+			titles.add("序号");	  //1
+			titles.add("车辆颜色");  //2
+			titles.add("状态");	  //3
 			dataMap.put("titles", titles);
-			List<PageData> varOList = colormanageService.listAll(pd);
+			List<PageData> varOList = colormanageService.listAll(pd);//获取当前页面的记录
 			List<PageData> varList = new ArrayList<PageData>();
-			for(int i=0;i<varOList.size();i++){
+			for(int i=0;i<varOList.size();i++){//循环记录varOList，分别将每一条记录存入一个vpd(Map)对象
 				PageData vpd = new PageData();
-				vpd.put("var1", varOList.get(i).getString("ID"));	//1
+				vpd.put("var1", varOList.get(i).getString("ID"));	    //1
 				vpd.put("var2", varOList.get(i).getString("COLOR"));	//2
 				vpd.put("var3", varOList.get(i).getString("STATUS"));	//3
-				varList.add(vpd);
+				varList.add(vpd);//将循环得到的vpd(Map)对象存入新的varList中。(将pageData对象转换为单纯的HashMap对象)
 			}
 			dataMap.put("varList", varList);
 			ObjectExcelView erv = new ObjectExcelView();
