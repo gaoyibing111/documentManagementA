@@ -100,6 +100,7 @@ public class RegisterVehicleController extends BaseController {
 
             //生成6位验证码
             Integer checkCode = (int) ((Math.random() * 9 + 1) * 100000);
+            System.out.println("验证码："+checkCode);
             //把验证码先存起来(五分钟).
             ShortMessageInfo shortMessageInfo = new ShortMessageInfo();
             shortMessageInfo.setCode(checkCode.toString());

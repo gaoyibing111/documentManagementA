@@ -101,23 +101,23 @@ public class UserFollowVehicleController extends BaseController{
         pd.put("username",u.getUSERNAME());
         List<PageData>  pageDataListp=null;
         try {
-             pageDataListp  =userFollowVehicleService.findFollow(pd);
+            pageDataListp  =userFollowVehicleService.findFollow(pd);
         } catch (Exception e) {
             e.printStackTrace();
         }
         for(PageData pageData:pageDataListp){
-        //根据文档理解,可利用维修计划接口,传入MESSAGEID来获取车辆最新数据
-        String jsonString=remoteService.HttpClientGet("queryMaintenancePlan?messageID="+pageData.get("message_id"));
-        if(StringUtils.isBlank(jsonString)){
-            continue;
-        }
-            MaintenancePlanResp br = JSON.parseObject(jsonString,MaintenancePlanResp.class);
-        if(br!=null){
-            if(pageData.get("is_pay").toString().equals("1")){
-            br.setIsPay(1);
-            }
-            listResp.add(br);
-        }
+	        //根据文档理解,可利用维修计划接口,传入MESSAGEID来获取车辆最新数据
+	        String jsonString=remoteService.HttpClientGet("queryMaintenancePlan?messageID="+pageData.get("message_id"));
+	        if(StringUtils.isBlank(jsonString)){
+	            continue;
+	        }
+	        MaintenancePlanResp br = JSON.parseObject(jsonString,MaintenancePlanResp.class);
+	        if(br!=null){
+	            if(pageData.get("is_pay").toString().equals("1")){
+	            	br.setIsPay(1);
+	            }
+	            listResp.add(br);
+	        }
         }
         mv.addObject("dataList", listResp);
         mv.setViewName("vehicleManage/personalInfo_FocusOnVehicles");

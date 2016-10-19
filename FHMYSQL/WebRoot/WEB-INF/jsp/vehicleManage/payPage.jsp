@@ -21,9 +21,9 @@
 	</div>
 	<div class="main">
 		<div class="content">
-			<div class="login-form">
+			<div >
 				<div class="container-fluid">
-					<form id="payForm" method="post" action="pay" >
+					<form id="payForm" name="payForm" method="post" action="" >
 						<div class="row login-form-item form-group">
 							<div class="col-xs-3 col-left">
 								<label for="username">用户账号：</label>
@@ -75,6 +75,19 @@
 								<input   name="chargeExpDate" hidden="hidden" class="form-control-lg" type="text" value="${charge.EXP_DATE}">
 							</div>
 						</div>
+						
+						<div class="row login-form-item form-group">
+							<div class="col-xs-3 col-left">
+								<label>支付方式：</label>
+							</div>
+							<div class="col-xs-7 col-right">
+								<select id="payStyle" class="form-control-lg">
+									<option value="aliPay">支付宝支付</option>
+									<option value="weChat">微信支付</option>
+								</select>
+							</div>
+						</div>
+						
 						<div class="row login-form-item">
 							<div class="col-xs-3 col-left"></div>
 							<div class="col-xs-7 col-right">
@@ -105,10 +118,40 @@
 <script type="text/javascript">
 
 	function submitPay(){
-		 $('#payForm').submit();
+		var payStyle=$("#payStyle option:selected").val();
+		if(payStyle=="aliPay"){
+			document.payForm.action="aliPayPage";
+			//$("#payForm").action="alipay";jQuery不支持这种方法
+		}else if(payStyle=="weChat"){
+			document.payForm.action="weChatPage";
+			//$("#payForm").action="weChat";
+		}
+		$("#payForm").submit();
 	}
+
+	/* function submitPay(){
+		var payStyle=$("#payStyle option:selected").val();
+		if(payStyle.equals("aliPay")){
+			$("#payForm").action="aliPay";
+			$("#payForm").submit();
+		}else if(payStyle.equals("weChat")){
+			$("#payForm").action="weChat";
+			$("#payForm").submit();
+		}
+	} */
 
 
 </script>
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+

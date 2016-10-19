@@ -6,24 +6,24 @@ import java.io.Serializable;
  * queryBasicInfo
  */
 public class BaseInfoResp implements Serializable {
-    private	boolean 	          success  ;//true,                       ;//数据是否返回成功，失败返回false
-     private	String 	          messageID  ;//  asdada232432sdasdadsada232  ,     ;//本信息ID
-    private	String 	              plateNumber  ;//  陕A12345  ,            ;//车牌号
- //   private	String 	              vehicleType  ;//  xx  ,                   ;//车辆种类
-    private	String 	              vehicleTypeNo  ;//  xx  ,                 ;//车辆型号
-    private	String 	              contactPhone  ;//  11111111111  ,          ;//联系电话
-    private	String 	              roadTransportNo  ;//  xx  ,               ;//道路运输证号
-    private	String 	              vehicleColor  ;//  xx  ,                  ;//车辆颜色
-    private	String 	              chassisNo  ;//  xx  ,                    ;//底盘号
-    private	String 	              subordinateUnits  ;//  xx  ,              ;//所属单位
-    private	String 	              fuelType  ;//  xx  ,                     ;//燃油类型
-    private	String 	              engineNo  ;//  xx  ,                    ;//发动机号
-    private	String 	              affiliationStation  ;//  xx  ,              ;//所属运管站
-    private	String 	              vehicleRegistrationDate  ;//  2016-00-00  , ;//车辆登记日期
-    private	String 	              businessLicenseNo  ;//  xx  ,            ;//企业许可证号
-    private	String 	              vehicleType  ;//  xx  ,                  ;//车辆类型
-    private	String 	              checkTonnage  ;//  xx  ,                ;//核定吨位
-    private	String 	              vehicleState  ;//  xx                    ;//车辆状态
+    private	boolean 	success ;//true,                       ;   //数据是否返回成功，失败返回false
+    private	String 	    messageID;//  asdada232432sdasdadsada232;  //本信息ID
+    private	String 	    plateNumber;//  陕A12345  ,            ;    //车牌号
+ // private	String 	    vehicleType;//  xx  ,                   ;  //车辆种类
+    private	String 	    vehicleTypeNo;//  xx  ,                 ;  //车辆型号
+    private	String 	    contactPhone;//  11111111111  ,          ; //联系电话
+    private	String 	    roadTransportNo;//  xx  ,               ;  //道路运输证号
+    private	String 	    vehicleColor;//  xx  ,                  ;  //车辆颜色
+    private	String 	    chassisNo;//  xx  ,                    ;   //底盘号
+    private	String 	    subordinateUnits;//  xx  ,              ;  //所属单位
+    private	String 	    fuelType;//  xx  ,                     ;   //燃油类型
+    private	String 	    engineNo;//  xx  ,                    ;    //发动机号
+    private	String 	    affiliationStation;//  xx  ,              ;//所属运管站
+    private	String 	    vehicleRegistrationDate;//  2016-00-00  , ;//车辆登记日期
+    private	String 	    businessLicenseNo;//  xx  ,            ;   //企业许可证号
+    private	String 	    vehicleType;//  xx  ,                  ;   //车辆类型
+    private	String 	    checkTonnage;//  xx  ,                ;    //核定吨位
+    private	String 	    vehicleState;//  xx                    ;   //车辆状态
 
     public BaseInfoResp() {
     }

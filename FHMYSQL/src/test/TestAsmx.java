@@ -1,18 +1,17 @@
 package test;
 
+import java.net.MalformedURLException;
+import java.rmi.RemoteException;
+import java.util.LinkedHashMap;
+import java.util.Map;
+
+import javax.xml.namespace.QName;
+import javax.xml.rpc.ServiceException;
+
 import org.apache.axis.client.Call;
 import org.apache.axis.client.Service;
 
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.Map;
-import javax.xml.namespace.QName;
-import javax.xml.rpc.ServiceException;
-import java.net.MalformedURLException;
-import java.rmi.RemoteException;
-import java.util.Set;
-
-
+//todo  list@Service
 public class TestAsmx {
  /*
     private String url="http://www.webxml.com.cn/WebServices/WeatherWebService.asmx?wsdl";//提供接口的地址
@@ -130,6 +129,7 @@ public class TestAsmx {
        String op="GetCheLiangHGZSLQJL";
        map.put("ChePaiHM","陕AN0711"); //param1 入参顺序严格执行
        map.put("ChePaiYS","黄色"); //param1 入参顺序严格执行
+       
        //todo list if(postString==运管通数据服务接口说明)
        //1.	获取业户信息
        String url="http://10.18.1.10:8001/YGTWebService.asmx?op=GetYeHu";

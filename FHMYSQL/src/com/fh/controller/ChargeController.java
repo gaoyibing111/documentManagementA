@@ -32,6 +32,7 @@ import com.fh.util.Const;
 import com.fh.util.PageData;
 import com.fh.util.Tools;
 import com.fh.util.Jurisdiction;
+import com.fh.util.Logger;
 
 /** 
  * 类名称：ChargeController
@@ -42,6 +43,9 @@ import com.fh.util.Jurisdiction;
 @RequestMapping(value="/charge")
 public class ChargeController extends BaseController {
 	
+    protected Logger logger = Logger.getLogger(this.getClass());
+ 
+	
 	String menuUrl = "charge/list.do"; //菜单地址(权限用)
 	@Resource(name="chargeService")
 	private ChargeService chargeService;
@@ -51,7 +55,6 @@ public class ChargeController extends BaseController {
 	 */
 	@RequestMapping(value="/save")
 	public ModelAndView save() throws Exception{
-		logBefore(logger, "新增Charge");
 		if(!Jurisdiction.buttonJurisdiction(menuUrl, "add")){return null;} //校验权限
 		ModelAndView mv = this.getModelAndView();
 		PageData pd = new PageData();
