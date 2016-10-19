@@ -11,7 +11,11 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import com.alibaba.fastjson.JSON;
+import com.fh.entity.RemoteResp.VehicleChangeRecordListResp;
 import com.fh.service.ColorManageService;
+import net.sf.json.JSONObject;
+import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
@@ -22,6 +26,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -244,4 +249,27 @@ public class ColorManageController extends BaseController {
 		DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 		binder.registerCustomEditor(Date.class, new CustomDateEditor(format,true));
 	}
+
+	/**
+	 * 查询车辆首页获取正常使用的车牌颜色
+	 * @return
+	 */
+	@RequestMapping("getVehicleColorDataList")
+	@ResponseBody
+	public String queryVehicleChangeRecord() {
+		JSONObject jsonObject=new JSONObject();
+	 	Page page=new Page();
+		List<PageData> jsonString= null;
+		try {
+			jsonString = colormanageService.colorDataList(page);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		if(jsonString!=null&&jsonString.size()>0) {
+			jsonObject.put("colorList", jsonString);
+		}
+		return  jsonObject.toString();
+	}
+
+
 }

@@ -65,6 +65,10 @@ public class ColorManageService {
 	public void deleteAll(String[] ArrayDATA_IDS)throws Exception{
 		dao.delete("ColorManageMapper.deleteAll", ArrayDATA_IDS);
 	}
-	
+
+	//查询正常使用的颜色列表
+	public List<PageData> colorDataList(Page page) throws Exception {
+		return  (List<PageData>)dao.findForList("ColorManageMapper.colorDataList", page);
+	}
 }
 
