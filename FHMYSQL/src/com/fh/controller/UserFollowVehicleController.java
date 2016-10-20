@@ -9,6 +9,7 @@ import com.fh.service.UserFollowVehicleService;
 import com.fh.service.remote.RemoteService;
 import com.fh.util.DateUtil;
 import com.fh.util.PageData;
+import com.fh.util.UuidUtil;
 import com.google.gson.JsonObject;
 import net.sf.json.JSONObject;
 import org.apache.commons.lang.StringUtils;
@@ -62,6 +63,7 @@ public class UserFollowVehicleController extends BaseController{
          try {
              BaseInfoResp br = JSON.parseObject(jsonString, BaseInfoResp.class);
              User u =SerchVehicleController.getUserInfo();
+             pd.put("id",UuidUtil.get32UUID());
              pd.put("username",u.getUSERNAME());
              pd.put("plate_number",br.getPlateNumber());
              pd.put("message_id",messageID);

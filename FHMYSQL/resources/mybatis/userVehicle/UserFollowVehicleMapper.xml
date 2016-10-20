@@ -13,7 +13,7 @@
 			is_pay,
 			create_date,
 			last_modify_date,
-			is_delete
+			is_delete,id
 
 		) values (
 		#{username},
@@ -22,7 +22,8 @@
 		#{is_pay},
 		#{create_date},
 		#{last_modify_date},
-		#{is_delete}
+		#{is_delete},
+		#{id}
 		)
 	</insert>
 	

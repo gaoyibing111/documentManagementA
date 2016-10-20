@@ -27,4 +27,15 @@ public class SpringClearRegisterQTZ {
 			}
 		}
 	}
+
+	/**
+	 * 定时处理付费到期的用户
+	 */
+	@Scheduled(cron = "0 0/5 * * * ?")
+	protected void countExpTime() {
+
+
+	}
+
+
 }
