@@ -133,6 +133,44 @@ public class SerchVehicleController extends BaseController{
 
 		return  mv;
 	}
+    /*@RequestMapping(value="getDataDetail")
+	public ModelAndView getDataDetail(@RequestParam("CheLiangDLYSZH")String CheLiangDLYSZH,@RequestParam("xukezh")String xukezh,@RequestParam("plateNumber")String plateNumber){
+		ModelAndView mv = this.getModelAndView();
+		if(!userFollowVehicleService.checkUserLoginPay(plateNumber)){
+			mv.setViewName("vehicleManage/login");
+			return  mv;
+		}
+		String jsonString=newRemoteService.GetCheLiangXX(CheLiangDLYSZH,xukezh);
+		if(StringUtils.isBlank(jsonString)){
+			mv.setViewName("vehicleManage/dataDetail");
+			return mv;
+		}
+		NewBaseInfoResp nbir=JSON.parseObject(jsonString,NewBaseInfoResp.class);
+		BaseInfoResp bir=new BaseInfoResp();
+		bir.setPlateNumber(nbir.getChePaiHM());//车牌号
+		bir.setVehicleTypeNo(nbir.getChangPaiXH());//车辆型号
+		bir.setRoadTransportNo(nbir.getCheLiangDLYSZH());//道路运输证号
+		bir.setVehicleColor(nbir.getCheLiangYS());//车辆颜色
+		bir.setChassisNo(nbir.getCheJiaH());//底盘号
+		bir.setSubordinateUnits(nbir.getYeHuMC());//所属单位
+		bir.setEngineNo(nbir.getFaDongJH());//发动机号
+		bir.setAffiliationStation(nbir.getSuoShuZhan());//所属运管站
+		bir.setBusinessLicenseNo(nbir.getXuKeZhengHao());//企业许可证号
+		bir.setCheckTonnage(String.valueOf(nbir.getHeDingDW()));//核定吨位
+		bir.setVehicleState(nbir.getCheLiangZT());//车辆状态
+		bir.setSuccess(true);//默认为真
+		bir.setMessageID("");//暂无数据
+		bir.setContactPhone("");//暂无数据
+		bir.setFuelType("");//暂无数据
+		bir.setVehicleRegistrationDate("");//暂无数据
+		bir.setVehicleType("");//暂无数据
+		if(bir.isSuccess()){
+			mv.addObject("baseInfo",bir);
+		}
+		mv.setViewName("vehicleManage/dataDetail");
+
+		return mv;
+	}*/
 
 
 
@@ -161,7 +199,36 @@ public class SerchVehicleController extends BaseController{
 		}
 		return  jsonObject.toString();
 	}
+	/*@RequestMapping("queryVehicleChangeRecord")
+	@ResponseBody
+	public String queryVehicleChangeRecord(@RequestParam("plateNumber")String plateNumber,@RequestParam("plateColor")String plateColor){
+		JSONObject jsonObject=new JSONObject();
+		if(!userFollowVehicleService.checkUserLoginPay(plateNumber)){
+			jsonObject.put("msg", "请登录并付费查看");
+			return  jsonObject.toString();
+		}
+		String ChePaiHM=plateNumber;
+		String ChePaiYS=plateColor;
+		String jsonString=newRemoteService.GetCheLiangBGXXByCP(ChePaiHM,ChePaiYS);
+		if(StringUtils.isBlank(jsonString)){
+			return jsonString.toString();
+		}
+		NewVehicleChangeRecordResp nvcrr=JSON.parseObject(jsonString,NewVehicleChangeRecordResp.class);
+		VehicleChangeRecordResp vcrr=new VehicleChangeRecordResp();
+		vcrr.setPlateNumber(nvcrr.getChePaiHM());//车牌号
+		vcrr.setCarGenusUnit(nvcrr.getYeHuMC());//车属单位
+		vcrr.setReviewStatus(nvcrr.getShenPiZT());//审核状态
+		vcrr.setHassisNumber("");//暂无信息
+		vcrr.setChangeContent("");//暂无信息
+		VehicleChangeRecordListResp vcrlr=new VehicleChangeRecordListResp();
+		vcrlr.getData().add(vcrr);
+		if(vcrlr.isSuccess()){
+			jsonObject.put("_vcrList",vcrlr.getData());
+		}
+		return  jsonObject.toString();
+	}*/
 
+	
 	/**
 	 * 	查询燃油检测记录接口
 	 */
@@ -183,6 +250,35 @@ public class SerchVehicleController extends BaseController{
 		}
 		return  jsonObject.toString();
 	}
+	/*@RequestMapping("queryFuelTestingRecord")
+    @ResponseBody
+    public String queryFuelTestingRecord(@RequestParam("plateNumber")String plateNumber){
+        JSONObject jsonObject=new JSONObject();
+        if(!userFollowVehicleService.checkUserLoginPay(plateNumber)){
+            jsonObject.put("msg","请登录并付费查看");
+            return jsonObject.toString();
+        }
+        String ChePaiHM=plateNumber;
+        String jsonString=newRemoteService.GetRanYouJCJL(ChePaiHM);
+        if(StringUtils.isBlank(jsonString)){
+            return jsonString.toString();
+        }
+        NewFuelTestingRecordResp nftrr=JSON.parseObject(jsonString,NewFuelTestingRecordResp.class);
+        FuelTestingRecordResp ftrr=new FuelTestingRecordResp();
+        ftrr.setPlateNumber(nftrr.getCHEPAIHAO());//车牌号
+        ftrr.setChassisNumber(nftrr.getCHEJIAHAO());//车架号
+        ftrr.setCarGenusUnit(nftrr.getCHESHUDW());//车属单位
+        ftrr.setSendCheckPeople(nftrr.getSONGJIANREN());//送检人
+        ftrr.setDetectionUnit(nftrr.getJIANCEDW());//检测单位
+        ftrr.setReviewStatus(String.valueOf(nftrr.getIsApproved()));//审核状态
+        ftrr.setDetectionTime(nftrr.getApprovedDate().toString());//检测时间
+        FuelTestingRecordListResp ftrlr=new FuelTestingRecordListResp();
+        ftrlr.getData().add(ftrr);
+        if(ftrlr.isSuccess()){
+            jsonObject.put("_vcrList",ftrlr.getData());
+        }
+        return jsonObject.toString();
+    }*/
 
 
 	/**
@@ -206,6 +302,36 @@ public class SerchVehicleController extends BaseController{
 		}
 		return  jsonObject.toString();
 	}
+	/*@RequestMapping("querySecondMaintenanceRecords")
+	@ResponseBody
+	public String querySecondMaintenanceRecords(@RequestParam("plateNumber")String plateNumber,@RequestParam("plateColor")String plateColor){
+		JSONObject jsonObject=new JSONObject();
+		if(!userFollowVehicleService.checkUserLoginPay(plateNumber)){
+			jsonObject.put("msg", "请登录并付费查看");
+			return  jsonObject.toString();
+		}
+		String ChePaiHM=plateNumber;
+		String ChePaiYS=plateColor;
+		String jsonString=newRemoteService.GetErJiWHJL(ChePaiHM,ChePaiYS);
+		if(StringUtils.isBlank(jsonString)){
+			return jsonString.toString();
+		}
+		NewSecondMaintenanceRecordResp nbrs=JSON.parseObject(jsonString,NewSecondMaintenanceRecordResp.class);//新协议Bean
+		SecondMaintenanceRecordResp brs=new SecondMaintenanceRecordResp();//原Bean
+		brs.setIcCardNumber(nbrs.getIccard_id());//IC卡号
+		brs.setLicensePlateColor(nbrs.getCard_color());//车牌颜色
+		brs.setVehicleType(nbrs.getCarType());//车牌类型
+		brs.setRoadTransportLicense(nbrs.getWork_card());//道路运输许可证
+		brs.setMaintainTimes(String.valueOf(nbrs.getWhsl()));//维护次数
+		brs.setMaintainRegistrationTime(nbrs.getRegdate().toString());//维护登记时间
+		brs.setMaintainState(nbrs.getFlag());//维护状态(0待审核,1已审核)
+		SecondMaintenanceRecordListResp br=new SecondMaintenanceRecordListResp();
+		br.getData().add(brs);
+		if(br.isSuccess()){
+			jsonObject.put("_vcrList",br.getData());
+		}
+		return  jsonObject.toString();
+	}*/
 
 	/**
 	 * 查询车辆检测记录接口
@@ -251,6 +377,37 @@ public class SerchVehicleController extends BaseController{
 		}
 		return  jsonObject.toString();
 	}
+	/*@RequestMapping("queryCertificateReceivingRecords")
+    @ResponseBody
+    public String queryCertificateReceivingRecords(@RequestParam("plateNumber")String plateNumber,@RequestParam("plateColor")String plateColor){
+        JSONObject jsonObject=new JSONObject();
+        if(!userFollowVehicleService.checkUserLoginPay(plateNumber)){
+            jsonObject.put("msg","请登录并付费查看");
+            return jsonObject.toString();
+        }
+        String ChePaiHM=plateNumber;
+        String ChePaiYS=plateColor;
+        String jsonString=newRemoteService.GetCheLiangHGZSLQJL(ChePaiHM,ChePaiYS);
+        if(StringUtils.isBlank(jsonString)){
+            return jsonString.toString();
+        }
+        NewCertificateReceivingRecordResp ncrrr=JSON.parseObject(jsonString,NewCertificateReceivingRecordResp.class);
+        CertificateReceivingRecordResp crrr=new CertificateReceivingRecordResp();
+        crrr.setToraRepairParty(ncrrr.getOwner_name());//托修方
+        crrr.setLicensePlateNumber(ncrrr.getCard_no());//车牌号码
+        crrr.setIntoFactoryDate(ncrrr.getCheckDate().toString());//进厂日期
+        crrr.setOutFactoryDate(ncrrr.getIsOkDate().toString());//出厂日期
+        crrr.setCarModel("");//暂无数据
+        crrr.setMaintenanceCategory("");//暂无数据
+        crrr.setMaintenanceContractNumber("");//暂无数据
+        crrr.setOutFactoryMileageValues("");//暂无数据
+        CertificateReceivingRecordListResp crrlr=new CertificateReceivingRecordListResp();
+        crrlr.getData().add(crrr);
+        if(crrlr.isSuccess()){
+            jsonObject.put("_vcrList",crrlr.getData());
+        }
+        return jsonObject.toString();
+    }*/
 
 
 		/**
