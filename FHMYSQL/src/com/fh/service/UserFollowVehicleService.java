@@ -33,6 +33,14 @@ public class UserFollowVehicleService {
     public  List<PageData> findFollowIsPay(PageData pd)throws Exception{
         return ( List<PageData>)dao.findForList("UserFollowVehicleMapper.findFollowIsPay", pd);
     }
+   public void updateExpTime(){
+       PageData pd=null;
+       try {
+           dao.update("UserFollowVehicleMapper.updateExpTime",pd);
+       } catch (Exception e) {
+           e.printStackTrace();
+       }
+   }
 
 
     /**
@@ -55,6 +63,8 @@ public class UserFollowVehicleService {
         }
        return flag;
     }
+
+
 
 
 }

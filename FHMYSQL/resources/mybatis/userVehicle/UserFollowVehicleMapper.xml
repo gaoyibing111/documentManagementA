@@ -73,4 +73,12 @@
 		</if>
 	</select>
 
+	<update id="updateExpTime">
+		update user_follow_vehicle set is_pay = 0 where id in
+		(select ufv.id from tb_count_exp_time tcet left join user_follow_vehicle ufv
+		on tcet.plate_number=ufv.plate_number and tcet.USERNAME=ufv.username
+		where tcet.EXP_DATE  &lt;  GETDATE());
+	</update>
+
+
 </mapper>
