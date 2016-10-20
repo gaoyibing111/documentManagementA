@@ -10,14 +10,13 @@ import org.apache.axis.client.Service;
 import org.springframework.stereotype.Component;
 
 
-
 /**
  * Created by WangKe on 2016/10/12.
  */
 @Component("newRemoteService")
 public class NewRemoteService {
 
-    NewRemoteService pw=new NewRemoteService();
+
     Map<String,String> map=new LinkedHashMap<String,String>();
     String soapaction="http://tempuri.org/";
     String urlErBao="http://10.18.1.10:8002/ErBaoWebService.asmx?op=";
@@ -29,7 +28,7 @@ public class NewRemoteService {
         String op="GetRanYouJCJL";
         String url=urlErBao+op;
         map.put("ChePaiHM",ChePaiHM); //param1 入参顺序严格执行
-        return pw.ERWebService(op,url,soapaction,map);
+        return ERWebService(op, url, soapaction, map);
     }
 
     //2.查询二级维护记录
@@ -38,7 +37,7 @@ public class NewRemoteService {
         String url=urlErBao+op;
         map.put("ChePaiHM",ChePaiHM); //param1 入参顺序严格执行
         map.put("ChePaiYS",ChePaiYS); //param1 入参顺序严格执行
-        return pw.ERWebService(op,url,soapaction,map);
+        return ERWebService(op, url, soapaction, map);
     }
 
     //3.查询车辆竣工出厂检测记录
@@ -47,7 +46,7 @@ public class NewRemoteService {
         String url=urlErBao+op;
         map.put("ChePaiHM",ChePaiHM); //param1 入参顺序严格执行
         map.put("ChePaiYS",ChePaiYS); //param1 入参顺序严格执行
-        return pw.ERWebService(op,url,soapaction,map);
+        return ERWebService(op, url, soapaction, map);
     }
 
     //4.查询车辆等级评定检测
@@ -55,7 +54,7 @@ public class NewRemoteService {
         String op="GetCheLiangDJPD";
         String url=urlErBao+op;
         map.put("ChePaiHM",ChePaiHM); //param1 入参顺序严格执行
-        return pw.ERWebService(op,url,soapaction,map);
+        return ERWebService(op, url, soapaction, map);
     }
 
     //5.查询合格证书领取记录
@@ -64,7 +63,7 @@ public class NewRemoteService {
         String url=urlErBao+op;
         map.put("ChePaiHM",ChePaiHM); //param1 入参顺序严格执行
         map.put("ChePaiYS",ChePaiYS); //param1 入参顺序严格执行
-        return pw.ERWebService(op,url,soapaction,map);
+        return ERWebService(op, url, soapaction, map);
     }
 
     //运管通数据服务接口说明
@@ -73,7 +72,7 @@ public class NewRemoteService {
         String op="GetYeHu";
         String url=urlYGT+op;
         map.put("xukezh",xukezh); //param1 入参顺序严格执行
-        return pw.ERWebService(op,url,soapaction,map);
+        return ERWebService(op, url, soapaction, map);
     }
 
     //2.获取车辆信息
@@ -82,7 +81,7 @@ public class NewRemoteService {
         String url=urlYGT+op;
         map.put("CheLiangDLYSZH",CheLiangDLYSZH); //param1 入参顺序严格执行
         map.put("xukezh",xukezh); //param1 入参顺序严格执行
-        return pw.ERWebService(op,url,soapaction,map);
+        return ERWebService(op, url, soapaction, map);
     }
 
     //3.通过车牌号码车牌颜色获取车辆信息
@@ -91,7 +90,7 @@ public class NewRemoteService {
         String url=urlYGT+op;
         map.put("ChePaiHM",ChePaiHM); //param1 入参顺序严格执行
         map.put("ChePaiYS",ChePaiYS); //param1 入参顺序严格执行
-        return pw.ERWebService(op,url,soapaction,map);
+        return ERWebService(op, url, soapaction, map);
     }
 
     //4.获取业户更新信息
@@ -101,7 +100,7 @@ public class NewRemoteService {
         map.put("xukezh","'610101909492'"); //param1 入参顺序严格执行
         map.put("kaishisj",kaishisj); //param1 入参顺序严格执行
         map.put("jiezhisj",jiezhisj); //param1 入参顺序严格执行
-        return pw.ERWebService(op,url,soapaction,map);
+        return ERWebService(op, url, soapaction, map);
     }
 
     //5.获取车辆更新信息
@@ -112,7 +111,7 @@ public class NewRemoteService {
         map.put("xukezh",xukezh); //param1 入参顺序严格执行
         map.put("kaishisj",kaishisj); //param1 入参顺序严格执行
         map.put("jiezhisj",jiezhisj); //param1 入参顺序严格执行
-        return pw.ERWebService(op,url,soapaction,map);
+        return ERWebService(op, url, soapaction, map);
     }
 
     //6.获取车辆投保信息
@@ -120,7 +119,7 @@ public class NewRemoteService {
         String op="GetCheLiangTBByBH";
         String url=urlYGT+op;
         map.put("bianhao",bianhao); //param1 入参顺序严格执行
-        return pw.ERWebService(op,url,soapaction,map);
+        return ERWebService(op, url, soapaction, map);
     }
 
     //7.获取车辆二保信息
@@ -128,7 +127,7 @@ public class NewRemoteService {
         String op="GetCheLiangEBByBH";
         String url=urlYGT+op;
         map.put("bianhao",bianhao); //param1 入参顺序严格执行
-        return pw.ERWebService(op,url,soapaction,map);
+        return ERWebService(op, url, soapaction, map);
     }
 
     //8.获取车辆性能检测信息
@@ -136,7 +135,7 @@ public class NewRemoteService {
         String op="GetCheLiangXNJCByBH";
         String url=urlYGT+op;
         map.put("bianhao",bianhao); //param1 入参顺序严格执行
-        return pw.ERWebService(op,url,soapaction,map);
+        return ERWebService(op, url, soapaction, map);
     }
 
     //9.批量获取车辆信息
@@ -145,7 +144,7 @@ public class NewRemoteService {
         String url=urlYGT+op;
         map.put("ChePaiHM",ChePaiHM); //param1 入参顺序严格执行
         map.put("ChePaiYS",ChePaiYS); //param1 入参顺序严格执行
-        return pw.ERWebService(op,url,soapaction,map);
+        return ERWebService(op, url, soapaction, map);
     }
 
     //10.批量获取业户信息
@@ -153,7 +152,7 @@ public class NewRemoteService {
         String op="GetYeHuPLBYBH";
         String url=urlYGT+op;
         map.put("bianhao",bianhao); //param1 入参顺序严格执行
-        return pw.ERWebService(op,url,soapaction,map);
+        return ERWebService(op, url, soapaction, map);
     }
 
     //11.获取业户信息（业户名称）
@@ -161,7 +160,7 @@ public class NewRemoteService {
         String op="GetYeHuBYMC";
         String url=urlYGT+op;
         map.put("YeHuMC",YeHuMC); //param1 入参顺序严格执行
-        return pw.ERWebService(op,url,soapaction,map);
+        return ERWebService(op, url, soapaction, map);
     }
 
     //12.获取车辆从业人员
@@ -169,7 +168,7 @@ public class NewRemoteService {
         String op="GetYeHuPLBYBH";
         String url=urlYGT+op;
         map.put("bianhao",bianhao); //param1 入参顺序严格执行
-        return pw.ERWebService(op,url,soapaction,map);
+        return ERWebService(op, url, soapaction, map);
     }
 
     //13.获取客运运力储备目录
@@ -179,7 +178,7 @@ public class NewRemoteService {
         map.put("mingcheng",mingcheng); //param1 入参顺序严格执行
         map.put("muluzt",muluzt); //param1 入参顺序严格执行
         map.put("niandu",niandu); //param1 入参顺序严格执行
-        return pw.ERWebService(op,url,soapaction,map);
+        return ERWebService(op, url, soapaction, map);
     }
 
     //15.获取车辆变更信息
@@ -188,7 +187,7 @@ public class NewRemoteService {
         String url=urlYGT+op;
         map.put("ChePaiHM",ChePaiHM); //param1 入参顺序严格执行
         map.put("ChePaiYS",ChePaiYS); //param1 入参顺序严格执行
-        return pw.ERWebService(op,url,soapaction,map);
+        return ERWebService(op, url, soapaction, map);
     }
 
 

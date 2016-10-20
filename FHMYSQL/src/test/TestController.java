@@ -32,6 +32,9 @@ public class TestController {
             url="queryPayVehicle2";
         }
         if(url.equals("queryMaintenancePlan")&&messageID.equals("XXXXXXXXXXX2")){
+            url="queryMaintenancePlan";
+        }
+        if(url.equals("queryMaintenancePlan")&&messageID.equals("XXXXXXXXXXX1")){
             url="queryMaintenancePlan2";
         }
         jsonString = Read.read(request, url);
