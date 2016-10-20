@@ -36,7 +36,7 @@
 					<div class="vms-tabs">
 						<ul class="nav-tabs logic-tab">
 							<li class="active">
-								<a href="#vehicle">车 辆 </a>
+								<a href="#vehicle" onclick="hide_user2()">车 辆 </a>
 							</li>
 							<li class="">
 								<a href="#business" onclick="hide_user()">所属企业</a>
@@ -48,7 +48,7 @@
 							<div class="tab-pane active" id="vehicle">
 								<div class="row">
 									<div class="col-xs-7 col-left">
-										<input id="user" name="plateNumber" class="form-control-lg" type="text"  >
+										<input id="user" name="plateNumber" class="form-control-lg" type="text"  placeholder="请输入车牌号" >
 									</div>
 									<div class="col-xs-3 col-left" >
 										<select  id="vehicleColor1" name="vehiclePlateColor" title="" class="form-control-lg">
@@ -64,7 +64,7 @@
 							<div class="tab-pane" id="business">
 								<div class="row">
 									<div class="col-xs-7 col-left">
-										<input id="user2" class="form-control-lg" type="text" name="plateNumber">
+										<input id="user2" class="form-control-lg" type="text" name="plateNumber" placeholder="请输入车牌号" >
 									</div>
 									<div class="col-xs-3 col-left">
 										<select id="vehicleColor2" name="vehiclePlateColor" title="" class="form-control-lg">
@@ -105,10 +105,29 @@
 		function queryVehicleByCompany(){
 			$('#queryVehicleByCompany').submit();
 		}
+
+
 		function hide_user(){
 			$('#user').hide();
 			$('#userText').hide();
 			$('#vehicleColor1').hide();
+			$('.help-block').hide();
+
+			$('#user2').show();
+			$('#userText2').show();
+			$('#vehicleColor2').show();
+			$('.help-block').show();
+		}
+
+		function hide_user2(){
+			$('#user').show();
+			$('#userText').show();
+			$('#vehicleColor1').show();
+			$('.help-block').show();
+
+			$('#user2').hide();
+			$('#userText2').hide();
+			$('#vehicleColor2').hide();
 			$('.help-block').hide();
 		}
 

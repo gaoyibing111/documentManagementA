@@ -98,9 +98,7 @@ public class MyInfoVehicleController extends BaseController {
         @RequestMapping("/aliPayPage")
         public ModelAndView aliPay(){
             PageData pd = this.getPageData();
-            
             String orderId = payInterfaceService.getOrderId(pd);
-            //ModelAndView mv=new ModelAndView();
             ModelAndView mv = this.getModelAndView();
             mv.addObject("out_trade_no",orderId);
             mv.addObject("subject",pd.get("chargeName"));

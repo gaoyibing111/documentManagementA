@@ -13,7 +13,7 @@
 			is_pay,
 			create_date,
 			last_modify_date,
-			is_delete
+			is_delete,id
 
 		) values (
 		#{username},
@@ -22,7 +22,8 @@
 		#{is_pay},
 		#{create_date},
 		#{last_modify_date},
-		#{is_delete}
+		#{is_delete},
+		#{id}
 		)
 	</insert>
 	
@@ -71,5 +72,13 @@
 			AND	message_id=#{message_id}
 		</if>
 	</select>
+
+	<update id="updateExpTime">
+		update user_follow_vehicle set is_pay = 0 where id in
+		(select ufv.id from tb_count_exp_time tcet left join user_follow_vehicle ufv
+		on tcet.plate_number=ufv.plate_number and tcet.USERNAME=ufv.username
+		where tcet.EXP_DATE  &lt;  GETDATE());
+	</update>
+
 
 </mapper>
